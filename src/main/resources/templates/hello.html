@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${pageTitle}">My Page</title>
+</head>
+<body>
+<p th:text="'Today is ' + ${#dates.format(#dates.createNow(),'yyyy-MM-dd')}">Today is </p>
+</body>
+</html>
