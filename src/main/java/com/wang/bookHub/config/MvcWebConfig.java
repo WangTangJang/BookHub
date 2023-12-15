@@ -56,5 +56,4 @@ public class MvcWebConfig implements WebMvcConfigurer {
     }
 
 }
-//更多请阅读：https://www.yiibai.com/thymeleaf/thymeleaf-springmvc5.html
 
