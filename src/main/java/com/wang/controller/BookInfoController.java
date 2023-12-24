@@ -33,6 +33,6 @@ public class BookInfoController {
     @RequestMapping("doAdd")
     public String doAdd(@ModelAttribute("books") BookInfo bookInfo){
         service.insertBook(bookInfo);
-        return "redirect:book/add";
+        return "book/add";
     }
 }

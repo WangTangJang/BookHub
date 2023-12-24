@@ -45,3 +45,5 @@ Xml文件的位置又出错了，大概是我一开始打错字符，而后又�
         SELECT * FROM bookInfo;
     </select>
 ```
+
+为什么每次在pom中更改依赖的时候都要在项目结构里put一下？？
