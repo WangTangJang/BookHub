@@ -6,6 +6,7 @@ import com.wang.service.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public class BookInfoController {
     }
     @RequestMapping("toAddView")
     public String toAddView(Model model){
+        model.addAttribute("books",new BookInfo());
         return "book/add";
+    }
+
+    @RequestMapping("doAdd")
+    public String doAdd(@ModelAttribute("books") BookInfo bookInfo){
+        service.insertBook(bookInfo);
+        return "redirect:book/add";
     }
 }

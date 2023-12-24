@@ -21,3 +21,27 @@ git push 到远程仓库时，原来不是原封不动的传上去的。
 `` git branch ‘查看本地分支’ ``
 
 ``git pull 远程分支 本地分支``
+
+```xml
+    <!--配置通用DAO-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.wang.mapper"/>
+    </bean>
+```
+在spring配置文件中缺少这一段时，会报如下错误，找了许久。但是我似乎添加过，报错又不报错。
+```text
+	org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookInfoServiceImpl': Unsatisfied dependency expressed through field 'mapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.wang.mapper.BookInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	..........
+	Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.wang.mapper.BookInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+```
+
+每次依赖添加完之后，用idea更新一下，设置里就会变成java5
+
+Xml文件的位置又出错了，大概是我一开始打错字符，而后又修改，但是并没有被识别为文件夹层次的原因吧。
+
+未曾设置过别名的情况下，xml里面应该输入实体类的路径
+```xml
+    <select id="selectAll" resultType="com.wang.model.BookInfo">
+        SELECT * FROM bookInfo;
+    </select>
+```

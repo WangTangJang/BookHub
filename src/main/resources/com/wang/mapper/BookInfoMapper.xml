@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wang.mapper">
+<mapper namespace="com.wang.mapper.BookInfoMapper">
 
-    <select id="selectAll" resultType="BookInfo">
+    <select id="selectAll" resultType="com.wang.model.BookInfo">
         SELECT * FROM bookInfo;
     </select>
 
-    <insert id="insertBook" parameterType="BookInfo">
+    <insert id="insertBook" parameterType="com.wang.model.BookInfo">
         INSERT INTO bookinfo ( title, author, format)
-        VALUE ( #{title},#{author},#{format} )
+            VALUE ( #{title},#{author},#{format} )
     </insert>
 </mapper>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>添加书籍</h2>
-<form action="/insert" method="post">
+<form action="doAdd" method="post">
     <table>
         <tr>
             <td>书名:</td>
@@ -21,7 +21,7 @@
             <td><input type="text" name="format"></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Insert Book"></td>
+            <td colspan="2"><input type="submit" value="添加书籍"></td>
         </tr>
     </table>
 </form>
