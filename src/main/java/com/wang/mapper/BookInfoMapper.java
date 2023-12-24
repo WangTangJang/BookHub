@@ -1,6 +1,7 @@
-package com.wang.bookHub.mapper;
+package com.wang.mapper;
 
-import com.wang.bookHub.model.BookInfo;
+import com.wang.model.BookInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 

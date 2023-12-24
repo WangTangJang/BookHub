@@ -1,6 +1,6 @@
-package com.wang.bookHub.service;
+package com.wang.service;
 
-import com.wang.bookHub.model.BookInfo;
+import com.wang.model.BookInfo;
 
 import java.util.List;
 

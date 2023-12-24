@@ -1,4 +1,4 @@
-package com.wang.bookHub;
+package com.wang;
 
 public class Application {
 }

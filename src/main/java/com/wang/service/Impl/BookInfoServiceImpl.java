@@ -1,8 +1,8 @@
-package com.wang.bookHub.service.Impl;
+package com.wang.service.Impl;
 
-import com.wang.bookHub.mapper.BookInfoMapper;
-import com.wang.bookHub.model.BookInfo;
-import com.wang.bookHub.service.BookInfoService;
+import com.wang.mapper.BookInfoMapper;
+import com.wang.model.BookInfo;
+import com.wang.service.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

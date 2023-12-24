@@ -1,4 +1,4 @@
-package com.wang.bookHub.model;
+package com.wang.model;
 
 public class BookInfo {
     private int id;

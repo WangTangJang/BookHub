@@ -12,6 +12,7 @@
     <properties>
         <spring.version>5.3.10.RELEASE</spring.version>
         <mybatis.version>3.5.8</mybatis.version>
+        <java.version>11</java.version>
         <mysql.connector.version>8.0.25</mysql.connector.version>
     </properties>
     <dependencies>
@@ -24,6 +25,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <version>5.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
             <version>5.3.10</version>
         </dependency>
 
