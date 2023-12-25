@@ -1,0 +1,42 @@
+<!-- 文件名：horizontal-navbar.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Horizontal Navigation Bar</title>
+  <style>
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+
+    nav li {
+      margin: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 5px 10px;
+      background-color: #f2f2f2;
+      color: #333;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div th:fragment="navbar">
+  <nav>
+    <ul>
+      <li><a th:href="@{/books/list}">Book List</a></li>
+      <li><a th:href="@{/books/toAddView}">Add Book</a></li>
+      <!-- 添加其他导航链接 -->
+    </ul>
+  </nav>
+</div>
+
+
+</body>
+</html>

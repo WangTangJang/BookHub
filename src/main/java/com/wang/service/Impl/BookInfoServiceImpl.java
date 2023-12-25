@@ -15,7 +15,7 @@ public class BookInfoServiceImpl implements BookInfoService {
     private BookInfoMapper mapper;
 
     public List<BookInfo> getAllBooks() {
-        return mapper.getAllBooks();
+        return mapper.selectAll();
     }
 
     public void insertBook(BookInfo bookInfo) {
