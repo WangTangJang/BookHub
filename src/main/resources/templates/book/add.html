@@ -22,19 +22,19 @@
                 <div class="form-group">
                     <label for="title" class="col-md-1 control-label">书名:</label>
                     <div class="col-md-11">
-                        <input type="text" class="form-control" placeholder="输入书名" id="title" name="title">
+                        <input type="text" class="form-control" placeholder="输入书名" id="title" name="title" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="author" class="col-md-1 control-label">作者:</label>
                     <div class="col-md-11">
-                    <input type="text" class="form-control" placeholder="输入作者姓名/笔名" id="author" name="author">
+                    <input type="text" class="form-control" placeholder="输入作者姓名/笔名" id="author" name="author" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="format" class="col-md-1 control-label">格式:</label>
+                    <label for="format" class="col-md-1 control-label" >格式:</label>
                     <div class="col-md-11">
-                        <input type="text" class="form-control" placeholder="输入该书电子版的格式" id="format" name="format">
+                        <input type="text" class="form-control" placeholder="输入该书电子版的格式" id="format" name="format" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,6 +46,7 @@
                     </div>
                 </div>
             </form>
+            <div th:text="${message}">请加入吧</div>
         </div>
     </div>
 </div>

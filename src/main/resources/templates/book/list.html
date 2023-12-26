@@ -18,7 +18,7 @@
         <div class="col-md-3">
             <!-- 导入横向导航栏 -->
             <div th:with="currentPage=${currentPage}">
-                <div th:insert="book/navbar :: navbar"></div>
+                <div th:replace="book/navbar :: navbar"></div>
             </div>
         </div>
         <!-- 表格数据 -->

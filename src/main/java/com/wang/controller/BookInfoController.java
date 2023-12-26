@@ -34,8 +34,11 @@ public class BookInfoController {
     }
 
     @RequestMapping("doAdd")
-    public String doAdd(@ModelAttribute("books") BookInfo bookInfo){
+    public String doAdd(@ModelAttribute("books") BookInfo bookInfo,Model model){
         service.insertBook(bookInfo);
+        model.addAttribute("message", "书籍添加成功");
+        // 触发显示成功 Modal
+        model.addAttribute("showSuccessModal", true);
         return "book/add";
     }
 }
