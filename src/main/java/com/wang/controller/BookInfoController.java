@@ -22,11 +22,14 @@ public class BookInfoController {
     public String listBooks(Model model){
         List<BookInfo> books = service.getAllBooks();
         model.addAttribute("books", books);
+        // 用于告知前端当前页面
+        model.addAttribute("currentPage" ,"list");
         return "book/list";
     }
     @RequestMapping("toAddView")
     public String toAddView(Model model){
         model.addAttribute("books",new BookInfo());
+        model.addAttribute("currentPage" ,"add");
         return "book/add";
     }
 

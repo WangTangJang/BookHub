@@ -3,26 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>书籍列表</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>书籍列表</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>书名</th>
-                <th>作者</th>
-                <th>格式</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.id}"></td>
-                <td th:text="${book.title}"></td>
-                <td th:text="${book.author}"></td>
-                <td th:text="${book.format}"></td>
-            </tr>
-        </tbody>
-    </table>
+
+<div class="container-fluid">
+
+    <div class="row-fluid" th:replace="book/header :: header"></div>
+    <!-- 一行排版 -->
+    <div class="row-fluid">
+
+        <div class="col-md-3">
+            <!-- 导入横向导航栏 -->
+            <div th:with="currentPage=${currentPage}">
+                <div th:insert="book/navbar :: navbar"></div>
+            </div>
+        </div>
+        <!-- 表格数据 -->
+        <div class="col-md-9">
+            <h2 class="text-center">书籍列表</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>格式</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.id}"></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.format}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>
