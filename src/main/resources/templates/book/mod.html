@@ -1,40 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ch">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>添加</title>
+    <title>Title</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container-fluid">
+    <!-- 导入横向导航栏 -->
     <div class="row-fluid" th:replace="book/header :: header"></div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="col-md-3">
-            <!-- 导入横向导航栏 -->
+            <!-- 导入纵向导航栏 -->
             <div th:replace="book/navbar :: navbar"></div>
         </div>
         <div class="col-md-7">
-            <h2 class="text-center">添加书籍</h2>
-            <form action="doAdd" method="post" role="form" class="form-horizontal">
+            <h2 class="text-center">修改信息</h2>
+            <form action="../doMod" method="post" role="form" class="form-horizontal">
                 <div class="form-group">
                     <label for="title" class="col-md-1 control-label">书名:</label>
                     <div class="col-md-11">
-                        <input type="text" class="form-control" placeholder="输入书名" id="title" name="title" required>
+                        <input th:value="${book.title}" type="text"  class="form-control" id="title" name="title" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="author" class="col-md-1 control-label">作者:</label>
                     <div class="col-md-11">
-                    <input type="text" class="form-control" placeholder="输入作者姓名/笔名" id="author" name="author" required>
+                        <input th:value="${book.author}" type="text"  class="form-control" id="author" name="author" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="format" class="col-md-1 control-label" >格式:</label>
+                    <label for="format" class="col-md-1 control-label">格式:</label>
                     <div class="col-md-11">
-                        <input type="text" class="form-control" placeholder="输入该书电子版的格式" id="format" name="format" required>
+                        <input th:value="${book.format}" type="text"  class="form-control" id="format" name="format" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,9 +46,6 @@
                     </div>
                 </div>
             </form>
-            <div th:if="${param.message}" class="alert alert-success">
-                <p th:text="${param.message}"></p>
-            </div>
         </div>
     </div>
 </div>

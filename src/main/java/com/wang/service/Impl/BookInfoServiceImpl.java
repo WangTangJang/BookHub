@@ -18,7 +18,19 @@ public class BookInfoServiceImpl implements BookInfoService {
         return mapper.selectAll();
     }
 
+    public BookInfo selectById(int id) {
+        return mapper.selectById(id);
+    }
+
     public void insertBook(BookInfo bookInfo) {
         mapper.insertBook(bookInfo);
+    }
+
+    public void deleteBook(BookInfo bookInfo) {
+        mapper.deleteBook(bookInfo);
+    }
+
+    public void modifyBook(BookInfo bookInfo) {
+        mapper.modifyBook(bookInfo);
     }
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -34,11 +36,29 @@ public class BookInfoController {
     }
 
     @RequestMapping("doAdd")
-    public String doAdd(@ModelAttribute("books") BookInfo bookInfo,Model model){
+    public String doAdd(@ModelAttribute("books") BookInfo bookInfo, RedirectAttributes redirectAttributes){
         service.insertBook(bookInfo);
-        model.addAttribute("message", "书籍添加成功");
-        // 触发显示成功 Modal
-        model.addAttribute("showSuccessModal", true);
-        return "book/add";
+        redirectAttributes.addAttribute("message", "书籍添加成功");
+        return "redirect:/books/toAddView";
+    }
+
+    @RequestMapping("del")
+    public String doDel(@ModelAttribute("books") BookInfo bookInfo){
+        service.deleteBook(bookInfo);
+        return "redirect:/books/list";
+    }
+
+    @RequestMapping("toMod/{id}")
+    public String toMod(@PathVariable("id") int id,Model model){
+        BookInfo book =  service.selectById(id);
+        model.addAttribute("book",book);
+        return "book/mod";
+    }
+    @RequestMapping("doMod")
+    public String doMod(@ModelAttribute("book") BookInfo bookInfo,Model model){
+        service.modifyBook(bookInfo);
+        List<BookInfo> books = service.getAllBooks();
+        model.addAttribute("books", books);
+        return "book/list";
     }
 }
