@@ -31,6 +31,7 @@
                     <th>书名</th>
                     <th>作者</th>
                     <th>格式</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,11 +40,14 @@
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.author}"></td>
                     <td th:text="${book.format}"></td>
+                    <td><a th:href="@{'/books/toMod/' + ${book.id}}">修改</a>
+                        /
+                        <a th:href="@{'/books/del/'+${book.id}}">删除</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 

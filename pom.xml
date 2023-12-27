@@ -67,9 +67,6 @@
             <version>3.0.12.RELEASE</version>
         </dependency>
 
-
-
-
         <!-- Servlet API，用于支持Spring MVC -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -83,13 +80,5 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.17.1</version>
-        </dependency>
-
     </dependencies>
 </project>

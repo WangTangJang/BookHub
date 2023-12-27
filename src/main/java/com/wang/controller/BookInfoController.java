@@ -31,6 +31,7 @@ public class BookInfoController {
     @RequestMapping("toAddView")
     public String toAddView(Model model){
         model.addAttribute("books",new BookInfo());
+        // 用于告知前端当前页面
         model.addAttribute("currentPage" ,"add");
         return "book/add";
     }
@@ -42,8 +43,9 @@ public class BookInfoController {
         return "redirect:/books/toAddView";
     }
 
-    @RequestMapping("del")
-    public String doDel(@ModelAttribute("books") BookInfo bookInfo){
+    @RequestMapping("del/{id}")
+    public String doDel(@PathVariable("id") int id, @ModelAttribute("books") BookInfo bookInfo){
+        bookInfo = service.selectById(id);
         service.deleteBook(bookInfo);
         return "redirect:/books/list";
     }
@@ -55,10 +57,8 @@ public class BookInfoController {
         return "book/mod";
     }
     @RequestMapping("doMod")
-    public String doMod(@ModelAttribute("book") BookInfo bookInfo,Model model){
+    public String doMod(@ModelAttribute("book") BookInfo bookInfo){
         service.modifyBook(bookInfo);
-        List<BookInfo> books = service.getAllBooks();
-        model.addAttribute("books", books);
-        return "book/list";
+        return "redirect:/books/list";
     }
 }
