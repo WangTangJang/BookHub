@@ -1,7 +1,9 @@
 package com.wang.mapper;
 
 import com.wang.model.BookInfo;
+import org.apache.ibatis.annotations.Param;
 
+import java.awt.print.Book;
 import java.util.List;
 
 public interface BookInfoMapper {
@@ -15,5 +17,6 @@ public interface BookInfoMapper {
 
     void modifyBook(BookInfo bookInfo);
 
+    List<BookInfo> searchBooks(@Param("keyword")String keyword);
 
 }

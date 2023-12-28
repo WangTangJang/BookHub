@@ -33,4 +33,8 @@ public class BookInfoServiceImpl implements BookInfoService {
     public void modifyBook(BookInfo bookInfo) {
         mapper.modifyBook(bookInfo);
     }
+
+    public List<BookInfo> searchBooks(String keyword) {
+        return mapper.searchBooks(keyword);
+    }
 }

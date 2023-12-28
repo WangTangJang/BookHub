@@ -14,4 +14,6 @@ public interface BookInfoService {
     void deleteBook(BookInfo bookInfo);
 
     void modifyBook(BookInfo bookInfo);
+
+    List<BookInfo> searchBooks(String keyword);
 }

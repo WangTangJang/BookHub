@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -60,5 +61,12 @@ public class BookInfoController {
     public String doMod(@ModelAttribute("book") BookInfo bookInfo){
         service.modifyBook(bookInfo);
         return "redirect:/books/list";
+    }
+
+    @RequestMapping("search")
+    public String search(@RequestParam("keyword") String keyword,Model model){
+        List<BookInfo> books = service.searchBooks(keyword);
+        model.addAttribute("books",books);
+        return "book/list";
     }
 }

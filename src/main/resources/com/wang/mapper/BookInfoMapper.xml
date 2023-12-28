@@ -27,4 +27,10 @@
         SET title = #{title},author = #{author},format = #{format}
         WHERE id = #{id}
     </update>
+
+    <select id="searchBooks" resultType="com.wang.model.BookInfo">
+        SELECT * FROM bookinfo
+        WHERE title LIKE CONCAT('%',#{keyword},'%')
+        OR author LIKE CONCAT('%', #{keyword},'%')
+    </select>
 </mapper>
