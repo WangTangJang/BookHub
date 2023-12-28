@@ -19,4 +19,8 @@ public interface BookInfoMapper {
 
     List<BookInfo> searchBooks(@Param("keyword")String keyword);
 
+    int count();
+
+    List<BookInfo> getByPage(@Param("start") int start,@Param("size") int size);
+
 }

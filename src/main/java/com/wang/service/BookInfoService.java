@@ -7,6 +7,7 @@ import java.util.List;
 public interface BookInfoService {
     List<BookInfo> getAllBooks();
 
+
     BookInfo selectById(int id);
 
     void insertBook(BookInfo bookInfo);
@@ -16,4 +17,8 @@ public interface BookInfoService {
     void modifyBook(BookInfo bookInfo);
 
     List<BookInfo> searchBooks(String keyword);
+
+    int count();
+
+    List<BookInfo> getByPage(int page,int size);
 }

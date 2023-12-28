@@ -33,4 +33,12 @@
         WHERE title LIKE CONCAT('%',#{keyword},'%')
         OR author LIKE CONCAT('%', #{keyword},'%')
     </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM bookinfo
+    </select>
+
+    <select id="getByPage" resultType="com.wang.model.BookInfo">
+        SELECT * FROM bookinfo LIMIT #{start},#{size}
+    </select>
 </mapper>

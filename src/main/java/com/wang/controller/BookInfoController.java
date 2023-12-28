@@ -22,11 +22,21 @@ public class BookInfoController {
     private BookInfoService service;
 
     @RequestMapping("/list")
-    public String listBooks(Model model){
-        List<BookInfo> books = service.getAllBooks();
+    public String listBooks(
+            @RequestParam(name = "page",defaultValue = "1") int page,
+            @RequestParam(name = "size",defaultValue = "6") int size,
+            Model model){
+
+        int total = service.count();
+        // 计算总页数
+        int totalPages = (int)Math.ceil((double) total/size);
+
+        List<BookInfo> books = service.getByPage(page,size);
         model.addAttribute("books", books);
-        // 用于告知前端当前页面
-        model.addAttribute("currentPage" ,"list");
+        model.addAttribute("currentPage",page);
+        model.addAttribute("totalPages",totalPages);
+        // 用于告知前端当前所在页面，用来控制导航栏激活状态
+        model.addAttribute("currentHtml" ,"list");
         return "book/list";
     }
     @RequestMapping("toAddView")

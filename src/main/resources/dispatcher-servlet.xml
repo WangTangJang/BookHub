@@ -14,6 +14,11 @@
 
     <context:component-scan base-package="com.wang.controller"/>
 
+    <!-- 配置静态资源处理 -->
+    <mvc:annotation-driven />
+    <mvc:resources location="/static/css" mapping="/css/**" />
+
+
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/classes/templates/"/>
         <property name="suffix" value=".html"/>
