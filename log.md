@@ -56,3 +56,13 @@ idea中输入字符变宽了　使用ｓｈｉｆｔ＋空格＋点（半角全�
 但是,导航栏也和其他页面不在一个文件,控制器的model的Attribute也无法被识别到.虽然能用..
 
 静态资源无法访问。
+
+当我把static文件夹放到webapp目录下的时候，去编译后的target里面看时，
+static会直接在根目录下生成，
+此时，在配置中写上``<mvc:resources location="/static/" mapping="/static/**" />``
+则可以用``http://localhost:8080/BookHub/static/css/bootstrap_3.3.7.css`` 访问到。
+如果我把static放到src里的resources文件夹下，它会在**/根目录/WEB-INF/classes**目录下生成。
+那么我需要在配置中写上 ``<mvc:resources location="/WEB-INF/classes/static/" mapping="/static/**" />``
+_(测试成功，油管的印度老哥名不虚传，美中不足的是idea智能识别不了修改后的location，会报红。或许有更简便的方法，但至少现在能运行。)_
+
+在前端页面中用thymeleaf时，使用``th:href="@{}"``会自动加上根目录。_chatGPT误我_

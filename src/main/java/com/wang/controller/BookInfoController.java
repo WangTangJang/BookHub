@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -23,10 +24,13 @@ public class BookInfoController {
 
     @RequestMapping("/list")
     public String listBooks(
+            HttpServletRequest request,
             @RequestParam(name = "page",defaultValue = "1") int page,
             @RequestParam(name = "size",defaultValue = "6") int size,
             Model model){
 
+
+        model.addAttribute("RootPath",request.getContextPath());
         int total = service.count();
         // 计算总页数
         int totalPages = (int)Math.ceil((double) total/size);

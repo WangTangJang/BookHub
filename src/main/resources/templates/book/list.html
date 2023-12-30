@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>书籍列表</title>
-    <link rel="stylesheet" href="src/main/webapp/static/css/bootstrap_3.3.7.css">
-    <script src="/static/js/jquery_2.1.1.js"></script>
-    <script src="/static/js/bootstrap_3.3.7.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap_3.3.7.css}">
+    <script th:src="@{/static/js/jquery_2.1.1.js}"></script>
+    <script th:src="@{/static/js/bootstrap_3.3.7.js}"></script>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -48,24 +53,24 @@
                 </tr>
                 </tbody>
             </table>
-            <!--分页-->
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li th:class="${currentPage == 1} ? 'disabled':''">
-                        <a class="page-link" th:href="@{/books/list?page=(currentPage - 1)}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li th:each="page : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == page} ? 'active' : ''">
-                        <a class="page-link" th:href="@{'/books/list?page=' + page}" th:text="${page}"></a>
-                    </li>
-                    <li th:class="${currentPage == totalPages} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{'/books/list?page=' + (currentPage + 1)}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+<!--            &lt;!&ndash;分页&ndash;&gt;-->
+<!--            <nav aria-label="Page navigation">-->
+<!--                <ul class="pagination">-->
+<!--                    <li th:class="${currentPage == 1} ? 'disabled':''">-->
+<!--                        <a class="page-link" th:href="@{/books/list?page=(currentPage - 1)}" aria-label="Previous">-->
+<!--                            <span aria-hidden="true">&laquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li th:each="page : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == page} ? 'active' : ''">-->
+<!--                        <a class="page-link" th:href="@{'/books/list?page=' + page}" th:text="${page}"></a>-->
+<!--                    </li>-->
+<!--                    <li th:class="${currentPage == totalPages} ? 'disabled' : ''">-->
+<!--                        <a class="page-link" th:href="@{'/books/list?page=' + (currentPage + 1)}" aria-label="Next">-->
+<!--                            <span aria-hidden="true">&raquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
         </div>
     </div>
 </div>

@@ -16,7 +16,7 @@
 
     <!-- 配置静态资源处理 -->
     <mvc:annotation-driven />
-    <mvc:resources location="/static/css" mapping="/css/**" />
+    <mvc:resources location="/WEB-INF/classes/static/" mapping="/static/**" />
 
 
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
