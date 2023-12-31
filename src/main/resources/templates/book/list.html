@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-md-9">
-            <h2 class="text-center">书籍列表</h2>
+            <h2 class="col-md-offset-3">书籍列表</h2>
             <!-- 表格数据 -->
             <table class="table table-striped">
                 <thead>
@@ -33,7 +33,8 @@
                     <th>书名</th>
                     <th>作者</th>
                     <th>格式</th>
-                    <th>操作</th>
+                    <th th:if="${param.delBooked}" class="alert alert-success" th:text="${param.delBooked}+'已经删除'"></th>
+                    <th th:if="${param.modBooked}" class="alert alert-success" th:text="${param.modBooked}+'已经修改'"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,6 +88,7 @@
                         <span aria-hidden="true" th:if="${currentPage==1}">&laquo;</span>
 
                     </li>
+                    <!-- TODO 页数过多的话可以增加一个折叠功能 -->
                     <li th:each="page : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == page} ? 'active' : ''">
                         <a class="page-link" th:href="@{'/books/list?page=' + ${page}}" th:text="${page}"></a>
                     </li>

@@ -59,10 +59,10 @@ public class BookInfoController {
     }
 
     @RequestMapping("del/{id}")
-    public String doDel(@PathVariable("id") int id, @ModelAttribute("books") BookInfo bookInfo){
+    public String doDel(@PathVariable("id") int id, @ModelAttribute("books") BookInfo bookInfo,RedirectAttributes redirectAttributes){
         bookInfo = service.selectById(id);
         service.deleteBook(bookInfo);
-
+        redirectAttributes.addAttribute("delBooked",bookInfo.getTitle());
         return "redirect:/books/list";
     }
 
@@ -73,8 +73,9 @@ public class BookInfoController {
         return "book/mod";
     }
     @RequestMapping("doMod")
-    public String doMod(@ModelAttribute("book") BookInfo bookInfo){
+    public String doMod(@ModelAttribute("book") BookInfo bookInfo,RedirectAttributes redirectAttributes){
         service.modifyBook(bookInfo);
+        redirectAttributes.addAttribute("modBooked",bookInfo.getTitle());
         return "redirect:/books/list";
     }
 
