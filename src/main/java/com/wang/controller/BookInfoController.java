@@ -62,6 +62,7 @@ public class BookInfoController {
     public String doDel(@PathVariable("id") int id, @ModelAttribute("books") BookInfo bookInfo){
         bookInfo = service.selectById(id);
         service.deleteBook(bookInfo);
+
         return "redirect:/books/list";
     }
 
