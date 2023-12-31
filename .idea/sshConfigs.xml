@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" id="afb1b233-d80d-46fc-bee1-845c9282608e" customName="Alibaba" nameFormat="CUSTOM">
+        <option name="customName" value="Alibaba" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

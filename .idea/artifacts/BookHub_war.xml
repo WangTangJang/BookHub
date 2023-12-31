@@ -9,12 +9,6 @@
     </properties>
     <root id="archive" name="BookHub-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="BookHub:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="library" level="application" name="bootstrap" />
-          <element id="library" level="application" name="jquery" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>

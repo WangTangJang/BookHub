@@ -47,7 +47,7 @@ public class BookInfoController {
     public String toAddView(Model model){
         model.addAttribute("books",new BookInfo());
         // 用于告知前端当前页面
-        model.addAttribute("currentPage" ,"add");
+        model.addAttribute("currentHtml" ,"add");
         return "book/add";
     }
 
