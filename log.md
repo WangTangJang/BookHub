@@ -69,3 +69,5 @@ _(测试成功，油管的印度老哥名不虚传，美中不足的是idea智�
 
 idea每次更新maven后设置里的Java Compiler中target bytecode version都自动变成1.5。
 需要在pom指定编译版本。能用，但是版本报错。。
+
+终究不过拾人牙慧。
