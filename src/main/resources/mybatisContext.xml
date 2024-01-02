@@ -4,5 +4,12 @@
 <configuration>
     <settings>
         <setting name="logImpl" value="LOG4J" />
+        <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
+    <typeAliases>
+        <typeAlias alias="Books" type="com.wang.model.Books"/>
+        <typeAlias alias="User" type="com.wang.model.User"/>
+
+    </typeAliases>
+
 </configuration>

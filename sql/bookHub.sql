@@ -27,7 +27,7 @@ CREATE TABLE user
 (
     id                    INT PRIMARY KEY AUTO_INCREMENT,
     -- 账号信息
-    username              VARCHAR(255) NOT NULL,
+    username              VARCHAR(255) NOT NULL UNIQUE ,
     password              VARCHAR(255) NOT NULL,
     security_question     VARCHAR(100),
     last_login_ip_address VARCHAR(100),
@@ -41,7 +41,7 @@ CREATE TABLE user
     email                 VARCHAR(100),
     phone                 VARCHAR(100),
     gender                VARCHAR(10),
-    country               VARCHAR(10),
+    country               VARCHAR(100),
     data_of_birth         DATE,
     social_media_links    VARCHAR(10),
     profile_picture       BLOB,
