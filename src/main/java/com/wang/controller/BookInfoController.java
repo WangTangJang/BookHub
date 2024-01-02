@@ -1,8 +1,8 @@
 package com.wang.controller;
 
 
-import com.wang.model.BookInfo;
-import com.wang.service.BookInfoService;
+import com.wang.model.Books;
+import com.wang.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import java.util.List;
 public class BookInfoController {
 
     @Autowired
-    private BookInfoService service;
+    private BooksService service;
 
     @RequestMapping("/list")
     public String listBooks(
@@ -35,7 +35,7 @@ public class BookInfoController {
         // 计算总页数
         int totalPages = (int)Math.ceil((double) total/size);
 
-        List<BookInfo> books = service.getByPage(page,size);
+        List<Books> books = service.selectPage(page,size);
         model.addAttribute("books", books);
         model.addAttribute("currentPage",page);
         model.addAttribute("totalPages",totalPages);
@@ -45,43 +45,43 @@ public class BookInfoController {
     }
     @RequestMapping("toAddView")
     public String toAddView(Model model){
-        model.addAttribute("books",new BookInfo());
+        model.addAttribute("books",new Books());
         // 用于告知前端当前页面
         model.addAttribute("currentHtml" ,"add");
         return "book/add";
     }
 
     @RequestMapping("doAdd")
-    public String doAdd(@ModelAttribute("books") BookInfo bookInfo, RedirectAttributes redirectAttributes){
-        service.insertBook(bookInfo);
+    public String doAdd(@ModelAttribute("books") Books books, RedirectAttributes redirectAttributes){
+        service.insert(books);
         redirectAttributes.addAttribute("message", "书籍添加成功");
         return "redirect:/books/toAddView";
     }
 
     @RequestMapping("del/{id}")
-    public String doDel(@PathVariable("id") int id, @ModelAttribute("books") BookInfo bookInfo,RedirectAttributes redirectAttributes){
-        bookInfo = service.selectById(id);
-        service.deleteBook(bookInfo);
-        redirectAttributes.addAttribute("delBooked",bookInfo.getTitle());
+    public String doDel(@PathVariable("id") int id, @ModelAttribute("books") Books books,RedirectAttributes redirectAttributes){
+        books = service.select(id);
+        service.delete(books);
+        redirectAttributes.addAttribute("delBooked",books.getTitle());
         return "redirect:/books/list";
     }
 
     @RequestMapping("toMod/{id}")
     public String toMod(@PathVariable("id") int id,Model model){
-        BookInfo book =  service.selectById(id);
+        Books book =  service.select(id);
         model.addAttribute("book",book);
         return "book/mod";
     }
     @RequestMapping("doMod")
-    public String doMod(@ModelAttribute("book") BookInfo bookInfo,RedirectAttributes redirectAttributes){
-        service.modifyBook(bookInfo);
-        redirectAttributes.addAttribute("modBooked",bookInfo.getTitle());
+    public String doMod(@ModelAttribute("book") Books books,RedirectAttributes redirectAttributes){
+        service.update(books);
+        redirectAttributes.addAttribute("modBooked",books.getTitle());
         return "redirect:/books/list";
     }
 
     @RequestMapping("search")
     public String search(@RequestParam("keyword") String keyword,Model model){
-        List<BookInfo> books = service.searchBooks(keyword);
+        List<Books> books = service.search(keyword);
         model.addAttribute("books",books);
         return "book/list";
     }

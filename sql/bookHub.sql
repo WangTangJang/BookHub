@@ -3,7 +3,7 @@ CREATE DATABASE bookHub;
 
 use bookHub;
 -- 书籍表
-DROP TABLE books;
+# DROP TABLE books;
 CREATE TABLE books
 (
     id     INT PRIMARY KEY AUTO_INCREMENT,
@@ -16,13 +16,13 @@ CREATE TABLE books
     file_path varchar(100),
     average_rating decimal(3,2),
     total_reviews int,
-    size float,
+    file_size float,
     -- 有关书架的信息
     added int
 );
 
 -- 用户表
-DROP TABLE user;
+# DROP TABLE user;
 CREATE TABLE user
 (
     id                    INT PRIMARY KEY AUTO_INCREMENT,
