@@ -9,7 +9,8 @@
     <typeAliases>
         <typeAlias alias="Books" type="com.wang.model.Books"/>
         <typeAlias alias="User" type="com.wang.model.User"/>
-
+        <typeAlias alias="Bookshelf" type="com.wang.model.Bookshelf"/>
+        <typeAlias type="com.wang.model.BookRatings" alias="BookRatings"/>
     </typeAliases>
 
 </configuration>

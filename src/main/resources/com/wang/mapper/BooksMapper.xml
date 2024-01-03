@@ -57,4 +57,12 @@
     <select id="selectPage" resultType="Books">
         SELECT * FROM books LIMIT #{start},#{size}
     </select>
+
+    <select id="selectByListId" resultType="Books">
+        select * from books where id in 
+        <foreach collection="list" item="bookIds" index="index" open="(" close=")" separator=",">
+            #{bookIds}
+        </foreach>
+        
+    </select>
 </mapper>

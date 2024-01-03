@@ -30,13 +30,13 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public Books select(int id) {
+    public Books select(long id) {
         return mapper.select(id);
     }
 
     @Override
-    public List<Books> selectAll(Books books) {
-        return mapper.selectAll(books);
+    public List<Books> selectAll() {
+        return mapper.selectAll();
     }
 
     @Override
@@ -53,5 +53,11 @@ public class BooksServiceImpl implements BooksService {
     public List<Books> selectPage(int page, int size) {
         int start = (page-1)*size;
         return mapper.selectPage(start, size);
+    }
+
+    @Override
+    public List<Books> selectByList(List<Long> bookIds) {
+
+        return mapper.selectByListId(bookIds);
     }
 }

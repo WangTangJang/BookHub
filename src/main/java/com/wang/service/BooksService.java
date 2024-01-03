@@ -1,18 +1,68 @@
 package com.wang.service;
 
 import com.wang.model.Books;
+import com.wang.model.Bookshelf;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface BooksService {
+    /**
+     * 插入书籍
+     * @param books 书籍的信息
+     */
     void insert(Books books);
-    void delete(Books books);
-    void update(Books books);
-    Books select(int id);
 
-    List<Books> selectAll(Books books);
+    /**
+     * 删除书籍
+     * @param books 书籍信息
+     */
+    void delete(Books books);
+
+    /**
+     * 更新书籍
+     * @param books 书籍的信息
+     */
+    void update(Books books);
+
+    /**
+     * 通过id查找书籍
+     * @param id 书籍的id
+     * @return 只能返回单个书籍
+     */
+    Books select(long id);
+
+    /**
+     * 查找全部书籍
+     * @return 全部信息
+     */
+    List<Books> selectAll();
+
+    /**
+     * 通过关键字查找 书籍
+     * @param keyword 关键字
+     * @return 符合关键字的所有书籍
+     */
     List<Books> search(@Param("keyword") String keyword);
+
+    /**
+     * 统计书籍数量
+     * @return 书籍的数量
+     */
     int count();
+
+    /**
+     * 分页查找书籍
+     * @param page 第几页
+     * @param size 每页的数量
+     * @return 范围内的书籍
+     */
     List<Books> selectPage(@Param("start") int page,@Param("size") int size);
+
+    /**
+     * 通过多个书籍id查找
+     * @param bookIds 多个id
+     * @return 符合的全部书籍
+     */
+    List<Books> selectByList(List<Long> bookIds);
 }

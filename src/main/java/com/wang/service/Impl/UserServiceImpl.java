@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
         mapper.login(username, hashedPassword);
         return "ok";
     }
+
+    @Override
+    public User selectById(User user) {
+        return  mapper.selectPro(user);
+    }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wang.mapper.BookshelfMapper">
+
+    <insert id="insert" parameterType="Bookshelf">
+        insert into bookshelf
+        <set>
+            <if test="id != null and id != 0"> id = #{id},</if>
+            <if test="userId != null and userId != 0 "> user_id = #{userId},</if>
+            <if test="bookId != null and userId != 0 "> book_id = #{bookId},</if>
+            <if test="status != null and status != '' "> status = #{status},</if>
+            <if test="joinDate != null "> join_Date = #{joinDate},</if>
+        </set>
+    </insert>
+    <delete id="delete" parameterType="Bookshelf">
+        delete from bookshelf
+        <where>
+            <if test="id != null and id != 0"> id = #{id} </if>
+            <if test="userId != null"> and user_id = #{userId} </if>
+            <if test="bookId != null and bookId != 0"> and book_id = #{bookId} </if>
+            <if test="status != null and status != '' "> and status = #{status} </if>
+            <if test="joinDate != null">and join_Date = #{joinDate}</if>
+        </where>
+    </delete>
+
+    <update id="update" parameterType="Bookshelf">
+        update bookshelf
+        <set>
+            <if test="id != null and id != 0"> id = #{id},</if>
+            <if test="userId != null"> user_id = #{userId},</if>
+            <if test="bookId != null"> book_id = #{bookId},</if>
+            <if test="status != null"> status = #{status},</if>
+            <if test="joinDate != null"> join_Date = #{joinDate},</if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="select" resultType="Bookshelf">
+        select * from bookshelf
+        <where>
+            <if test="id != null and id != 0"> id = #{id} </if>
+            <if test="userId != null"> and user_id = #{userId} </if>
+            <if test="bookId != null and bookId != 0"> and book_id = #{bookId} </if>
+            <if test="status != null and status != '' "> and status = #{status} </if>
+            <if test="joinDate != null">and join_Date = #{joinDate}</if>
+        </where>
+    </select>
+</mapper>
