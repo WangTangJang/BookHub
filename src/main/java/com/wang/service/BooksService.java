@@ -14,9 +14,9 @@ public interface BooksService {
 
     /**
      * 删除书籍
-     * @param books 书籍信息
+     * @param id 书籍id
      */
-    void delete(Books books);
+    void deleteById(int id);
 
     /**
      * 更新书籍

@@ -15,9 +15,9 @@ public interface BooksMapper {
     /**
      * 删除书籍通过单个书籍的信息
      * 这个似乎只能删除一个书籍.
-     * @param books 单个书籍的信息
+     * @param id 单个书籍的信息
      */
-    void delete(Books books);
+    void deleteById(int id);
 
     /**
      * 更新书籍

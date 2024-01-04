@@ -9,11 +9,34 @@ public class Books {
   private String isbn;
   private String format;
   private String filePath;
-  private double averageRating;
-  private long totalReviews;
-  private double fileSize;
-  private long added;
 
+  private double fileSize;
+
+  private double averageRating;
+  private long reviewsCount;
+  private long ratingCount;
+  private long shelfCount;
+
+  public Books() {
+
+  }
+
+  public Books(double averageRating, long reviewsCount, long ratingCount, long shelfCount) {
+    this.averageRating = averageRating;
+    this.reviewsCount = reviewsCount;
+    this.ratingCount = ratingCount;
+    this.shelfCount = shelfCount;
+  }
+
+  public Books(long id, String title, String author, String isbn, String format, String filePath, double fileSize) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
+    this.format = format;
+    this.filePath = filePath;
+    this.fileSize = fileSize;
+  }
 
   public long getId() {
     return id;
@@ -23,7 +46,6 @@ public class Books {
     this.id = id;
   }
 
-
   public String getTitle() {
     return title;
   }
@@ -31,7 +53,6 @@ public class Books {
   public void setTitle(String title) {
     this.title = title;
   }
-
 
   public String getAuthor() {
     return author;
@@ -41,7 +62,6 @@ public class Books {
     this.author = author;
   }
 
-
   public String getIsbn() {
     return isbn;
   }
@@ -49,7 +69,6 @@ public class Books {
   public void setIsbn(String isbn) {
     this.isbn = isbn;
   }
-
 
   public String getFormat() {
     return format;
@@ -59,7 +78,6 @@ public class Books {
     this.format = format;
   }
 
-
   public String getFilePath() {
     return filePath;
   }
@@ -67,25 +85,6 @@ public class Books {
   public void setFilePath(String filePath) {
     this.filePath = filePath;
   }
-
-
-  public double getAverageRating() {
-    return averageRating;
-  }
-
-  public void setAverageRating(double averageRating) {
-    this.averageRating = averageRating;
-  }
-
-
-  public long getTotalReviews() {
-    return totalReviews;
-  }
-
-  public void setTotalReviews(long totalReviews) {
-    this.totalReviews = totalReviews;
-  }
-
 
   public double getFileSize() {
     return fileSize;
@@ -95,13 +94,35 @@ public class Books {
     this.fileSize = fileSize;
   }
 
-
-  public long getAdded() {
-    return added;
+  public double getAverageRating() {
+    return averageRating;
   }
 
-  public void setAdded(long added) {
-    this.added = added;
+  public void setAverageRating(double averageRating) {
+    this.averageRating = averageRating;
   }
 
+  public long getReviewsCount() {
+    return reviewsCount;
+  }
+
+  public void setReviewsCount(long reviewsCount) {
+    this.reviewsCount = reviewsCount;
+  }
+
+  public long getRatingCount() {
+    return ratingCount;
+  }
+
+  public void setRatingCount(long ratingCount) {
+    this.ratingCount = ratingCount;
+  }
+
+  public long getShelfCount() {
+    return shelfCount;
+  }
+
+  public void setShelfCount(long shelfCount) {
+    this.shelfCount = shelfCount;
+  }
 }

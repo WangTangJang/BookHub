@@ -17,21 +17,20 @@ public class UserServiceImpl implements UserService {
     UserMapper mapper;
 
     @Override
-    public void register(User user) {
+    public String register(User user) {
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        if(mapper.selectPro(user)==null){
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
 
-        LocalDate localDate = LocalDate.now();
-
-        user.setPassword(hashedPassword);
-        user.setCreateDate(Date.valueOf(localDate));
-        user.setAccountStatus("offline");
-        user.setRoles("user");
-        user.setExperience(0);
-        user.setLevel(1);
-        user.setMembershipStatus("non-member");
-        mapper.insert(user);
+            user.setPassword(hashedPassword);
+            user.setAccountStatus("offline");
+            user.setRoles("user");
+            mapper.insert(user);
+            return "ok";
+        }else {
+            return "existed";
+        }
     }
 
     @Override

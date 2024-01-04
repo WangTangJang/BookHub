@@ -7,8 +7,9 @@ public interface UserService {
     /**
      * 用户注册
      * @param user 前端传入的用户信息
+     * @return 注册结果
      */
-    void register(User user);
+    String register(User user);
 
     /**
      * 用户登录

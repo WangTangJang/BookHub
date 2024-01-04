@@ -6,15 +6,15 @@
 <mapper namespace="com.wang.mapper.UserMapper">
 
     <select id="selectAll" resultType="User">
-        SELECT * FROM User;
+        SELECT * FROM user_original_info ;
     </select>
 
     <select id="select" resultType="User">
-        SELECT * FROM User WHERE id = #{id}
+        SELECT * FROM user_original_info WHERE id = #{id}
     </select>
 
     <select id="selectPro" resultType="User">
-        SELECT * FROM user
+        SELECT * FROM user_original_info
         <where>
             <if test="id != null and id != 0">id = #{id}</if>
             <if test="username != null and username != ''">AND username = #{username}</if>
@@ -22,17 +22,13 @@
     </select>
 
     <insert id="insert" parameterType="User">
-        INSERT INTO User
+        INSERT INTO user_original_info
         <set>
             <if test="username != null">username = #{username},</if>
             <if test="password != null">password = #{password},</if>
             <if test="securityQuestion != null">security_question = #{securityQuestion},</if>
-            <if test="lastLoginIpAddress != null">last_login_ip_address = #{lastLoginIpAddress},</if>
-            <if test="lastLoginDate != null">last_login_date = #{lastLoginDate},</if>
             <if test="accountStatus != null">account_status = #{accountStatus},</if>
             <if test="createDate != null">create_date = #{createDate},</if>
-            <if test="level != null">level = #{level},</if>
-            <if test="experience != null">experience = #{experience},</if>
             <if test="roles != null">roles = #{roles},</if>
             <if test="email != null">email = #{email},</if>
             <if test="phone != null">phone = #{phone},</if>
@@ -41,28 +37,21 @@
             <if test="dataOfBirth != null">data_of_birth = #{dataOfBirth},</if>
             <if test="socialMediaLinks != null">social_media_links = #{socialMediaLinks},</if>
             <if test="profilePicture != null">profile_picture = #{profilePicture, jdbcType=BLOB},</if>
-            <if test="membershipStatus != null">membership_status = #{membershipStatus},</if>
-            <if test="membershipStartDate != null">membership_start_date = #{membershipStartDate, jdbcType=DATE},</if>
-            <if test="membershipEndDate != null">membership_end_date = #{membershipEndDate, jdbcType=DATE}</if>
         </set>
     </insert>
 
     <delete id="delete" parameterType="User">
-        DELETE FROM user WHERE id = #{id}
+        DELETE FROM user_original_info WHERE id = #{id}
     </delete>
 
     <update id="update" parameterType="User">
-        UPDATE user
-        <trim prefix="SET" suffixOverrides=",">
+        UPDATE user_original_info
+        <set>
             <if test="username != null">username = #{username},</if>
             <if test="password != null">password = #{password},</if>
             <if test="securityQuestion != null">security_question = #{securityQuestion},</if>
-            <if test="lastLoginIpAddress != null">last_login_ip_address = #{lastLoginIpAddress},</if>
-            <if test="lastLoginDate != null">last_login_date = #{lastLoginDate},</if>
             <if test="accountStatus != null">account_status = #{accountStatus},</if>
             <if test="createDate != null">create_date = #{createDate},</if>
-            <if test="level != null">level = #{level},</if>
-            <if test="experience != null">experience = #{experience},</if>
             <if test="roles != null">roles = #{roles},</if>
             <if test="email != null">email = #{email},</if>
             <if test="phone != null">phone = #{phone},</if>
@@ -71,15 +60,12 @@
             <if test="dataOfBirth != null">data_of_birth = #{dataOfBirth},</if>
             <if test="socialMediaLinks != null">social_media_links = #{socialMediaLinks},</if>
             <if test="profilePicture != null">profile_picture = #{profilePicture, jdbcType=BLOB},</if>
-            <if test="membershipStatus != null">membership_status = #{membershipStatus},</if>
-            <if test="membershipStartDate != null">membership_start_date = #{membershipStartDate, jdbcType=DATE},</if>
-            <if test="membershipEndDate != null">membership_end_date = #{membershipEndDate, jdbcType=DATE}</if>
-        </trim>
+        </set>
         WHERE id = #{id}
     </update>
 
     <select id="login" resultType="User">
-        select * from user where username = #{username} and password = #{password}
+        select * from user_original_info where username = #{username} and password = #{password}
     </select>
 
 </mapper>

@@ -18,8 +18,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class BookshelfServiceImplTest {

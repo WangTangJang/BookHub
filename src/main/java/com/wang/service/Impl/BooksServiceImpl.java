@@ -16,12 +16,14 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public void insert(Books books) {
+
         mapper.insert(books);
     }
 
     @Override
-    public void delete(Books books) {
-        mapper.delete(books);
+    public void deleteById(int id) {
+
+        mapper.deleteById(id);
     }
 
     @Override

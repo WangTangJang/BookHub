@@ -6,72 +6,72 @@
 <mapper namespace="com.wang.mapper.BooksMapper">
 
     <select id="selectAll" resultType="Books">
-        SELECT * FROM books;
+        SELECT * FROM book_original_info,book_dynamic_info where book_id = book_original_info.id
     </select>
 
     <select id="select" resultType="Books">
-        SELECT * FROM books WHERE id = #{id}
+        SELECT * FROM book_original_info WHERE id = #{id}
     </select>
 
     <insert id="insert" parameterType="Books">
-        INSERT INTO books
+        INSERT INTO book_original_info
         SET title = #{title},
             author = #{author},
             isbn = #{isbn},
             format = #{format},
             file_path = #{filePath},
-            average_rating = #{averageRating},
-            total_reviews = #{totalReviews},
-            file_size = #{fileSize},
-            added = #{added}
+            file_size = #{fileSize}
     </insert>
 
-    <delete id="delete" parameterType="Books">
-        DELETE FROM books WHERE id = #{id}
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM book_original_info WHERE id = #{id}
     </delete>
 
     <update id="update" parameterType="Books">
-        UPDATE books
-        SET title = #{title},
-            author = #{author},
-            isbn = #{isbn},
-            format = #{format},
-            file_path = #{filePath},
-            average_rating = #{averageRating},
-            total_reviews = #{totalReviews},
-            file_size = #{fileSize},
-            added = #{added}
+        UPDATE book_original_info
+        <set>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="author != null and author != ''">author = #{author},</if>
+            <if test="isbn != null and isbn != ''">isbn = #{isbn},</if>
+            <if test="format != null and format != ''">format = #{format},</if>
+            <if test="filePath != null and filePath != ''">file_path = #{filePath},</if>
+            <if test="fileSize != null and fileSize != ''">file_size = #{fileSize},</if>
+        </set>
         WHERE id = #{id}
     </update>
 
     <select id="search" resultType="Books">
-        SELECT * FROM books
-        WHERE title LIKE CONCAT('%',#{keyword},'%')
-        OR author LIKE CONCAT('%', #{keyword},'%')
+        SELECT * FROM book_original_info,book_dynamic_info
+        WHERE (
+            title LIKE CONCAT('%',#{keyword},'%') OR
+            author LIKE CONCAT('%', #{keyword},'%')
+            )
+            and book_id = book_original_info.id
     </select>
 
     <select id="count" resultType="int">
-        SELECT COUNT(*) FROM books
+        SELECT COUNT(*) FROM book_original_info
     </select>
 
     <select id="selectPage" resultType="Books">
-        SELECT * FROM books LIMIT #{start},#{size}
+        SELECT * FROM book_original_info LIMIT #{start},#{size}
     </select>
 
     <select id="selectByListId" resultType="Books">
-        select * from books where id in 
+        select * from book_original_info ,book_dynamic_info where book_original_info.id in
         <foreach collection="list" item="bookIds" index="index" open="(" close=")" separator=",">
             #{bookIds}
         </foreach>
+        and book_id = book_original_info.id
     </select>
     <update id="updateAverageRating">
-        update books
-        set average_rating = (select avg(rating) from userbookratings where book_id = #{bookId})
+        update book_dynamic_info
+        set average_rating = (select avg(rating) from book_ratings where book_id = #{bookId})
         where id = #{bookId}
     </update>
     <update id="updateAdded">
-        update books
-        set added = (select count(*) from bookshelf where book_id = #{bookId})
+        update book_dynamic_info
+        set shelf_count = (select count(*) from bookshelf where book_id = #{bookId})
         where id = #{bookId}
     </update>
 </mapper>

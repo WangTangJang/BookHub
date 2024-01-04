@@ -61,7 +61,7 @@ public class BookInfoController {
     @RequestMapping("del/{id}")
     public String doDel(@PathVariable("id") int id, @ModelAttribute("books") Books books,RedirectAttributes redirectAttributes){
         books = service.selectById(id);
-        service.delete(books);
+        service.deleteById(id);
         redirectAttributes.addAttribute("delBooked",books.getTitle());
         return "redirect:/books/list";
     }

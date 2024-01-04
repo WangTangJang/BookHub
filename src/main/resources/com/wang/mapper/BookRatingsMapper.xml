@@ -5,25 +5,23 @@
 
 <mapper namespace="com.wang.mapper.BookRatingsMapper">
     <insert id="insert" parameterType="BookRatings">
-        insert into userbookratings
+        insert into book_ratings
         set user_id = #{userId}, book_id = #{bookId},rating = #{rating}
     </insert>
     <update id="update" parameterType="BookRatings">
-        update userbookratings
+        update book_ratings
         set rating = #{rating}
         where user_id = #{userId} and book_id = #{bookId}
     </update>
 
     <delete id="delete" parameterType="BookRatings">
-        delete from userbookratings where user_id = #{userId} and book_id = #{bookId}
+        delete from book_ratings where user_id = #{userId} and book_id = #{bookId}
     </delete>
     <select id="select" resultType="BookRatings">
-        select * from userbookratings
+        select * from book_ratings
         <where>
             <if test="userId != null and userId != 0">user_id = #{userId}</if>
             <if test="bookId != null and bookId != 0">and book_id = #{bookId}</if>
         </where>
     </select>
-
-
 </mapper>
