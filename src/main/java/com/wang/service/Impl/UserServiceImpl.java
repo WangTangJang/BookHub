@@ -42,15 +42,19 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getId());
         user.setUsername(username);
         user =  mapper.selectPro(user);
-        if (!user.getAccountStatus().equals("online") && !user.getAccountStatus().equals("offline")){
-            return user.getAccountStatus();
+
+        // 检查账号状态是否正常
+        if (user.getAccountStatus()!=null){
+            if (!user.getAccountStatus().equals("online") && !user.getAccountStatus().equals("offline")){
+                return user.getAccountStatus();
+            }
         }
         mapper.login(username, hashedPassword);
         return "ok";
     }
 
     @Override
-    public User selectById(User user) {
-        return  mapper.selectPro(user);
+    public User selectById(int id) {
+        return  mapper.select(id);
     }
 }

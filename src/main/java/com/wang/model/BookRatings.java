@@ -39,7 +39,7 @@ public class BookRatings {
         this.bookId = bookId;
     }
 
-    public long getRating() {
+    public int getRating() {
         return rating;
     }
 

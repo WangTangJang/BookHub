@@ -50,6 +50,18 @@ CREATE TABLE user
     membership_start_date date,
     membership_end_date   date
 );
+
+-- 用户给书籍打分表
+drop table userBookRatings;
+create table userBookRatings(
+                                user_id int,
+                                book_id int,
+                                rating int not null ,
+                                primary key (user_id,book_id),
+                                foreign key (user_id) references user(id),
+                                foreign key (book_id) references books(id)
+);
+
 -- 书架表
 create table bookshelf(
     id int primary key auto_increment,
@@ -68,8 +80,11 @@ create table comments(
     book_id int,
     parent_comment_id int,
     context text not null ,
-    likes int ,
-    dislikes int ,
+    -- 这两个应该是归属到用户给评论投票的表上去.
+    -- 到时候查询的时候,直接去统计那张关联表.
+    -- 而不是在绑定到这张表里
+#     likes int ,
+#     dislikes int ,
     creation_date TIMESTAMP default CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) references user(id),
     foreign key (book_id) references books(id),
@@ -77,22 +92,14 @@ create table comments(
 );
 
 -- 用户给评论点赞或踩
+drop table userCommentVotes;
 create table userCommentVotes (
-    use_id int,
+    user_id int,
     comment_id int,
     vote_type enum ('like','dislike') not null ,
     vote_date TIMESTAMP default current_timestamp,
-    primary key (use_id,comment_id),
-    foreign key (use_id) references user(id),
+    primary key (user_id,comment_id),
+    foreign key (user_id) references user(id),
     foreign key (comment_id) references comments(id)
 );
 
--- 用户给书籍打分表
-create table userBookRatings(
-    use_id int,
-    book_id int,
-    rating int not null ,
-    primary key (use_id,book_id),
-    foreign key (use_id) references user(id),
-    foreign key (book_id) references books(id)
-);

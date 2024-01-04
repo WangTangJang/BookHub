@@ -60,7 +60,7 @@ public class BookInfoController {
 
     @RequestMapping("del/{id}")
     public String doDel(@PathVariable("id") int id, @ModelAttribute("books") Books books,RedirectAttributes redirectAttributes){
-        books = service.select(id);
+        books = service.selectById(id);
         service.delete(books);
         redirectAttributes.addAttribute("delBooked",books.getTitle());
         return "redirect:/books/list";
@@ -68,7 +68,7 @@ public class BookInfoController {
 
     @RequestMapping("toMod/{id}")
     public String toMod(@PathVariable("id") int id,Model model){
-        Books book =  service.select(id);
+        Books book =  service.selectById(id);
         model.addAttribute("book",book);
         return "book/mod";
     }

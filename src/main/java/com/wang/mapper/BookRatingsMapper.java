@@ -2,7 +2,7 @@ package com.wang.mapper;
 
 import com.wang.model.BookRatings;
 
-public interface BookRatingMapper {
+public interface BookRatingsMapper {
 
     void insert(BookRatings bookRantings);
     void delete(BookRatings bookRantings);

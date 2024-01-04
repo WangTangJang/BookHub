@@ -3,25 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wang.mapper.BookRatingMapper">
+<mapper namespace="com.wang.mapper.BookRatingsMapper">
     <insert id="insert" parameterType="BookRatings">
         insert into userbookratings
-        set use_id = #{useId}, book_id = #{bookId},rating = #{rating}
+        set user_id = #{userId}, book_id = #{bookId},rating = #{rating}
     </insert>
     <update id="update" parameterType="BookRatings">
         update userbookratings
         set rating = #{rating}
-        where use_id = #{useId} and book_id = #{bookId}
+        where user_id = #{userId} and book_id = #{bookId}
     </update>
 
     <delete id="delete" parameterType="BookRatings">
-        delete from userbookratings where use_id = #{userId} and book_id = #{bookId}
+        delete from userbookratings where user_id = #{userId} and book_id = #{bookId}
     </delete>
     <select id="select" resultType="BookRatings">
         select * from userbookratings
         <where>
             <if test="userId != null and userId != 0">user_id = #{userId}</if>
-            <if test="bookId != null and bookId != 0">book_id = #{bookId}</if>
+            <if test="bookId != null and bookId != 0">and book_id = #{bookId}</if>
         </where>
     </select>
 </mapper>

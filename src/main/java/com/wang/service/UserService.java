@@ -20,9 +20,9 @@ public interface UserService {
 
     /**
      * 查找用户
-     * 此接口通过一个用户实体里的id查找
-     * @param user 用户信息
+     * 此接口id的值直接查找
+     * @param id 用户的id的值
      * @return 找到的用户
      */
-    User selectById(User user);
+    User selectById(int id);
 }

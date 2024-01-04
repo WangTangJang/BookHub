@@ -1,7 +1,6 @@
 package com.wang.service;
 
 import com.wang.model.Books;
-import com.wang.model.Bookshelf;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public interface BooksService {
      * @param id 书籍的id
      * @return 只能返回单个书籍
      */
-    Books select(long id);
+    Books selectById(long id);
 
     /**
      * 查找全部书籍

@@ -30,7 +30,7 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public Books select(long id) {
+    public Books selectById(long id) {
         return mapper.select(id);
     }
 

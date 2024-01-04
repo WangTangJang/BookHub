@@ -49,7 +49,7 @@ public class BookshelfServiceImplTest {
         User user = new User();
         bookshelf.setUserId(1);
         user.setId(bookshelf.getUserId());
-        String username = userService.selectById(user).getUsername();
+        String username = userService.selectById(1).getUsername();
         List<Bookshelf> bookshelves = service.lookOver(bookshelf);
         List<Long> bookIdList = new ArrayList<>();
         for(Bookshelf bookshelf1:bookshelves){
