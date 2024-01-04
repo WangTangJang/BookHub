@@ -61,6 +61,24 @@ public interface BooksMapper {
      */
     List<Books> selectPage(@Param("start") int start,@Param("size") int size);
 
+    /**
+     * 通过一组id查询多个书籍
+     * @param bookIds id组
+     * @return 一组书籍信息
+     */
     List<Books> selectByListId(List<Long> bookIds);
+
+    /**
+     * 通过id更新书籍平均分的信息
+     * 通过查询评分表中的值来实现了的
+     * @param bookId 书籍id
+     */
+    void updateAverageRating(@Param("bookId") long bookId);
+
+    /**
+     * 通过id更新一本书被加入了书架的数量。
+     * @param booId 书籍id
+     */
+    void updateAdded(@Param("bookId") long booId);
 
 }

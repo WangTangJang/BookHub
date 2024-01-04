@@ -64,4 +64,12 @@ public interface BooksService {
      * @return 符合的全部书籍
      */
     List<Books> selectByList(List<Long> bookIds);
+
+    /**
+     * 更新书籍的平均分
+     * @param id 书籍id
+     */
+    void updateAverageRating(long id);
+
+    void updateAdded(long bookId);
 }

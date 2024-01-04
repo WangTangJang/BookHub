@@ -74,6 +74,7 @@ create table bookshelf(
 );
 
 -- 评论表
+DROP table comments;
 create table comments(
     id int primary key auto_increment,
     user_id int,
@@ -83,9 +84,11 @@ create table comments(
     -- 这两个应该是归属到用户给评论投票的表上去.
     -- 到时候查询的时候,直接去统计那张关联表.
     -- 而不是在绑定到这张表里
-#     likes int ,
-#     dislikes int ,
+    -- 但是 .....
+    likes int ,
+    dislikes int ,
     creation_date TIMESTAMP default CURRENT_TIMESTAMP,
+    update_time TIMESTAMP default  CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) references user(id),
     foreign key (book_id) references books(id),
     foreign key (parent_comment_id) references comments(id)

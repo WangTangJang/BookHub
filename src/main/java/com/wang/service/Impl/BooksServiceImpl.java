@@ -60,4 +60,16 @@ public class BooksServiceImpl implements BooksService {
 
         return mapper.selectByListId(bookIds);
     }
+
+    @Override
+    public void updateAverageRating(long id) {
+        mapper.updateAverageRating(id);
+    }
+
+    @Override
+    public void updateAdded(long bookId) {
+        mapper.updateAdded(bookId);
+    }
+
+
 }

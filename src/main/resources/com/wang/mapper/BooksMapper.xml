@@ -63,6 +63,15 @@
         <foreach collection="list" item="bookIds" index="index" open="(" close=")" separator=",">
             #{bookIds}
         </foreach>
-        
     </select>
+    <update id="updateAverageRating">
+        update books
+        set average_rating = (select avg(rating) from userbookratings where book_id = #{bookId})
+        where id = #{bookId}
+    </update>
+    <update id="updateAdded">
+        update books
+        set added = (select count(*) from bookshelf where book_id = #{bookId})
+        where id = #{bookId}
+    </update>
 </mapper>
