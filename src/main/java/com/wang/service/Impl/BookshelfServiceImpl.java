@@ -34,7 +34,10 @@ public class BookshelfServiceImpl implements BookshelfService {
     }
     @Override
     public void delFormBookshelf(Bookshelf bookshelf) {
+
         mapper.delete(bookshelf);
+        booksService.updateAdded(bookshelf.getBookId());
+
     }
 
     @Override

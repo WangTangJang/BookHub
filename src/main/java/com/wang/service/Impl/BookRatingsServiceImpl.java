@@ -23,6 +23,7 @@ public class BookRatingsServiceImpl implements BookRatingsService {
         if (bookRatings == null){
             mapper.insert(new BookRatings(userId,bookId,rating));
             booksService.updateAverageRating(bookId);
+            booksService.updateRatingCount(bookId);
             return "ok";
         }else {
             return "existed";
@@ -40,13 +41,13 @@ public class BookRatingsServiceImpl implements BookRatingsService {
     public void updateBookRating(long userId ,long bookId ,int rating) {
         mapper.update(new BookRatings(userId,bookId,rating));
         booksService.updateAverageRating(bookId);
-
+        booksService.updateRatingCount(bookId);
     }
 
     @Override
     public void deleteBookRating(long userId ,long bookId) {
         mapper.delete(new BookRatings(userId,bookId));
         booksService.updateAverageRating(bookId);
-
+        booksService.updateRatingCount(bookId);
     }
 }

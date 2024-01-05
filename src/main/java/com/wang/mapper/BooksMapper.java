@@ -81,4 +81,5 @@ public interface BooksMapper {
      */
     void updateAdded(@Param("bookId") long booId);
 
+    void updateRatingCount(@Param("bookId") long booId);
 }

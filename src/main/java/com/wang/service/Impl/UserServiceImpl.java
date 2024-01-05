@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
         if(mapper.selectPro(user)==null){
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
             String hashedPassword = passwordEncoder.encode(user.getPassword());
 
             user.setPassword(hashedPassword);
@@ -48,8 +49,12 @@ public class UserServiceImpl implements UserService {
                 return user.getAccountStatus();
             }
         }
-        mapper.login(username, hashedPassword);
-        return "ok";
+        // 匹配从数据库中取出的密码和输入的密码是否一致
+        if(passwordEncoder.matches(password,user.getPassword())){
+            return "ok";
+        }else {
+            return "password error";
+        }
     }
 
     @Override

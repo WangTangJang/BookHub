@@ -23,7 +23,7 @@ public class UserServiceImplTest {
     @Test
     public void register() {
         User user = new User();
-        user.setUsername("王唐将");
+        user.setUsername("极客");
         user.setPassword("123456");
         user.setPhone("13039423142");
         user.setDataOfBirth(Date.valueOf("2002-5-25"));
@@ -35,6 +35,7 @@ public class UserServiceImplTest {
 
     @Test
     public void login() {
+        System.out.println(service.login("王唐将","123456"));
     }
 
     @Test

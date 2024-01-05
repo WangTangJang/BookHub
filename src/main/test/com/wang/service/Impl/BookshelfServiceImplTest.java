@@ -35,7 +35,7 @@ public class BookshelfServiceImplTest {
     public void addToBookshelf(){
         Bookshelf bookshelf = new Bookshelf();
 
-        bookshelf.setUserId(4);
+        bookshelf.setUserId(1);
         bookshelf.setBookId(1);
         service.addToBookshelf(bookshelf);
     }
@@ -64,7 +64,7 @@ public class BookshelfServiceImplTest {
     public void delFormBookshelf() {
         Bookshelf bookshelf = new Bookshelf();
         bookshelf.setUserId(1);
-        bookshelf.setBookId(2);
+        bookshelf.setBookId(1);
         service.delFormBookshelf(bookshelf);
     }
 }

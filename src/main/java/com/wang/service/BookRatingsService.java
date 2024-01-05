@@ -34,4 +34,5 @@ public interface BookRatingsService {
      * @param bookId 书籍评分
      */
     void deleteBookRating(long userId ,long bookId );
+
 }

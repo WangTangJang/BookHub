@@ -51,5 +51,8 @@ public class BooksServiceImplTest {
         for (Books b:books){
             System.out.println(b.getTitle()+"评论量为"+b.getReviewsCount());
         }
+
+        Books book2 = service.selectById(1);
+        System.out.println(book2.getTitle()+"的评分为"+book2.getAverageRating());
     }
 }

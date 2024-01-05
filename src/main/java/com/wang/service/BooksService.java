@@ -71,5 +71,15 @@ public interface BooksService {
      */
     void updateAverageRating(long id);
 
+    /**
+     * 更新一本书被添加到了多少的书籍
+     * @param bookId 书籍id
+     */
     void updateAdded(long bookId);
+
+    /**
+     * 更新一本书被多少人评分
+     * @param bookId
+     */
+    void updateRatingCount(long bookId);
 }

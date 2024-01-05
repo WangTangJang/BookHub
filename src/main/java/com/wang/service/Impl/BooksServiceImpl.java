@@ -73,5 +73,10 @@ public class BooksServiceImpl implements BooksService {
         mapper.updateAdded(bookId);
     }
 
+    @Override
+    public void updateRatingCount(long bookId) {
+        mapper.updateRatingCount(bookId);
+    }
+
 
 }

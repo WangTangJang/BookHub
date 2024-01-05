@@ -10,7 +10,8 @@
     </select>
 
     <select id="select" resultType="Books">
-        SELECT * FROM book_original_info WHERE id = #{id}
+        SELECT * FROM book_original_info,book_dynamic_info
+        WHERE book_original_info.id = #{id} and book_id = book_original_info.id
     </select>
 
     <insert id="insert" parameterType="Books">
@@ -72,6 +73,11 @@
     <update id="updateAdded">
         update book_dynamic_info
         set shelf_count = (select count(*) from bookshelf where book_id = #{bookId})
-        where id = #{bookId}
+        where book_id = #{bookId}
+    </update>
+    <update id="updateRatingCount">
+        update book_dynamic_info
+        set rating_count = (select count(*) from book_ratings where book_ratings.book_id=#{bookId})
+        where book_id = #{bookId}
     </update>
 </mapper>
