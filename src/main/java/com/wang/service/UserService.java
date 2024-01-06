@@ -26,4 +26,12 @@ public interface UserService {
      * @return 找到的用户
      */
     User selectById(int id);
+
+    /**
+     * 用户修改个人信息
+     * @param user 修改后的部分信息
+     */
+    void updateUserProfile(User user);
+
+    void selectPro(User user);
 }

@@ -10,14 +10,16 @@
     </select>
 
     <select id="select" resultType="User">
-        SELECT * FROM user_original_info WHERE id = #{id}
+        SELECT * FROM user_original_info ,user_dynamic_info
+        WHERE user_original_info.id = #{id} AND user_id = user_original_info.id
     </select>
 
     <select id="selectPro" resultType="User">
-        SELECT * FROM user_original_info
+        SELECT * FROM user_original_info ,user_dynamic_info
         <where>
             <if test="id != null and id != 0">id = #{id}</if>
             <if test="username != null and username != ''">AND username = #{username}</if>
+            and user_id = user_original_info.id
         </where>
     </select>
 

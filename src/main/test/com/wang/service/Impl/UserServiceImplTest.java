@@ -40,5 +40,20 @@ public class UserServiceImplTest {
 
     @Test
     public void selectById() {
+        service.selectById(1);
+    }
+
+    @Test
+    public void selectPro(){
+        User user = new User();
+        user.setUsername("极客");
+        service.selectPro(user);
+    }
+    @Test
+    public void update(){
+        User user = new User();
+        user.setId(1);
+        user.setSecurityQuestion("我是谁");
+        service.updateUserProfile(user);
     }
 }
