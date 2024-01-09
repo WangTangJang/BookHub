@@ -32,7 +32,11 @@ public interface BooksMapper {
      * @param id 书籍的id
      * @return 单个书籍
      */
-    Books select(long id);
+    Books selectById(long id);
+
+    Books selectPro(Books books);
+
+    int checkDuplicateISBN(String isbn);
 
     /**
      * 查找全部书籍

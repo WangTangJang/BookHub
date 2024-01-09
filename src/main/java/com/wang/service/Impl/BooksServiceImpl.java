@@ -15,9 +15,16 @@ public class BooksServiceImpl implements BooksService {
     BooksMapper mapper;
 
     @Override
-    public void insert(Books books) {
+    public String adminUpload(Books book) {
+        if(mapper.checkDuplicateISBN(book.getIsbn())>0){
+            return "isbn重复";
+        }else{
+            book.setUploadedBy("管理员");
+            book.setStatus("审核通过");
+            mapper.insert(book);
+            return "ok";
+        }
 
-        mapper.insert(books);
     }
 
     @Override
@@ -33,7 +40,7 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public Books selectById(long id) {
-        return mapper.select(id);
+        return mapper.selectById(id);
     }
 
     @Override
@@ -76,6 +83,19 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public void updateRatingCount(long bookId) {
         mapper.updateRatingCount(bookId);
+    }
+
+    @Override
+    public String userUpload(Books books, String username) {
+        if (mapper.checkDuplicateISBN(books.getIsbn())>0){
+            return "isbn 重复";
+        }else {
+            books.setStatus("未审核");
+            books.setUploadedBy(username);
+            mapper.insert(books);
+            return "ok";
+        }
+
     }
 
 

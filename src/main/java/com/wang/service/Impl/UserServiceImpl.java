@@ -6,6 +6,7 @@ import com.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -70,5 +71,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void selectPro(User user) {
         mapper.selectPro(user);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        mapper.deleteOriginal(id);
+        mapper.deleteDynamic(id);
     }
 }

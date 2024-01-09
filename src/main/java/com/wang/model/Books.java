@@ -9,6 +9,8 @@ public class Books {
   private String isbn;
   private String format;
   private String filePath;
+  private String uploadedBy;
+  private String status;
 
   private double fileSize;
 
@@ -60,6 +62,22 @@ public class Books {
 
   public void setAuthor(String author) {
     this.author = author;
+  }
+
+  public String getUploadedBy() {
+    return uploadedBy;
+  }
+
+  public void setUploadedBy(String uploadedBy) {
+    this.uploadedBy = uploadedBy;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   public String getIsbn() {

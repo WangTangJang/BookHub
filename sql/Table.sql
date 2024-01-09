@@ -14,7 +14,9 @@ CREATE TABLE book_original_info
     -- 电子版信息
     format    VARCHAR(255),
     file_path varchar(100),
-    file_size float
+    file_size float,
+    uploaded_by varchar(50),
+    status varchar(20)
 );
 -- 书籍的动态信息表
 drop table book_dynamic_info;

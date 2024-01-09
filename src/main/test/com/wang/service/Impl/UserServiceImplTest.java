@@ -23,7 +23,7 @@ public class UserServiceImplTest {
     @Test
     public void register() {
         User user = new User();
-        user.setUsername("极客");
+        user.setUsername("荆棘");
         user.setPassword("123456");
         user.setPhone("13039423142");
         user.setDataOfBirth(Date.valueOf("2002-5-25"));
@@ -53,8 +53,12 @@ public class UserServiceImplTest {
     public void update(){
         User user = new User();
         user.setId(1);
-
         user.setSecurityQuestion("我是谁");
         service.updateUserProfile(user);
     }
+    @Test
+    public void deleteUser(){
+        service.delete(2);
+    }
+
 }

@@ -53,7 +53,7 @@ public class BookInfoController {
 
     @RequestMapping("doAdd")
     public String doAdd(@ModelAttribute("books") Books books, RedirectAttributes redirectAttributes){
-        service.insert(books);
+        service.adminUpload(books);
         redirectAttributes.addAttribute("message", "书籍添加成功");
         return "redirect:/books/toAddView";
     }

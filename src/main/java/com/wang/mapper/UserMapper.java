@@ -13,10 +13,11 @@ public interface UserMapper {
     /**
      * 删除用户
      * 通过实体内的信息找到需要删除的用户
-     * @param user 用户信息
+     * @param id 用户id
      */
-    void delete(User user);
+    void deleteOriginal(int id);
 
+    void deleteDynamic(int id);
     /**
      * 更新用户
      * 假设用户的id是不可更改的,

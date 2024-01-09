@@ -34,4 +34,6 @@ public interface UserService {
     void updateUserProfile(User user);
 
     void selectPro(User user);
+
+    void delete(int id);
 }

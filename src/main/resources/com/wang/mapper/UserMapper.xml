@@ -42,8 +42,11 @@
         </set>
     </insert>
 
-    <delete id="delete" parameterType="User">
-        DELETE FROM user_original_info WHERE id = #{id}
+    <delete id="deleteOriginal" parameterType="int">
+        DELETE FROM user_original_info  WHERE id = #{id}
+    </delete>
+    <delete id="deleteDynamic" parameterType="int">
+        DELETE FROM user_dynamic_info WHERE user_id = #{id}
     </delete>
 
     <update id="update" parameterType="User">

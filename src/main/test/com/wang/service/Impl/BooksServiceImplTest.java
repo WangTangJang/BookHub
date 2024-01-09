@@ -1,14 +1,15 @@
 package com.wang.service.Impl;
 
 import com.wang.model.Books;
+import com.wang.model.User;
 import com.wang.service.BooksService;
+import com.wang.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类
@@ -17,17 +18,21 @@ public class BooksServiceImplTest {
 
     @Resource
     BooksService service;
+
+    @Resource
+    UserService userService;
+
     @Test
     public void test(){
 
         Books books = new Books();
         books.setTitle("水浒传");
         books.setAuthor("施耐庵");
-        books.setIsbn("3237482324123487");
+        books.setIsbn("3237482324123480");
         books.setFormat("EPUB");
         books.setFilePath("C://");
         books.setFileSize(10);
-        service.insert(books);
+        service.adminUpload(books);
     }
     @Test
     public void delete(){
@@ -54,5 +59,18 @@ public class BooksServiceImplTest {
 
         Books book2 = service.selectById(1);
         System.out.println(book2.getTitle()+"的评分为"+book2.getAverageRating());
+    }
+    @Test
+    public void userUpload(){
+        Books book = new Books();
+        book.setTitle("水浒传");
+        book.setAuthor("施耐庵");
+        book.setIsbn("3237482324123487");
+        book.setFormat("EPUB");
+        book.setFilePath("C://");
+        book.setFileSize(10);
+        User user = userService.selectById(3);
+        System.out.println(service.userUpload(book,user.getUsername()));
+
     }
 }

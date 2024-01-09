@@ -8,9 +8,9 @@ import java.util.List;
 public interface BooksService {
     /**
      * 插入书籍
-     * @param books 书籍的信息
+     * @param book 书籍的信息
      */
-    void insert(Books books);
+    String adminUpload(Books book);
 
     /**
      * 删除书籍
@@ -79,7 +79,15 @@ public interface BooksService {
 
     /**
      * 更新一本书被多少人评分
-     * @param bookId
+     * @param bookId 书籍id
      */
     void updateRatingCount(long bookId);
+
+    /**
+     * 用户上传书籍
+     * @param books 书籍的信息
+     * @param username 上传者的id
+     */
+    String userUpload(Books books,String username);
+
 }
