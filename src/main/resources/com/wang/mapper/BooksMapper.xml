@@ -28,6 +28,11 @@
         select * from book_original_info where isbn = #{isbn}
     </select>
 
+    <select id="selectByStatus" resultType="Books">
+        select * from book_original_info ,book_dynamic_info
+        where book_id = book_original_info.id and
+              status = #{status}
+    </select>
     <insert id="insert" parameterType="Books">
         INSERT INTO book_original_info
         SET title = #{title},

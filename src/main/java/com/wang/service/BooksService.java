@@ -90,4 +90,9 @@ public interface BooksService {
      */
     String userUpload(Books books,String username);
 
+    List<Books> searchPendingBooks();
+
+    List<Books> searchApprovedBooks();
+
+    List<Books> searchRejectedBooks();
 }

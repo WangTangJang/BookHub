@@ -95,7 +95,21 @@ public class BooksServiceImpl implements BooksService {
             mapper.insert(books);
             return "ok";
         }
+    }
 
+    @Override
+    public List<Books> searchPendingBooks() {
+        return mapper.selectByStatus("未审核");
+    }
+
+    @Override
+    public List<Books> searchApprovedBooks() {
+        return mapper.selectByStatus("审核通过");
+    }
+
+    @Override
+    public List<Books> searchRejectedBooks() {
+        return mapper.selectByStatus("审核驳回");
     }
 
 

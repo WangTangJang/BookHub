@@ -75,3 +75,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 先来写后端的功能实现吧,
 
 可以验证码接收等待期间生成一下文段消解时间
+
+需不需要将(书籍-提交者-审核状态)单独做一张表

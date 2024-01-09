@@ -68,6 +68,20 @@ create table user_dynamic_info
     foreign key (user_id) references user_original_info(id) on DELETE CASCADE
 );
 
+-- 书籍添加的审核表
+drop table audit_records;
+create table audit_records(
+    id int primary key auto_increment,
+    book_id int ,
+    result varchar(50),
+    audit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    auditor_id int ,
+    submitter_id int ,
+    comments TEXT,
+    foreign key (book_id) references book_original_info(id) on DELETE CASCADE ,
+    foreign key (auditor_id) references user_original_info (id),
+    foreign key (submitter_id) references user_original_info (id)
+);
 
 -- 用户给书籍打分表
 drop table Book_ratings;

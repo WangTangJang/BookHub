@@ -71,6 +71,12 @@ public class BooksServiceImplTest {
         book.setFileSize(10);
         User user = userService.selectById(3);
         System.out.println(service.userUpload(book,user.getUsername()));
-
+    }
+    @Test
+    public void getBookByStatus(){
+        List<Books> books = service.searchPendingBooks();
+        for (Books b:books){
+            System.out.println(b.getTitle());
+        }
     }
 }

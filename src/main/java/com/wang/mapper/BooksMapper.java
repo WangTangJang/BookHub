@@ -36,7 +36,14 @@ public interface BooksMapper {
 
     Books selectPro(Books books);
 
+    /**
+     * 检查isbn是否重复
+     * @param isbn isbn号码
+     * @return 检查出的数量
+     */
     int checkDuplicateISBN(String isbn);
+
+    List<Books> selectByStatus(String status);
 
     /**
      * 查找全部书籍
