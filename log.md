@@ -73,3 +73,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 终究不过拾人牙慧。
 
 先来写后端的功能实现吧,
+
+可以验证码接收等待期间生成一下文段消解时间
