@@ -53,6 +53,7 @@ public class UserServiceImplTest {
     public void update(){
         User user = new User();
         user.setId(1);
+
         user.setSecurityQuestion("我是谁");
         service.updateUserProfile(user);
     }
