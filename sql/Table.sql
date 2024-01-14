@@ -125,7 +125,7 @@ create table comments
     likes             int,
     dislikes          int,
     creation_time     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_time       DATE,
+    update_time       DATETIME DEFAULT null,
     FOREIGN KEY (user_id) references user_original_info (id),
     foreign key (book_id) references book_original_info (id),
     foreign key (parent_comment_id) references comments (id)

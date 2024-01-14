@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.mapper.CommentsMapper">
+    <resultMap id="BaseResultMap" type="com.wang.model.Comments">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="parent_comment_id" jdbcType="INTEGER" property="parentCommentId"/>
+        <result column="likes" jdbcType="INTEGER" property="likes"/>
+        <result column="dislikes" jdbcType="INTEGER" property="dislikes"/>
+        <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wang.model.Comments">
+        <result column="context" jdbcType="LONGVARCHAR" property="context"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, book_id, parent_comment_id, likes, dislikes, creation_time, update_time
+    </sql>
+    <sql id="Blob_Column_List">
+        context
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comments
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from comments
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comments" useGeneratedKeys="true">
+        insert into comments (user_id, book_id, parent_comment_id,
+                              likes, dislikes, creation_time,
+                              update_time, context)
+        values (#{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{parentCommentId,jdbcType=INTEGER},
+                #{likes,jdbcType=INTEGER}, #{dislikes,jdbcType=INTEGER}, #{creationTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=DATE}, #{context,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comments"
+            useGeneratedKeys="true">
+        insert into comments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="bookId != null">
+                book_id,
+            </if>
+            <if test="parentCommentId != null">
+                parent_comment_id,
+            </if>
+            <if test="likes != null">
+                likes,
+            </if>
+            <if test="dislikes != null">
+                dislikes,
+            </if>
+            <if test="creationTime != null">
+                creation_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="context != null">
+                context,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="bookId != null">
+                #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="parentCommentId != null">
+                #{parentCommentId,jdbcType=INTEGER},
+            </if>
+            <if test="likes != null">
+                #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="dislikes != null">
+                #{dislikes,jdbcType=INTEGER},
+            </if>
+            <if test="creationTime != null">
+                #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=DATE},
+            </if>
+            <if test="context != null">
+                #{context,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wang.model.Comments">
+        update comments
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="bookId != null">
+                book_id = #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="parentCommentId != null and likes != 0">
+                parent_comment_id = #{parentCommentId,jdbcType=INTEGER},
+            </if>
+            <if test="likes != null and likes != 0">
+                likes = #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="dislikes != null and likes != 0">
+                dislikes = #{dislikes,jdbcType=INTEGER},
+            </if>
+            <if test="creationTime != null">
+                creation_time = #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=DATE},
+            </if>
+            <if test="context != null">
+                context = #{context,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wang.model.Comments">
+        update comments
+        set user_id           = #{userId,jdbcType=INTEGER},
+            book_id           = #{bookId,jdbcType=INTEGER},
+            parent_comment_id = #{parentCommentId,jdbcType=INTEGER},
+            likes             = #{likes,jdbcType=INTEGER},
+            dislikes          = #{dislikes,jdbcType=INTEGER},
+            creation_time     = #{creationTime,jdbcType=TIMESTAMP},
+            update_time       = #{updateTime,jdbcType=DATE},
+            context           = #{context,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wang.model.Comments">
+        update comments
+        set user_id           = #{userId,jdbcType=INTEGER},
+            book_id           = #{bookId,jdbcType=INTEGER},
+            parent_comment_id = #{parentCommentId,jdbcType=INTEGER},
+            likes             = #{likes,jdbcType=INTEGER},
+            dislikes          = #{dislikes,jdbcType=INTEGER},
+            creation_time     = #{creationTime,jdbcType=TIMESTAMP},
+            update_time       = #{updateTime,jdbcType=DATE}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wang.mapper.CommentVotesMapper">
+    <insert id="insert" parameterType="CommentVotes">
+        insert into user_comment_votes (user_id, comment_id, vote_type)
+        value (#{userId}, #{commentId}, #{voteType})
+    </insert>
+
+    <delete id="delete" parameterType="CommentVotes">
+        delete from user_comment_votes
+        <where>
+            <if test="userId != null and userId !=0">user_id = #{userId}</if>
+            <if test="commentId != null and commentId !=0">and comment_id = #{commentId}</if>
+        </where>
+    </delete>
+
+    <select id="select" resultType="CommentVotes" parameterType="CommentVotes">
+        select * from user_comment_votes
+        where user_id = #{userId} and comment_id = #{commentId}
+    </select>
+    <update id="update" parameterType="CommentVotes">
+        update user_comment_votes
+        <set>
+            <if test="voteType != null">vote_type = #{voteType}</if>
+        </set>
+        where user_id = #{userId} and comment_id = #{commentId}
+    </update>
+</mapper>

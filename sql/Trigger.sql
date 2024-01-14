@@ -1,3 +1,4 @@
+-- 用触发器设置初始值
 -- 书籍表中的数据被插入的时候自动创建一条动态数据
 delimiter //
 create trigger after_insert_book_original_info
@@ -16,5 +17,11 @@ create trigger after_insert_user_original_info
         insert into user_dynamic_info(user_id, level, experience, membership_status)
         VALUE (NEW.id,1,0,'non-member');
     end;
+//
+-- 触发器，当用户更新评论时候，自动更新评论的更新时间
+CREATE TRIGGER before_update_comments
+    BEFORE UPDATE ON comments
+    FOR EACH ROW
+    SET NEW.update_time = IFNULL(NEW.update_time, CURRENT_TIMESTAMP);
 //
 delimiter ;
