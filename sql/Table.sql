@@ -52,6 +52,7 @@ CREATE TABLE user_original_info
     social_media_links    VARCHAR(10),
     profile_picture       BLOB
 );
+-- 用户的动态信息
 drop table user_dynamic_info;
 create table user_dynamic_info
 (

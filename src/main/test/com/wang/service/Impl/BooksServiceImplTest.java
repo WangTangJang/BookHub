@@ -47,8 +47,10 @@ public class BooksServiceImplTest {
     }
     @Test
     public void select(){
+        // 统计书籍数量
         List<Books> book1 = service.selectAll();
         for (Books b:book1){
+            // 输出b的所有属性
             System.out.println(b.getTitle()+"评论量为"+b.getReviewsCount());
         }
 
@@ -77,6 +79,11 @@ public class BooksServiceImplTest {
         List<Books> books = service.searchPendingBooks();
         for (Books b:books){
             System.out.println(b.getTitle());
+        }
+
+        List<Books> books1 = service.searchApprovedBooks();
+        for (Books b:books1){
+            System.out.println(b.getStatus());
         }
     }
 }

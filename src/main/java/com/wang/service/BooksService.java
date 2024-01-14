@@ -90,9 +90,21 @@ public interface BooksService {
      */
     String userUpload(Books books,String username);
 
+    /**
+     * 查找待审核的书籍
+     * @return 待审核的书籍
+     */
     List<Books> searchPendingBooks();
 
+    /**
+     * 查找审核通过的书籍
+     * @return 审核通过的书籍
+     */
     List<Books> searchApprovedBooks();
 
+    /**
+     * 查找审核驳回的书籍
+     * @return 审核驳回的书籍
+     */
     List<Books> searchRejectedBooks();
 }

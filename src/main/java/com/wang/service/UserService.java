@@ -33,7 +33,15 @@ public interface UserService {
      */
     void updateUserProfile(User user);
 
+    /**
+     * 查找用户
+     * @param user 用户的部分信息
+     */
     void selectPro(User user);
 
+    /**
+     * 删除用户
+     * @param id 用户的id
+     */
     void delete(int id);
 }
