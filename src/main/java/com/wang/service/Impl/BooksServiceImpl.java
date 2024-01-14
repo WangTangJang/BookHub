@@ -16,7 +16,7 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public String adminUpload(Books book) {
-        if(mapper.checkDuplicateISBN(book.getIsbn())>0){
+        if(mapper.checkDuplicateISBN(book.getIsbn())){
             return "isbn重复";
         }else{
             book.setUploadedBy("管理员");
@@ -24,7 +24,6 @@ public class BooksServiceImpl implements BooksService {
             mapper.insert(book);
             return "ok";
         }
-
     }
 
     @Override
@@ -86,20 +85,21 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public String userUpload(Books books, String username) {
-        if (mapper.checkDuplicateISBN(books.getIsbn())>0){
+    public String userUpload(Books book, String username) {
+        // 检查isbn是否重复
+        if (mapper.checkDuplicateISBN(book.getIsbn())){
             return "isbn 重复";
         }else {
-            books.setStatus("未审核");
-            books.setUploadedBy(username);
-            mapper.insert(books);
+            book.setStatus("尚未审核");
+            book.setUploadedBy(username);
+            mapper.insert(book);
             return "ok";
         }
     }
 
     @Override
     public List<Books> searchPendingBooks() {
-        return mapper.selectByStatus("未审核");
+        return mapper.selectByStatus("尚未审核");
     }
 
     @Override

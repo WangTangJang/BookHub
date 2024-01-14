@@ -39,10 +39,15 @@ public interface BooksMapper {
     /**
      * 检查isbn是否重复
      * @param isbn isbn号码
-     * @return 检查出的数量
+     * @return 如果重复返回true，否则返回false
      */
-    int checkDuplicateISBN(String isbn);
+    boolean checkDuplicateISBN(String isbn);
 
+    /**
+     * 通过状态查询书籍
+     * @param status 状态
+     * @return 符合条件的书籍
+     */
     List<Books> selectByStatus(String status);
 
     /**
@@ -92,5 +97,9 @@ public interface BooksMapper {
      */
     void updateAdded(@Param("bookId") long booId);
 
+    /**
+     * 更新一本书的评分数量
+     * @param booId 书籍id
+     */
     void updateRatingCount(@Param("bookId") long booId);
 }

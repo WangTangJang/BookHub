@@ -50,8 +50,6 @@ public interface UserMapper {
      */
     void login(@Param("username") String username,@Param("password") String password);
 
-    void addRateBook(@Param("userId") String userId,@Param("bookId") String bookId,@Param("rating") int rating);
-
     void addComment(@Param("userId") String userId,@Param("bookId") String bookId,@Param("content") int content);
 
     void likeComment(@Param("userId") String userId,@Param("commentId") String commentId);

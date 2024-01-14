@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wang.mapper.AuditRecordsMapper">
+    <insert id="insert" parameterType="AuditRecords">
+        insert into audit_records (book_id, result,  auditor_id, submitter_id, comments)
+        VALUE (#{bookId}, #{result}, #{auditorId}, #{submitterId}, #{comments})
+    </insert>
+    <select id="select" resultType="AuditRecords">
+        select * from audit_records
+        <where>
+            <if test="bookId != null and bookId != 0">book_id = #{bookId}</if>
+            <if test="result != null and result != ''">AND result = #{result}</if>
+            <if test="auditorId != null and auditorId != 0">AND auditor_id = #{auditorId}</if>
+            <if test="submitterId != null and submitterId != 0">AND submitter_id = #{submitterId}</if>
+            <if test="auditTime != null and auditTime != ''">AND audit_time = #{auditTime}</if>
+            <if test="comments != null and comments != ''">AND comments = #{comments}</if>
+        </where>
+    </select>
+    <delete id="delete" parameterType="AuditRecords">
+        delete from audit_records where id = #{id}
+    </delete>
+</mapper>

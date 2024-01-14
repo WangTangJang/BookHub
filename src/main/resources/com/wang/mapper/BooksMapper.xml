@@ -10,6 +10,7 @@
         where book_id = book_original_info.id
     </select>
 
+
     <select id="selectById" resultType="Books">
         SELECT * FROM book_original_info,book_dynamic_info
         WHERE book_original_info.id = #{id} and book_id = book_original_info.id
@@ -24,8 +25,8 @@
         </where>
     </select>
 
-    <select id="checkDuplicateISBN" resultType="int">
-        select * from book_original_info where isbn = #{isbn}
+    <select id="checkDuplicateISBN" resultType="boolean">
+        select COUNT(*)>0 from book_original_info where isbn = #{isbn}
     </select>
 
     <select id="selectByStatus" resultType="Books">

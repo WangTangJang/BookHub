@@ -85,10 +85,10 @@ public interface BooksService {
 
     /**
      * 用户上传书籍
-     * @param books 书籍的信息
+     * @param book 书籍的信息
      * @param username 上传者的id
      */
-    String userUpload(Books books,String username);
+    String userUpload(Books book,String username);
 
     /**
      * 查找待审核的书籍

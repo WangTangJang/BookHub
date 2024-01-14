@@ -77,3 +77,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 可以验证码接收等待期间生成一下文段消解时间
 
 需不需要将(书籍-提交者-审核状态)单独做一张表
+
+在MyBatis中，如果查询结果为空（即没有匹配的记录），那么select语句返回的结果将是null，而不是整数。

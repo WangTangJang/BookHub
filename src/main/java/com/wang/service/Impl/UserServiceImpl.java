@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     UserMapper mapper;
 
     @Override
-    public String register(User user) {
+    public String UserRegister(User user) {
 
         if(mapper.selectPro(user)==null){
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -35,6 +35,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public String AdminRegister(User user) {
+        if(mapper.selectPro(user)==null){
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+            user.setAccountStatus("offline");
+            user.setRoles("Admin");
+            mapper.insert(user);
+            return "ok";
+        }else {
+            return "existed";
+        }
+    }
     @Override
     public String login(String username, String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -61,6 +75,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectById(int id) {
         return  mapper.select(id);
+    }
+
+    @Override
+    public User selectByUsername(String username) {
+        User user = new User();
+        user.setUsername(username);
+        return mapper.selectPro(user);
     }
 
     @Override

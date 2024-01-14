@@ -1,4 +1,4 @@
-package com.sample;
+package com.wang.model;
 
 
 public class AuditRecords {

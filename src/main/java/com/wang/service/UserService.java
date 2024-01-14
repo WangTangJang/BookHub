@@ -9,7 +9,14 @@ public interface UserService {
      * @param user 前端传入的用户信息
      * @return 注册结果
      */
-    String register(User user);
+    String UserRegister(User user);
+
+    /**
+     * 管理员注册
+     * @param user 前端传入的用户信息
+     * @return 注册结果
+     */
+    String AdminRegister(User user);
 
     /**
      * 用户登录
@@ -26,6 +33,8 @@ public interface UserService {
      * @return 找到的用户
      */
     User selectById(int id);
+
+    User selectByUsername(String username);
 
     /**
      * 用户修改个人信息
