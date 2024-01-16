@@ -28,8 +28,4 @@ public class CommentVoteServiceImplTest {
     @Test
     public void cancelLike() {
     }
-
-    @Test
-    public void cancelDislike() {
-    }
 }

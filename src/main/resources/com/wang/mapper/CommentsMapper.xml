@@ -9,7 +9,7 @@
         <result column="likes" jdbcType="INTEGER" property="likes"/>
         <result column="dislikes" jdbcType="INTEGER" property="dislikes"/>
         <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
-        <result column="update_time" jdbcType="DATE" property="updateTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wang.model.Comments">
         <result column="context" jdbcType="LONGVARCHAR" property="context"/>
@@ -39,7 +39,7 @@
                               update_time, context)
         values (#{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{parentCommentId,jdbcType=INTEGER},
                 #{likes,jdbcType=INTEGER}, #{dislikes,jdbcType=INTEGER}, #{creationTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=DATE}, #{context,jdbcType=LONGVARCHAR})
+                #{updateTime,jdbcType=TIMESTAMP}, #{context,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comments"
             useGeneratedKeys="true">
@@ -90,7 +90,7 @@
                 #{creationTime,jdbcType=TIMESTAMP},
             </if>
             <if test="updateTime != null">
-                #{updateTime,jdbcType=DATE},
+                #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="context != null">
                 #{context,jdbcType=LONGVARCHAR},
@@ -119,7 +119,7 @@
                 creation_time = #{creationTime,jdbcType=TIMESTAMP},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=DATE},
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="context != null">
                 context = #{context,jdbcType=LONGVARCHAR},
@@ -135,7 +135,7 @@
             likes             = #{likes,jdbcType=INTEGER},
             dislikes          = #{dislikes,jdbcType=INTEGER},
             creation_time     = #{creationTime,jdbcType=TIMESTAMP},
-            update_time       = #{updateTime,jdbcType=DATE},
+            update_time       = #{updateTime,jdbcType=TIMESTAMP},
             context           = #{context,jdbcType=LONGVARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -147,7 +147,7 @@
             likes             = #{likes,jdbcType=INTEGER},
             dislikes          = #{dislikes,jdbcType=INTEGER},
             creation_time     = #{creationTime,jdbcType=TIMESTAMP},
-            update_time       = #{updateTime,jdbcType=DATE}
+            update_time       = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

@@ -19,9 +19,19 @@ create trigger after_insert_user_original_info
     end;
 //
 -- 触发器，当用户更新评论时候，自动更新评论的更新时间
+DROP TRIGGER before_update_comments;
 CREATE TRIGGER before_update_comments
     BEFORE UPDATE ON comments
     FOR EACH ROW
-    SET NEW.update_time = IFNULL(NEW.update_time, CURRENT_TIMESTAMP);
+#     此语句有误，如果update_time不为空才更新
+#     SET NEW.update_time = IFNULL(NEW.update_time, CURRENT_TIMESTAMP);
+#     此方法表中任一数据更新都会触发，不可。
+#     SET NEW.update_time = CURRENT_TIMESTAMP;
+    BEGIN
+        # 比较context是否发生变动
+        IF NEW.context != OLD.context THEN
+            SET NEW.update_time = CURRENT_TIMESTAMP;
+        end if;
+    end;
 //
 delimiter ;
