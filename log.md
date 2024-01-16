@@ -13,7 +13,7 @@ Template好复杂
 还是找一本教程看看吧。
 
 git push 到远程仓库时，原来不是原封不动的传上去的。
- 
+
 搞了半天,spring6必须要tomcat的版本高于10才行.我还以为我哪写错了...
 
 远程与本地仓库不同步，用fetch似乎还要合并，直接用pull更方便.
@@ -28,11 +28,13 @@ git push 到远程仓库时，原来不是原封不动的传上去的。
         <property name="basePackage" value="com.wang.mapper"/>
     </bean>
 ```
+
 在spring配置文件中缺少这一段时，会报如下错误，找了许久。但是我似乎添加过，报错又不报错。
+
 ```text
-	org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookInfoServiceImpl': Unsatisfied dependency expressed through field 'mapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.wang.mapper.BookInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-	..........
-	Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.wang.mapper.BookInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookInfoServiceImpl': Unsatisfied dependency expressed through field 'mapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.wang.mapper.BookInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+..........
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.wang.mapper.BookInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
 ```
 
 每次依赖添加完之后，用idea更新一下，设置里就会变成java5
@@ -40,6 +42,7 @@ git push 到远程仓库时，原来不是原封不动的传上去的。
 Xml文件的位置又出错了，大概是我一开始打错字符，而后又修改，但是并没有被识别为文件夹层次的原因吧。
 
 未曾设置过别名的情况下，xml里面应该输入实体类的路径
+
 ```xml
     <select id="selectAll" resultType="com.wang.model.BookInfo">
         SELECT * FROM bookInfo;
@@ -79,3 +82,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 需不需要将(书籍-提交者-审核状态)单独做一张表
 
 在MyBatis中，如果查询结果为空（即没有匹配的记录），那么select语句返回的结果将是null，而不是整数。
+
+准备前端，但是我认为先是写js吧，暂时没必要碰那些框架吧，只是用bootstrap布个局。
