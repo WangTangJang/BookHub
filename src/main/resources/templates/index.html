@@ -1,0 +1,216 @@
+<html lang="en">
+<head>
+    <title>index</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!--
+这是一个书籍分享网站的主页
+     主页上面是一个导航栏，导航栏上面有登录和注册的按钮
+        主页中间是一个轮播图，轮播图中间是一些书籍的图片
+        主页下面是书籍的列表，每个书籍都有一个图片，书名，作者，简介，
+        主页底部是页脚，页脚上面有一些关于网站的介绍，以及网站的一些信息
+-->
+<!--导航栏-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">书籍分享网站</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNav
+            Dropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--导航栏上面的按钮-->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <!--登录按钮-->
+            <li class="nav-item">
+                <a class="nav-link" href="/login">登录</a>
+            </li>
+            <!--注册按钮-->
+            <li class="nav-item">
+                <a class="nav-link" href="/register">注册</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--书籍列表-->
+<div class="container">
+    <div class="row">
+        <!--书籍列表的第一本书-->
+        <div class="col-sm">
+            <!--书籍的图片-->
+            <img src="http://img3m0.ddimg.cn/60/17/25272400-1_u_1.jpg" alt="..." class="img-thumbnail">
+            <!--书籍的名字-->
+            <div class="caption">
+                <h3>书籍的名字</h3>
+                <!--书籍的作者-->
+                <p>书籍的作者</p>
+                <!--书籍的简介-->
+                <p>书籍的简介</p>
+                <!--书籍的下载按钮-->
+                <p><a href="#" class="btn btn-primary" role="button">下载</a></p>
+            </div>
+        </div>
+        <!--书籍列表的第二本书-->
+        <div class="col-sm">
+            <!--书籍的图片-->
+            <img src="http://img3m0.ddimg.cn/60/17/25272400-1_u_1.jpg" alt="..." class="img-thumbnail">
+            <!--书籍的名字-->
+            <div class="caption">
+                <h3>书籍的名字</h3>
+                <!--书籍的作者-->
+                <p>书籍的作者</p>
+                <!--书籍的简介-->
+                <p>书籍的简介</p>
+                <!--书籍的下载按钮-->
+                <p><a href="#" class="btn btn-primary" role="button">下载</a></p>
+            </div>
+        </div>
+        <!--书籍列表的第三本书-->
+        <div class="col-sm">
+            <!--书籍的图片-->
+            <img src="http://img3m0.ddimg.cn/60/17/25272400-1_u_1.jpg" alt="..." class="img-thumbnail">
+            <!--书籍的名字-->
+            <div class="caption">
+                <h3>书籍的名字</h3>
+                <!--书籍的作者-->
+                <p>书籍的作者</p>
+                <!--书籍的简介-->
+                <p>书
+                    籍的简介</p>
+                <!--书籍的下载按钮-->
+                <p><a href="#" class="btn btn-primary" role="button">下载</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--页脚信息-->
+<footer class="footer">
+    <div class="container">
+        <!--页脚信息的左边-->
+        <div class="row">
+            <div class="col-sm">
+                <!--页脚信息的左边的标题-->
+                <h5>关于我们</h5>
+                <!--页脚信息的左边的内容-->
+                <p>这是一个书籍分享网站</p>
+            </div>
+            <!--页脚信息的中间-->
+            <div class="col-sm">
+                <!--页脚信息的中间的标题-->
+                <h5>联系我们</h5>
+                <!--页脚信息的中间的内容-->
+                <p>邮箱： 1231231@xx.com</p>
+            </div>
+            <!--页脚信息的右边-->
+            <div class="col-sm">
+                <!--页脚信息的右边的标题-->
+                <h5>友情链接</h5>
+                <!--页脚信息的右边的内容-->
+                <p>百度</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!--用js修改页面内鼠标的样式，鼠标要可爱一点的-->
+<script>
+    //鼠标的样式
+    var a_idx = 0;
+    jQuery(document).ready(function ($) {
+        $("body").click(function (e) {
+            //鼠标点击的位置
+            var a = new Array("❤富强❤", "❤民主❤", "❤文明❤", "❤和谐❤", "❤自由❤", "❤平等❤", "❤公正❤", "❤法治❤", "❤爱国❤", "❤敬业❤", "❤诚信❤", "❤友善❤");
+            //鼠标点击的位置的样式
+            var $i = $("<span/>").text(a[a_idx]);
+            //鼠标点击的位置的样式的位置
+            a_idx = (a_idx + 1) % a.length;
+            //鼠标点击的位置的样式的位置的样式
+            var x = e.pageX, y = e.pageY;
+            //鼠标点击的位置的样式的位置的样式的位置
+            $i.css({
+                "z-index": 999
+                , "top": y - 20
+                , "left": x
+                , "position": "absolute"
+                , "font-weight": "bold"
+                , "color": "#ff6651"
+            });
+            //鼠标点击的位置的样式的位置的样式的位置的样式
+            $("body").append($i);
+            //鼠标点击的位置的样式的位置的样式的位置的样式的样式
+            $i.animate({
+                    "top": y - 180
+                    , "opacity": 0
+                }
+                , 1500
+                , function () {
+                    $i.remove();
+                });
+        });
+    });
+    // 给页面加一个下雨的动态背景图
+    // q:我希望把这个动态效果的线条换成黑色，如何实现？
+    // a:把color: 0,0,0改成color: 255,255,255
+    // q:在哪一行
+
+    !function () {
+        function n(n, e, t) {
+            return n.getAttribute(e) || t
+        }
+
+        function e(n) {
+            return document.getElementsByTagName(n)
+        }
+
+        function t() {
+            var t = e("script"), o = t.length, i = t[o - 1];
+            return {
+                l: o,
+                z: n(i, "zIndex", -1),
+                o: n(i, "opacity", .5),
+                c: n(i, "color", "0,0,0"),
+                n: n(i, "count", 99)
+            }
+        }
+
+        function o() {
+            a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        }
+
+        function i() {
+            r.clearRect(0, 0, a, c);
+            var n, e, t, o, m, l;
+            s.forEach(function (i, x) {
+                for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++)n = u[e], null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+            }), x(i)
+        }
+
+        var a, c, u, m = document.createElement("canvas"), d = t(), l = "c_n" + d.l, r = m.getContext("2d"),
+            x = window.requestAnimationFrame ||  window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (n) {
+                    window.setTimeout(n, 1e3 / 45)
+                }, w = Math.random, y = {x: null, y: null, max: 2e4};
+        m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o, e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function (n) {
+            n = n || window.event, y.x = n.clientX, y.y = n.clientY
+        }, window.onmouseout = function () {
+            y.x = null, y.y = null
+        };
+        for (var s = [], f = 0; d.n > f; f++) {
+            var h = w() * a, g = w() * c, v = 2 * w() - 1, p = 2 * w() - 1;
+            s.push({x: h, y: g, xa: v, ya: p, max: 6e3})
+        }
+        u = s.concat([y]), setTimeout(function () {
+            i()
+        }, 100)
+    }();
+
+</script>
+
+
+
+</body>
+</html>

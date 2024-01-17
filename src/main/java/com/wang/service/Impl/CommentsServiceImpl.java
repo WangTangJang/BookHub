@@ -26,8 +26,8 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public Comments getCommentById(Integer id) {
-        return mapper.selectByPrimaryKey(id);
+    public Comments getCommentById(long id) {
+        return mapper.selectByPrimaryKey((int) id);
     }
 
     @Override
@@ -37,6 +37,11 @@ public class CommentsServiceImpl implements CommentsService {
         Comments comments = service.getCommentById(commentId);;
         comments.setContext(newContext);
         mapper.updateByPrimaryKeySelective(comments);
+    }
+
+    @Override
+    public void deleteComment(Integer commentId) {
+        mapper.deleteByPrimaryKey(commentId);
     }
 
     @Override

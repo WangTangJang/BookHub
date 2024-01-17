@@ -30,4 +30,9 @@ public class CommentsServiceImplTest {
     public void updateComment(){
         commentsService.updateContext(1,"不错的书！");
     }
+
+    @Test
+    public void deleteComment(){
+        commentsService.deleteComment(2);
+    }
 }

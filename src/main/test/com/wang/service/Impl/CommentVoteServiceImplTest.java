@@ -25,7 +25,4 @@ public class CommentVoteServiceImplTest {
         commentVoteService.dislikeComment(1,1);
     }
 
-    @Test
-    public void cancelLike() {
-    }
 }

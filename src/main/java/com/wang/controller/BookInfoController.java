@@ -41,14 +41,14 @@ public class BookInfoController {
         model.addAttribute("totalPages",totalPages);
         // 用于告知前端当前所在页面，用来控制导航栏激活状态
         model.addAttribute("currentHtml" ,"list");
-        return "book/list";
+        return "admin/book/list";
     }
     @RequestMapping("toAddView")
     public String toAddView(Model model){
         model.addAttribute("books",new Books());
         // 用于告知前端当前页面
         model.addAttribute("currentHtml" ,"add");
-        return "book/add";
+        return "admin/book/add";
     }
 
     @RequestMapping("doAdd")
@@ -70,7 +70,7 @@ public class BookInfoController {
     public String toMod(@PathVariable("id") int id,Model model){
         Books book =  service.selectById(id);
         model.addAttribute("book",book);
-        return "book/mod";
+        return "admin/book/mod";
     }
     @RequestMapping("doMod")
     public String doMod(@ModelAttribute("book") Books books,RedirectAttributes redirectAttributes){
@@ -83,6 +83,6 @@ public class BookInfoController {
     public String search(@RequestParam("keyword") String keyword,Model model){
         List<Books> books = service.search(keyword);
         model.addAttribute("books",books);
-        return "book/list";
+        return "admin/book/list";
     }
 }
