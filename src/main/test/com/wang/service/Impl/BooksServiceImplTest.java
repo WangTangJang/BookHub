@@ -36,14 +36,14 @@ public class BooksServiceImplTest {
         books.setFormat("EPUB");
         books.setFilePath("C://");
         books.setFileSize(10);
+        books.setCover("C://");
+        books.setCategoryId(1);
         System.out.println(service.adminUpload(books));
     }
 
-
-
     @Test
     public void delete(){
-        service.deleteById(4);
+        service.deleteById(1);
     }
     @Test
     public void update(){

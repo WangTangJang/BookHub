@@ -10,7 +10,6 @@
         where book_id = book_original_info.id
     </select>
 
-
     <select id="selectById" resultType="Books">
         SELECT * FROM book_original_info,book_dynamic_info
         WHERE book_original_info.id = #{id} and book_id = book_original_info.id
@@ -39,6 +38,7 @@
         SET title = #{title},
             author = #{author},
             isbn = #{isbn},
+            cover = #{cover},
             format = #{format},
             file_path = #{filePath},
             file_size = #{fileSize},
@@ -56,6 +56,7 @@
             <if test="title != null and title != ''">title = #{title},</if>
             <if test="author != null and author != ''">author = #{author},</if>
             <if test="isbn != null and isbn != ''">isbn = #{isbn},</if>
+            <if test="cover != null and cover != ''">cover = #{cover},</if>
             <if test="format != null and format != ''">format = #{format},</if>
             <if test="filePath != null and filePath != ''">file_path = #{filePath},</if>
             <if test="fileSize != null and fileSize != ''">file_size = #{fileSize},</if>

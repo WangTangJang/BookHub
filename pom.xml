@@ -14,21 +14,6 @@
         <mybatis.version>3.5.8</mybatis.version>
         <mysql.connector.version>8.0.25</mysql.connector.version>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-
     <dependencies>
 
         <!-- Spring 相关依赖 -->

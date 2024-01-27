@@ -2,9 +2,11 @@ package com.wang.service.Impl;
 
 import com.wang.mapper.BooksMapper;
 import com.wang.model.Books;
+import com.wang.service.BookCategoryService;
 import com.wang.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,8 +15,15 @@ public class BooksServiceImpl implements BooksService {
 
     @Autowired
     BooksMapper mapper;
+    @Autowired
+    BookCategoryService bookCategoryService;
 
+
+    // 先是向书籍的信息表中插入一条数据，然后再向书籍分类表中插入一条数据
+    // 正好可以试试事务，当向另一张表中插入时，如果失败，那么之前的插入也会回滚
+    // 经测试，需要在applicationContext.xml中配置事务管理器，然后在方法上加上@Transactional注解
     @Override
+    @Transactional
     public String adminUpload(Books book) {
         if(mapper.checkDuplicateISBN(book.getIsbn())){
             return "isbn重复";
@@ -22,10 +31,10 @@ public class BooksServiceImpl implements BooksService {
             book.setUploadedBy("管理员");
             book.setStatus("审核通过");
             mapper.insert(book);
+            bookCategoryService.addBookCategory(book.getId(),book.getCategoryId());
             return "ok";
         }
     }
-
     @Override
     public void deleteById(int id) {
 

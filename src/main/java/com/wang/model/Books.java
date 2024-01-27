@@ -11,7 +11,8 @@ public class Books {
   private String filePath;
   private String uploadedBy;
   private String status;
-
+  private String cover;
+  private long categoryId;
   private double fileSize;
 
   private double averageRating;
@@ -42,6 +43,22 @@ public class Books {
 
   public long getId() {
     return id;
+  }
+
+  public String getCover() {
+    return cover;
+  }
+
+  public void setCover(String cover) {
+    this.cover = cover;
+  }
+
+  public long getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(long categoryId) {
+    this.categoryId = categoryId;
   }
 
   public void setId(long id) {

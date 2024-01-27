@@ -1,13 +1,12 @@
-<!-- 我打算练习Html+Css+JavaScript的技术 -->
-<!-- 开发一个书籍分享网站 -->
+<!-- 一个书籍分享网站 -->
 <!-- 网站具有查看书籍,给书籍点赞,发表评论,点赞评论等功能 -->
-
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>MyHTML</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="../../static/css/MyStyle.css" th:href="@{/static/css/MyStyle.css}">
+    <script src="../../static/js/MyScript.js" th:src="@{/static/js/MyScript.js}"></script>
 
     <!-- 引入bootstrap -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -58,25 +57,17 @@
             <div class="col-sm-10 content-custom">
                 <!-- 主页面用来展示书籍 -->
                 <div class="row  py-3">
-                    <div class="col-sm-2 mb-3">
-                        <div class="card shadow-lg" style="width: 100%;">
-                            <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Three_Brothers_%28Bei%2C_Yu%2C_Fei%29.jpg/200px-Three_Brothers_%28Bei%2C_Yu%2C_Fei%29.jpg" alt="Book Cover">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">三国演义</h5>
-                                <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-thumbs-up" ></i>点赞 <span class="badge badge-light">10</span></a>
-                                <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light">5</span></a>
+                    <div class="col-sm-2 mb-3" th:each="book:${books}">
+                        <a href="#">
+                            <div class="card shadow-lg" style="width: 100%;">
+                                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Three_Brothers_%28Bei%2C_Yu%2C_Fei%29.jpg/200px-Three_Brothers_%28Bei%2C_Yu%2C_Fei%29.jpg" alt="Book Cover">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center" th:text="${book.title}"></h5>
+                                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-thumbs-up" ></i>点赞 <span class="badge badge-light">10</span></a>
+                                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light">5</span></a>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2 mb-3">
-                        <div class="card shadow-lg" style="width: 100%;">
-                            <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Three_Brothers_%28Bei%2C_Yu%2C_Fei%29.jpg/200px-Three_Brothers_%28Bei%2C_Yu%2C_Fei%29.jpg" alt="Book Cover">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">三国演义</h5>
-                                <a href="#" class="btn btn-dark btn-sm btn-block">点赞 <span class="badge badge-light">10</span></a>
-                                <a href="#" class="btn btn-dark btn-sm btn-block">评论 <span class="badge badge-light">5</span></a>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

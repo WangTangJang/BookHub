@@ -84,3 +84,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 在MyBatis中，如果查询结果为空（即没有匹配的记录），那么select语句返回的结果将是null，而不是整数。
 
 准备前端，但是我认为先是写js吧，暂时没必要碰那些框架吧，只是用bootstrap布个局。
+
+单页应用，不用刷新页面，所有内容一次性全部加载下来。

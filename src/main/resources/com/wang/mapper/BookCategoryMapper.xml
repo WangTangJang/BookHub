@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.mapper.BookCategoryMapper">
+    <insert id="insert" parameterType="Map">
+        insert into book_categories (name)
+        VALUE (#{name})
+    </insert>
+    <select id="select" resultType="Map">
+        select * from book_categories
+        <where>
+            <if test="id != null and id != 0">id = #{id}</if>
+            <if test="name != null and name != ''">AND name = #{name}</if>
+        </where>
+    </select>
+    <delete id="delete" parameterType="Map">
+        delete from book_categories where id = #{id}
+    </delete>
+    <update id="update" parameterType="Map">
+        update book_categories
+        <set>
+            <if test="name != null and name != ''">name = #{name}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--书籍与分类的映射表-->
+    <select id="selectMapper">
+        select * from book_category_mapping
+    </select>
+    <insert id="insertMapper">
+        insert into book_category_mapping (book_id, category_id)
+        value (#{bookId}, #{categoryId})
+    </insert>
+    <delete id="deleteMapper">
+        delete from book_category_mapping
+        where book_id = #{bookId} and category_id = #{categoryId}
+    </delete>
+    <update id="updateMapper">
+        update book_category_mapping
+        <set>
+            <if test="bookId != null and bookId != 0">book_id = #{bookId},</if>
+            <if test="categoryId != null and categoryId != 0">category_id = #{categoryId}</if>
+        </set>
+        where book_id = #{bookId} and category_id = #{categoryId}
+    </update>
+
+</mapper>

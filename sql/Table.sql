@@ -11,6 +11,7 @@ CREATE TABLE book_original_info
     title     VARCHAR(255) NOT NULL,
     author    VARCHAR(255),
     isbn      varchar(100) UNIQUE,
+    cover     varchar(100),
     -- 电子版信息
     format    VARCHAR(255),
     file_path varchar(100),
@@ -30,6 +31,26 @@ create table book_dynamic_info
     rating_count   int,
     foreign key (book_id) references book_original_info (id) ON DELETE CASCADE
 );
+-- 书籍分类表
+drop table book_categories;
+create table book_categories
+(
+    id   INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+-- 书籍与分类的关联表
+drop table book_category_mapping;
+create table book_category_mapping
+(
+    book_id     int,
+    category_id int,
+    primary key (book_id, category_id),
+    foreign key (book_id) references book_original_info (id) ON DELETE CASCADE,
+    foreign key (category_id) references book_categories (id) ON DELETE CASCADE
+);
+
+-- q 向数据库插入书籍分类的时候要同时向两张表插入吗
+
 
 -- 用户表
 DROP TABLE user_original_info;
@@ -125,7 +146,7 @@ create table comments
     likes             int,
     dislikes          int,
     creation_time     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_time       TIMESTAMP DEFAULT null,
+    update_time       DATETIME DEFAULT null,
     FOREIGN KEY (user_id) references user_original_info (id),
     foreign key (book_id) references book_original_info (id),
     foreign key (parent_comment_id) references comments (id)
