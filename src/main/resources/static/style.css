@@ -1,0 +1,45 @@
+#gushici {
+    /* 调整gushici的字体大小 */
+    /* font-size: 1.3em; */
+
+    /* 加粗 */
+    font-weight: bold;
+}
+/* 图标偏移 */
+ i {
+    margin-right: 5px;
+}
+/* 正文 */
+.content-custom {
+    min-height: 100vh;
+    background-color: rgba(69, 66, 66, 0.855);
+}
+/* 导航栏 */
+.navbar-custom {
+    background-color: rgba(107, 96, 96, 0.722);
+    /* background-color: rgba(172, 1, 1, 0.722); */
+
+}
+/* 侧边栏 */
+.sidebar-custom{
+    background-color: rgba(103, 98, 98, 0.823);
+}
+/* 卡片颜色 */
+.card-body{
+    background-color: rgba(103, 98, 98, 0.823);
+}
+#loginModal .modal-content {
+    color: #ffffff;
+    background-color: rgba(103, 98, 98, 0.823); 
+}
+#loginModal .modal-content .modal-header{
+    border: none;
+}
+#loginModal .modal-body {
+    background-color: rgba(81, 77, 77, 0.874); 
+}
+#loginModal .modal-body input{
+    background-color: rgba(103, 98, 98, 0.823); 
+    border: none;
+    color: #ffffff;
+}
