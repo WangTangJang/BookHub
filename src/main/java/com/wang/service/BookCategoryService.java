@@ -11,6 +11,7 @@ public interface BookCategoryService {
     // 书籍与分类的映射表
     void addBookCategory(long bookId,long categoryId);
     void deleteBookCategory(long bookId,long categoryId);
+    void deleteByBookId(long bookId);
     void updateBookCategory(long bookId,long categoryId);
     void selectBookCategory(long bookId,long categoryId);
 }

@@ -86,3 +86,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 准备前端，但是我认为先是写js吧，暂时没必要碰那些框架吧，只是用bootstrap布个局。
 
 单页应用，不用刷新页面，所有内容一次性全部加载下来。
+
+mybatis的useGeneratedKeys真是神来之笔。

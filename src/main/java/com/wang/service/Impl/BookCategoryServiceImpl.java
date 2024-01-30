@@ -45,6 +45,11 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     }
 
     @Override
+    public void deleteByBookId(long bookId) {
+        mapper.deleteMapperByBookId(bookId);
+    }
+
+    @Override
     public void updateBookCategory(long bookId, long categoryId) {
         mapper.updateMapper(bookId,categoryId);
     }

@@ -37,8 +37,10 @@ public class BooksServiceImpl implements BooksService {
     }
     @Override
     public void deleteById(int id) {
-
         mapper.deleteById(id);
+        // 多余操作，因为在删除书籍时，会删除书籍分类表中的数据
+        // 分类映射表中的书籍id是外键，当删除书籍时，会自动删除分类映射表中的数据
+        //bookCategoryService.deleteByBookId(id);
     }
 
     @Override

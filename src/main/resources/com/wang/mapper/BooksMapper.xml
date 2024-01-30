@@ -33,7 +33,7 @@
         where book_id = book_original_info.id and
               status = #{status}
     </select>
-    <insert id="insert" parameterType="Books">
+    <insert id="insert" parameterType="Books" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO book_original_info
         SET title = #{title},
             author = #{author},

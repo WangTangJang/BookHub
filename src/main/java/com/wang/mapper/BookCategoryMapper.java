@@ -10,8 +10,9 @@ public interface BookCategoryMapper {
     void update(Map<String, Object> map);
     void select(Map<String, Object> map);
     // 书籍与分类的映射表
-    void insertMapper(long bookId,long categoryId);
+    void insertMapper(@Param("bookId") long bookId,@Param("categoryId") long categoryId);
     void deleteMapper(@Param("bookId") long bookId,@Param("categoryId") long categoryId);
+    void deleteMapperByBookId(@Param("bookId") long bookId);
     void updateMapper(@Param("bookId") long bookId,@Param("categoryId") long categoryId);
     void selectMapper(@Param("bookId") long bookId,@Param("categoryId") long categoryId);
 }

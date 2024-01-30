@@ -37,6 +37,10 @@
         delete from book_category_mapping
         where book_id = #{bookId} and category_id = #{categoryId}
     </delete>
+    <delete id="deleteMapperByBookId">
+        delete from book_category_mapping
+        where book_id = #{bookId}
+    </delete>
     <update id="updateMapper">
         update book_category_mapping
         <set>

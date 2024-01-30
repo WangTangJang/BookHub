@@ -30,20 +30,20 @@ public class BooksServiceImplTest {
     @Test
     public void test(){
         Books books = new Books();
-        books.setTitle("西游记");
-        books.setAuthor("吴承恩");
-        books.setIsbn("32374823241223480");
+        books.setTitle("第三帝国");
+        books.setAuthor("理想国");
+        books.setIsbn("32374823241223280");
         books.setFormat("EPUB");
         books.setFilePath("C://");
         books.setFileSize(10);
-        books.setCover("C://");
-        books.setCategoryId(1);
+        books.setCover("/static/images/00003.jpeg");
+        books.setCategoryId(2);
         System.out.println(service.adminUpload(books));
     }
 
     @Test
     public void delete(){
-        service.deleteById(1);
+        service.deleteById(9);
     }
     @Test
     public void update(){
