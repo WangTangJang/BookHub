@@ -2,55 +2,33 @@ package demo.connectionpool;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.junit.experimental.theories.Theories;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class demo {
-    public static void main(String[] args) throws SQLException {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/test");
-        config.setUsername("root");
-        config.setPassword("20020525");
-        config.addDataSourceProperty("connectionTimeout", "1000");// 连接超时：1秒
-        config.addDataSourceProperty("idleTimeout", "1000");// 空闲超时：1秒
-        config.addDataSourceProperty("maximumPoolSize", "1");// 最大连接数：1
+    public static void main(String[] args) throws  Exception {
+        Class.forName("com.mysql.jdbc.Driver");
 
-        HikariDataSource ds = new HikariDataSource(config);
+        String url = "jdbc:mysql://localhost:3306/test";
+        String username = "root";
+        String password = "20020525";
+        // 连接数据库
+        Connection connection = DriverManager.getConnection(url, username, password);
+        Statement statement = connection.createStatement();
 
-        String sql = "select * from users";
-        String sql2= "select * from orders";
-        Connection connection = ds.getConnection();
-        Statement statement1 = connection.createStatement();
-        ResultSet resultSet = statement1.executeQuery(sql);
-        while (resultSet.next()){
-            System.out.println(resultSet.getString("username"));
-        }
-        System.out.println("TotalConnections:"+ds.getHikariPoolMXBean().getTotalConnections());
-        System.out.println("ActiveConnections:"+ds.getHikariPoolMXBean().getActiveConnections());
+        // 设置行锁
+        statement.execute("LOCK TABLES users READ ");
+        // 开启事务
+        connection.setAutoCommit(false);
+        //statement.executeUpdate("update users set username = 'wbf' where id = 23");
+        ResultSet resultSet = statement.executeQuery("select * from users where id = 23 lock in share mode");// 获取读锁
 
-        Connection connection2 = ds.getConnection();
-        Statement statement2 = connection2.createStatement();
-        ResultSet resultSet2 = statement2.executeQuery(sql2);
-        while (resultSet2.next()){
-            System.out.println(resultSet2.getString("order_number"));
-        }
-
-
-        System.out.println("TotalConnections:"+ds.getHikariPoolMXBean().getTotalConnections());
-        System.out.println("ActiveConnections:"+ds.getHikariPoolMXBean().getActiveConnections());
-        Connection connection3 = ds.getConnection();
-        Statement statement3 = connection3.createStatement();
-        ResultSet resultSet3 = statement3.executeQuery(sql2);
-        while (resultSet3.next()){
-            System.out.println(resultSet3.getString("order_number"));
-        }
-        System.out.println(connection.getMetaData().getDatabaseProductName());
-        System.out.println("TotalConnections:"+ds.getHikariPoolMXBean().getTotalConnections());
-        System.out.println("ActiveConnections:"+ds.getHikariPoolMXBean().getActiveConnections());
-
+        //while(resultSet.next()){
+        //    System.out.println(resultSet.getInt("id")+":"+resultSet.getString("username"));
+        //}
+        // 提交事务
+        connection.commit();
     }
 }
