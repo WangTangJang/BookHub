@@ -12,7 +12,17 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
     <!--开启注解扫描-->
-    <context:component-scan base-package="demo"/>
+    <context:component-scan base-package="com.wang.demo"/>
+    <bean id="calculator" class="com.wang.demo.CalculatorImpl" />
+
+    <bean id="myService" class="com.wang.demo.MyService" init-method="sayHello">
+        <property name="name" value="Hello"/>
+        <constructor-arg>
+            <list>
+                <value>1</value>
+            </list>
+        </constructor-arg>
+    </bean>
     <!--开启AOP的自动代理-->
     <aop:aspectj-autoproxy/>
 </beans>
