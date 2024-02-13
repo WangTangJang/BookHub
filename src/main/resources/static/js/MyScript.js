@@ -9,3 +9,9 @@ xhr.onreadystatechange = function () {
     }
   };
 xhr.send();
+// 显示回复输入框
+function showReplyInput(id) {
+    console.log("showReplyInput");
+    var replyInput = document.getElementById('replyInput' + id);
+    replyInput.style.display = 'flex';
+}

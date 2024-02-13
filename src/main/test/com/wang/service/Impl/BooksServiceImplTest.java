@@ -30,9 +30,9 @@ public class BooksServiceImplTest {
     @Test
     public void test(){
         Books books = new Books();
-        books.setTitle("第三帝国");
-        books.setAuthor("理想国");
-        books.setIsbn("32374823241223280");
+        books.setTitle("三国演义");
+        books.setAuthor("罗贯中");
+        books.setIsbn("32374823241221230");
         books.setFormat("EPUB");
         books.setFilePath("C://");
         books.setFileSize(10);
@@ -45,6 +45,7 @@ public class BooksServiceImplTest {
     public void delete(){
         service.deleteById(9);
     }
+
     @Test
     public void update(){
         Books books = new Books();

@@ -12,17 +12,22 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
     <!--开启注解扫描-->
-    <context:component-scan base-package="com.wang.demo"/>
-    <bean id="calculator" class="com.wang.demo.CalculatorImpl" />
-
-    <bean id="myService" class="com.wang.demo.MyService" init-method="sayHello">
-        <property name="name" value="Hello"/>
-        <constructor-arg>
-            <list>
-                <value>1</value>
-            </list>
-        </constructor-arg>
+    <context:component-scan base-package="demo"/>
+    <!-- Address Bean -->
+    <bean id="address2" class="demo.Address">
+        <property name="city" value="HeNan"/>
+        <property name="zipCode" value="10001"/>
     </bean>
-    <!--开启AOP的自动代理-->
-    <aop:aspectj-autoproxy/>
+
+    <bean id="address" class="demo.Address">
+        <property name="city" value="New York"/>
+        <property name="zipCode" value="10001"/>
+    </bean>
+
+    <!-- Person Bean -->
+    <!-- Person Bean with Autowiring byType -->
+    <bean id="person" class="demo.Person" autowire="byName">
+        <property name="name" value="John Doe" />
+        <!-- The 'address' property will be automatically injected by matching type -->
+    </bean>
 </beans>

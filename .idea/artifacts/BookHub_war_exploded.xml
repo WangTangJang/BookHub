@@ -43,6 +43,9 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-crypto:5.5.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.3.10" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.9.6" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.30" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.5.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.5.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">
