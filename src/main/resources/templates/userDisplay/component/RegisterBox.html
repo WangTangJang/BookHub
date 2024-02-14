@@ -1,0 +1,35 @@
+<!-- 注册框 -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">注册</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/user/register}" method="post">
+                    <div class="form-group">
+                        <label for="username_r">用户名</label>
+                        <input type="text" class="form-control" id="username_r" name="username" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email_r">邮箱</label>
+                        <input type="email" class="form-control" id="email_r" name="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_r">密码</label>
+                        <input type="password" class="form-control" id="password_r" name="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-group">
+                        <label for="checkPassword">确认密码</label>
+                        <input type="password" class="form-control" id="checkPassword" name="checkPassword" placeholder="Enter password">
+                    </div>
+                    <button type="submit" id="submitBtn" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

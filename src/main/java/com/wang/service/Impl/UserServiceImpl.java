@@ -57,7 +57,10 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getId());
         user.setUsername(username);
         user =  mapper.selectPro(user);
-
+        // 检查账号是否存在
+        if(user==null){
+            return "账号不存在";
+        }
         // 检查账号状态是否正常
         if (user.getAccountStatus()!=null){
             if (!user.getAccountStatus().equals("online") && !user.getAccountStatus().equals("offline")){
@@ -68,10 +71,9 @@ public class UserServiceImpl implements UserService {
         if(passwordEncoder.matches(password,user.getPassword())){
             return "ok";
         }else {
-            return "password error";
+            return "密码错误";
         }
     }
-
     @Override
     public User selectById(int id) {
         return  mapper.select(id);

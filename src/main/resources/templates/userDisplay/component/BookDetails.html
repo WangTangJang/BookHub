@@ -1,0 +1,52 @@
+<!-- 此处展示书籍的详细信息 -->
+<div class="row py-3">
+    <!-- 书籍封面 -->
+    <div class="col-sm-2 mb-3">
+            <img th:src="@{${book.cover}}" class="img-fluid rounded" alt="Book Cover">
+    </div>
+    <!-- 书籍信息 -->
+    <div class="col-sm-6">
+        <h1>《<span th:text="@{${book.title}}"></span>》</h1>
+        <h3>作者：<span th:text="@{${book.author}}"></span></h3>
+        <h3>ISBN：<span th:text="@{${book.isbn}}"></span></h3>
+        <h3>评分：<span id="bookRating" th:text="@{${book.averageRating}}"></span>/10</h3>
+        <h5  style="font-style: italic;">已有<span th:text="@{${book.shelfCount}}"></span>人收藏本书</h5>
+        <h5  style="font-style: italic;">已有<span th:text="@{${book.ratingCount}}"></span>人给本书打出了分数</h5>
+    </div>
+    <div class="col-4 text-right">
+        <div class="row">
+            <div class="col-6">
+                <!--只有登录后才可以收藏-->
+                <div th:if="${session.user!=null}">
+                    <a href="#" class="btn btn-info btn-block mt-2">收藏</a>
+                </div>
+                <div th:if="${session.user==null}">
+                    <a href="#" class="btn btn-dark btn-block mt-2" data-toggle="modal" data-target="#loginModal">登录后收藏</a>
+                </div>
+            </div>
+            <div class="col-6">
+                <!--只有登录后才可以打分-->
+                <div th:if="${session.user!=null}">
+                    <div th:if="${userRating ==null}">
+                        <!--点击打分后，弹出拟态框-->
+                        <a href="#" data-toggle="modal" data-target="#ratingPopover"  class="btn btn-primary btn-block mt-2">打分</a>
+                    </div>
+                    <div th:if="${userRating !=null}">
+                        <a href="#" class="btn btn-light btn-block mt-2">您打了<span th:text="${userRating}"></span>分</a>
+                    </div>
+                </div>
+                <div th:if="${session.user==null}">
+                    <a href="#" class="btn btn-dark btn-block mt-2" data-toggle="modal" data-target="#loginModal">登录后打分</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <a href="#" class="btn btn-success btn-block mt-2">下载</a>
+            </div>
+            <div class="col-6">
+                <a href="#" class="btn btn-danger btn-block mt-2">举报</a>
+            </div>
+        </div>
+    </div>
+</div>

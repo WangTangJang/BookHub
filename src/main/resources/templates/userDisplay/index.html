@@ -1,12 +1,8 @@
-<!-- 一个书籍分享网站 -->
-<!-- 网站具有查看书籍,给书籍点赞,发表评论,点赞评论等功能 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>MyHTML</title>
+    <title>BookHub</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../static/css/MyStyle.css" th:href="@{/static/css/MyStyle.css}">
-    <script src="../../static/js/MyScript.js" th:src="@{/static/js/MyScript.js}"></script>
 
     <!-- 引入bootstrap -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -14,151 +10,31 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 </head>
 <body >
-    <!-- 一个导航栏 -->
-    <nav class="navbar navbar-expand-sm navbar-custom navbar-light">
-        <a class="navbar-brand" href="#">BookHub</a>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-search"></i>搜索</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-upload"></i>上传</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-trophy"></i>排行榜</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-info-circle"></i>关于</a>
-            </li>
-
-        </ul>
-        
-        <!-- 一行诗词 -->
-        <div class="navbar-text ml-auto" id="gushici">
-            红叶黄花秋意晚，千里念行客。
-        </div>
-        <!-- 检查是否登录 -->
-        <!-- Thymeleaf 检查是否登录 -->
-        <ul class="navbar-nav ml-auto">
-            <!-- 如果用户已登录，显示用户信息和退出链接 -->
-            <li class="nav-item" th:if="${#session.getAttribute('username') != null}">
-        <span class="nav-link">
-            <i class="fas fa-user"></i> 用户名: [[${#session.getAttribute('username')}]]
-        </span>
-            </li>
-            <li class="nav-item" th:if="${#session.getAttribute('username') != null}">
-                <a class="nav-link" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>退出</a>
-            </li>
-
-            <!-- 如果用户未登录，显示登录和注册链接 -->
-            <li class="nav-item" th:if="${#session.getAttribute('loggedInUser') == null}">
-                <a class="nav-link" data-toggle="modal" data-target="#loginModal" th:href="@{/login}">
-                    <i class="fas fa-sign-in-alt"></i>登录
-                </a>
-            </li>
-            <li class="nav-item" th:if="${#session.getAttribute('loggedInUser') == null}">
-                <a class="nav-link" data-toggle="modal" data-target="#registerModal" th:href="@{/register}">
-                    <i class="fas fa-user-plus"></i>注册
-                </a>
-            </li>
-        </ul>
-
-    </nav>
-
+    <!--弹窗-->
+    <div th:replace="userDisplay/component/MessagePopover"></div>
+    <!--导航栏-->
+    <div class="row" th:replace="userDisplay/component/Header"></div>
     <div class="container-fluid ">
-        <div class="row main">
-            <!-- 中间栏 -->
-            <div class="col-sm-10 content-custom">
-                <!-- 主页面用来展示书籍 -->
-                <div class="row  py-3">
-                    <div class="col-sm-2 mb-3" th:each="book:${books}">
-                        <a href="#">
-                            <div class="card shadow-lg" >
-                                <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
-                                <div class="card-body">
-                                    <h5 class="card-title text-center" th:text="${book.title}"></h5>
-                                    <!--评分图标-->
-                                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-star" ></i>评分 <span class="badge badge-light">9/10</span></a>
-                                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light">5</span></a>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+        <!--主体-->
+        <div class="row main py-3">
+            <!-- 正文栏 -->
+            <div class="col-sm-10 content-custom" >
+                <div th:replace="userDisplay/component/indexBody"></div>
             </div>
-            <!-- 右侧栏 -->
-            <div class="col-sm-2 sidebar-custom">
-                <h2><strong><i class="fa fa-fire" aria-hidden="true"></i>热门书籍</strong></h2>
-                <hr>
-            </div>
-        </div>
-        
-    </div>
-    
-    <!-- 登录框 -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">登录</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="username">用户名</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">密码</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">确认</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    </form>
-                </div>
+            <!--右侧边栏-->
+            <div class="col-sm-2" >
+                <div th:replace="userDisplay/component/Sidebar"></div>
             </div>
         </div>
     </div>
-    <!-- 注册框 -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">注册</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form th:action="@{/user/register}" method="post">
-                        <div class="form-group">
-                            <label for="username_r">用户名</label>
-                            <input type="text" class="form-control" id="username_r" name="username" placeholder="Enter username">
-                        </div>
-                        <div class="form-group">
-                            <label for="email_r">邮箱</label>
-                            <input type="email" class="form-control" id="email_r" name="email" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="password_r">密码</label>
-                            <input type="password" class="form-control" id="password_r" name="password" placeholder="Enter password">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">确认密码</label>
-                            <input type="password" class="form-control" id="checkPassword" name="checkPassword" placeholder="Enter password">
-                        </div>
-                        <button type="submit" id="submitBtn" class="btn btn-primary">确认</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--登录框-->
+    <div th:replace="userDisplay/component/LoginBox"></div>
+    <!--注册框-->
+    <div th:replace="userDisplay/component/RegisterBox"></div>
 </body>
+<link rel="stylesheet" href="../../static/css/MyStyle.css" th:href="@{/static/css/MyStyle.css}">
+<script src="../../static/js/MyScript.js" th:src="@{/static/js/MyScript.js}"></script>
+
 </html>

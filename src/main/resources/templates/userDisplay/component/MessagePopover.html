@@ -1,0 +1,7 @@
+<!--检测model.addAttribute("errorMessage",result);是否为空-->
+<div th:if="${param.errorMessage!=null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong th:text="${param.errorMessage}">Error</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

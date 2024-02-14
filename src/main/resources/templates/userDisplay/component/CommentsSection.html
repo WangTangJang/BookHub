@@ -1,0 +1,137 @@
+<div class="row py-3">
+  <!--评论区顶部栏-->
+  <div class="col-sm-12">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <h2 class="d-inline">评论</h2>
+      <span class="ml-3">最新</span>
+      <span class="ml-3">最热</span>
+    </div>
+    <hr>
+  </div>
+
+  <!--评论输入框-->
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-1">
+        <img src="https://example.com/user-avatar.jpg" class="img-fluid rounded" alt="User Avatar">
+      </div>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" placeholder="发表评论...">
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="btn btn-primary">发送</button>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <!--评论区主体-->
+  <div class="col-sm-12">
+    <div class="row">
+      <!--用户头像-->
+      <div class="col-sm-1">
+        <img src="https://img3.doubanio.com/icon/u1000001-30.jpg" class="avatar-img" alt="Responsive image">
+        <p>打出了5分</p>
+      </div>
+      <div class="col-sm-11">
+        <!-- 评论内容的头部 -->
+        <div class="row">
+          <div class="col-sm-5">
+            <h3>泽峰</h3>
+          </div>
+          <!-- 评论交互区 -->
+          <div class="col-sm-3 text-right">
+            <!-- 回复图标 -->
+            <button onclick="showReplyInput(1)"><i class="fas fa-reply">回复</i></button>
+            <!-- 点赞图标 -->
+            <button><i class="fas fa-thumbs-up">100</i></button>
+            <!-- 点踩图标 -->
+            <button><i class="fas fa-thumbs-down">29</i></button>
+          </div>
+          <div class="col-sm-3 text-right">
+            <!-- 发送日期 -->
+            <span class="comment-date">2022年10月1日,10点30分</span>
+          </div>
+          <div class="col-sm-1 text-right">
+            <i class="fas fa-flag"></i>
+          </div>
+        </div>
+        <!-- 评论内容的主体 -->
+        <div class="row">
+          <p>我相信大多数人在高中历史课上学完建国初期的历史以后就没有再仔细认真的研究过那段历史吧。而且历史课本上对于那段时期的历史介绍的也并不细，在我那个年代高考文综试卷的分值占比也比较低，好像是不超过10分吧。很多人对那段时期的历史一知半解甚至很模糊，导致很多人弄不清楚为什么土改分田完以后又要干公社，为什么从发展民族资本注意变成大力发展国有经济。进而导致了，某些人利用大家的不了解将思想和舆论向他们希望的方向引导从而实现他们的目的。衷心希望这类能把过去发生的事情清楚明白的讲出来的作品可以有更多人看到，让读者可以得到属于自己的认知而不是似懂非懂而后人云亦云进而成为别人的工具。</p>
+        </div>
+
+        <hr>
+        <!-- 回复区 -->
+        <div class="row">
+          <!-- 头像 -->
+          <div class="col-sm-1">
+            <img src="https://w.wallhaven.cc/full/x6/wallhaven-x6wjkv.png" class="responsive-avatar-img">
+          </div>
+          <div class="col-sm-11">
+            <!-- 回复内容的头部 -->
+            <div class="row">
+              <div class="col-sm-5">
+                <h4>利剑出鞘</h4>
+              </div>
+              <!-- 评论交互区 -->
+              <div class="col-sm-3 text-right">
+                <!-- 回复图标 -->
+                <button onclick="showReplyInput(1)"><i class="fas fa-reply">回复</i></button>
+                <!-- 点赞图标 -->
+                <button><i class="fas fa-thumbs-up">100</i></button>
+                <!-- 点踩图标 -->
+                <button><i class="fas fa-thumbs-down">29</i></button>
+              </div>
+              <div class="col-sm-3 text-right">
+                <span class="comment-date">2022年10月1日,10点30分</span>
+              </div>
+              <div class="col-sm-1 text-right">
+                <i class="fas fa-flag"></i>
+              </div>
+            </div>
+            <!-- 评论内容的主体 -->
+            <div class="row">
+              <p>土改后变成合作社是必然，因为要保证土地兼并不会再发生。土改在历史也不是共产党首创，比如唐初的均田制也是土改的一种，但是问题在于土地产权在老百姓自己手里，必然会导致天灾人祸后土地集中重新兼并。建国分地后搞合作社就是因为建国初期百废待兴，很多人家没有壮劳力外加各种天灾人祸后土地重新集中又产生新地主了。只能搞合作化防止新的地主。</p>
+            </div>
+          </div>
+        </div>
+        <!-- 查看更多回复 -->
+        <div class="row">
+          <div class="col-sm-12">
+            <a href="#">查看更多回复</a>
+          </div>
+        </div>
+        <!-- 回复输入区 -->
+        <div class="row" style="display:none" id="replyInput1">
+          <div class="col-sm-1">
+            <img src="https://example.com/user-avatar.jpg" class="img-fluid rounded" alt="User Avatar">
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" placeholder="回复...">
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="col-sm-12">
+    <div class="row">
+      <!--用户头像-->
+      <div class="col-sm-1">
+        <img src="https://img3.doubanio.com/icon/u1000001-30.jpg" class="img-fluid rounded" alt="Responsive image">
+        <p>打出了5分</p>
+      </div>
+      <div class="col-sm-11">
+        <h3>天纵奇才</h3>
+        <p>生产力不够 不发展科技工业 反而分家和家底 靠所谓的积极性提高生产力 这不是荒诞么 人积极性再高能比高科技厉害么
+          各自单干能提高一部分人赚钱的积极性 但并不能提高大家干活的积极性 这两者不能混一谈</p>
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>
+</div>

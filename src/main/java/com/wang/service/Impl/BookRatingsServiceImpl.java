@@ -2,10 +2,13 @@ package com.wang.service.Impl;
 
 import com.wang.mapper.BookRatingsMapper;
 import com.wang.model.BookRatings;
+import com.wang.model.Books;
 import com.wang.service.BookRatingsService;
 import com.wang.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.awt.print.Book;
 
 @Service
 public class BookRatingsServiceImpl implements BookRatingsService {
