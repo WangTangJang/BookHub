@@ -15,17 +15,15 @@
     <!--弹窗-->
     <div th:replace="userDisplay/component/MessagePopover"></div>
     <!--导航栏-->
-    <div class="row" th:replace="userDisplay/component/Header"></div>
-    <div class="container-fluid ">
+    <div th:replace="userDisplay/component/Header"></div>
+
+
+    <div class="container-fluid " >
         <!--主体-->
-        <div class="row main py-3">
+        <div class="row main py-3" th:fragment="indexMain" id="indexMain" >
             <!-- 正文栏 -->
-            <div class="col-sm-10 content-custom" >
-                <div th:replace="userDisplay/component/indexBody"></div>
-            </div>
-            <!--右侧边栏-->
-            <div class="col-sm-2" >
-                <div th:replace="userDisplay/component/Sidebar"></div>
+            <div class="col-sm-12 content-custom" th:switch="${session.currentLocation}">
+                <div th:case="index" th:replace="userDisplay/component/indexBody"></div>
             </div>
         </div>
     </div>

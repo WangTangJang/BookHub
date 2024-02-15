@@ -28,9 +28,9 @@ $('#loginForm').submit(function (event) {
         url: url,
         data: JSON.stringify({username:username, password:password}),
         contentType: 'application/json',
-        success: function(response) {
+        success: function(newNavbarHtml) {
             // 处理登录成功的情况
-            location.reload();
+            $('#userCenter').replaceWith(newNavbarHtml);
             // 关闭登录框
             $('#loginModal').modal('hide');
         },
@@ -41,42 +41,40 @@ $('#loginForm').submit(function (event) {
         }
     })
 })
-function updateNavbar(){
-    // 检查当前session中是否有session.setAttribute("user",user);
 
-
-}
-
-
-// 当模态框显示时
-$('#ratingPopover').on('show.bs.modal', function () {
-    // 绑定提交按钮的点击事件
-    $('#ratingSubmit').on('click', function () {
-
-        let button = $(this); // 触发提交的按钮
-        // 从按钮中获取书籍ID
-        let bookId = button.data('book-id');
-
-        let saveUrl = button.data('save-url');
-        // 获取选择的评分
-        let selectedRating = parseInt($('#ratingSelect').val(), 10);
-
-        // 发送评分到后端保存，使用Ajax
-        $.ajax({
-            type: 'POST',
-            url: saveUrl, // 替换为你的后端保存评分的接口
-            contentType: 'application/json',
-            data: JSON.stringify({ bookId: bookId, rating: selectedRating }),
-            success: function(AverageRating) {
-                // 处理成功响应
-                $('#bookRating').text(AverageRating);
-                // 关闭模态框
-                $('#ratingPopover').modal('hide');
-            },
-            error: function(error) {
-                // 处理错误
-                console.error('Error saving rating:', error);
-            }
-        });
+// 退出
+$('#logout').click(function(event) {
+    // 拦截
+    event.preventDefault();
+    let url = $(this).attr('href');
+    $.ajax({
+        url : url,
+        method: 'POST',
+        success: function(newNavbarHtml) {
+            // 处理退出成功的情况
+            $('#logoutModal').modal('hide');
+            $('#userCenter').replaceWith(newNavbarHtml);
+        },
+        error: function(error) {
+            // 处理退出失败的情况
+            console.error('Logout failed:', error);
+        }
     });
+});
+
+<!--    当toBookInfo点击的时候-->
+$(".toBookInfo").click(function (event) {
+    //    拦截当前
+    event.preventDefault();
+    let url = $(this).attr('href');
+    $.ajax({
+        url:url,
+        type: 'POST',
+        success: function (bookDetailHtml) {
+            // 弹出一个拟态框
+            $('#bookDetailModal .modal-body').html(bookDetailHtml);
+            $('#bookDetailModal').modal('show');
+        }
+    })
+
 });

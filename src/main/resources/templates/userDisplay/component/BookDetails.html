@@ -1,5 +1,5 @@
 <!-- 此处展示书籍的详细信息 -->
-<div class="row py-3">
+<div class="row py-3" th:if="${book != null}" th:fragment="bookDetails" id="bookDetails">
     <!-- 书籍封面 -->
     <div class="col-sm-2 mb-3">
             <img th:src="@{${book.cover}}" class="img-fluid rounded" alt="Book Cover">
@@ -13,6 +13,7 @@
         <h5  style="font-style: italic;">已有<span th:text="@{${book.shelfCount}}"></span>人收藏本书</h5>
         <h5  style="font-style: italic;">已有<span th:text="@{${book.ratingCount}}"></span>人给本书打出了分数</h5>
     </div>
+    <!--与书籍的交互组件-->
     <div class="col-4 text-right">
         <div class="row">
             <div class="col-6">
@@ -46,6 +47,52 @@
             </div>
             <div class="col-6">
                 <a href="#" class="btn btn-danger btn-block mt-2">举报</a>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出一个打分的弹窗 使用bootstrap的拟态框-->
+    <div class="modal fade" id="ratingPopover" tabindex="-1" role="dialog" aria-labelledby="ratingPopoverLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ratingPopoverLabel">您认为该书值几分呢</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="rating">
+                                    <!--一分到九分中选择一个-->
+                                    <select class="form-control mt-2" id="ratingSelect">
+                                        <option value="1">1分</option>
+                                        <option value="2">2分</option>
+                                        <option value="3">3分</option>
+                                        <option value="4">4分</option>
+                                        <option value="5">5分</option>
+                                        <option value="6">6分</option>
+                                        <option value="7">7分</option>
+                                        <option value="8">8分</option>
+                                        <option value="9">9分</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button"
+                            class="btn btn-primary"
+                            id="ratingSubmit"
+                            th:data-book-id="${book.id}"
+                            th:data-save-url="@{/user/saveRating}"
+                    >
+                        提交
+                    </button>
+                </div>
             </div>
         </div>
     </div>

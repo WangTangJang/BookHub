@@ -34,6 +34,12 @@ public class BookRatingsServiceImpl implements BookRatingsService {
 
     }
 
+    // 判断用户是否已经对书籍评分
+    public boolean isRated(long userId ,long bookId){
+        BookRatings bookRatings = mapper.select(new BookRatings(userId,bookId));
+        return bookRatings != null;
+    }
+
     @Override
     public int selectBookRating(long userId ,long bookId) {
         BookRatings bookRatings = mapper.select(new BookRatings(userId,bookId));

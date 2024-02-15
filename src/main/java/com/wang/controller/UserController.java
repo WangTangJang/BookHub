@@ -34,45 +34,44 @@ public class UserController {
         return "redirect:/toIndex";
     }
 
+    /**
+     * 登录
+     * @param data 用户名和密码
+     * @param session 会话
+     * @param model 模型
+     * @return 登录结果
+     */
     @PostMapping("/login")
-    @ResponseBody
-    public ResponseEntity<String> login(@RequestBody Map<String,String> data, HttpSession session, Model model){
+    public String login(@RequestBody Map<String,String> data, HttpSession session, Model model){
         String result = userService.login(data.get("username"), data.get("password"));
         User user = userService.selectByUsername(data.get("username"));
         if(result.equals("ok")){
             session.setAttribute("user",user);
-            return new ResponseEntity<>("ok", HttpStatus.OK);
         }else {
             model.addAttribute("errorMessage",result);
-            return new ResponseEntity<>("error", HttpStatus.OK);
         }
+        return "userDisplay/component/Header :: userCenter";
     }
-    @RequestMapping("/logout")
-    public String logout(HttpSession session,HttpServletRequest request){
-        String referer = request.getHeader("Referer");
-        session.removeAttribute("user");
-        if (referer != null){
-            return "redirect:"+referer;
+    @PostMapping ("/logout")
+    public String  logout(HttpSession session){
+        if (session.getAttribute("user")!=null){
+            session.removeAttribute("user");
+        }else {
         }
-        return "redirect:/toIndex";
+        return "userDisplay/component/Header :: userCenter";
+
     }
 
     @PostMapping("saveRating")
-    @ResponseBody
-    public ResponseEntity<Double> saveRating(@RequestBody Map<String,Integer> data, HttpSession session){
+    public String saveRating(@RequestBody Map<String,Integer> data, HttpSession session){
         User user = (User) session.getAttribute("user");
         if (user != null) {
-
             int bookId = data.get("bookId");
             int rating = data.get("rating");
-
             bookRatingsService.rateBook(user.getId(),bookId, rating);
             double AverageRating =  booksService.selectById(bookId).getAverageRating();
             // 返回成功的响应
-            return new ResponseEntity<>(AverageRating, HttpStatus.OK);
-        } else {
-            // 如果用户未登录，返回未授权的响应
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+        return "userDisplay/component/BookDetails :: bookDetails";
     }
 }

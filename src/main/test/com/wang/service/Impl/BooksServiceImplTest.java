@@ -30,13 +30,13 @@ public class BooksServiceImplTest {
     @Test
     public void test(){
         Books books = new Books();
-        books.setTitle("三国演义");
-        books.setAuthor("罗贯中");
-        books.setIsbn("32374823241221230");
+        books.setTitle("西游记");
+        books.setAuthor("吴承恩");
+        books.setIsbn("3237482312391221230");
         books.setFormat("EPUB");
         books.setFilePath("C://");
         books.setFileSize(10);
-        books.setCover("/static/images/00003.jpeg");
+        books.setCover("/static/images/00002.jpeg");
         books.setCategoryId(2);
         System.out.println(service.adminUpload(books));
     }

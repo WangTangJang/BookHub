@@ -12,12 +12,14 @@ public interface BookRatingsService {
      */
     String rateBook(long userId,long bookId, int rating);
 
-    /**
-     * 搜素用户对某一本书的评分
-     * @param userId 用户id
-     * @param bookId 书籍id
-     * @return 评分
-     */
+    public boolean isRated(long userId ,long bookId);
+
+        /**
+         * 搜素用户对某一本书的评分
+         * @param userId 用户id
+         * @param bookId 书籍id
+         * @return 评分
+         */
     int selectBookRating(long userId ,long bookId);
 
     /**

@@ -5,6 +5,10 @@
     /* 加粗 */
     font-weight: bold;
 }
+
+.custom-logo{
+    font-size: 25px;
+}
 /* 图标偏移 */
  i {
     margin-right: 5px;
@@ -41,18 +45,4 @@
 .card-body{
     background-color: rgba(103, 98, 98, 0.823);
 }
-#loginModal .modal-content {
-    color: #ffffff;
-    background-color: rgba(103, 98, 98, 0.823); 
-}
-#loginModal .modal-content .modal-header{
-    border: none;
-}
-#loginModal .modal-body {
-    background-color: rgba(81, 77, 77, 0.874); 
-}
-#loginModal .modal-body input{
-    background-color: rgba(103, 98, 98, 0.823); 
-    border: none;
-    color: #ffffff;
-}
+

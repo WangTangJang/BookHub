@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-2 mb-3" th:each="book:${books}">
-        <a th:href="@{book/toBookInfo/{id}(id=${book.id})}">
+        <a th:href="@{book/toBookInfo/{id}(id=${book.id})}" class="toBookInfo">
             <div class="card shadow-lg" >
                 <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
                 <div class="card-body">
@@ -11,5 +11,22 @@
                 </div>
             </div>
         </a>
+    </div>
+</div>
+
+<!--一个拟态框窗口，窗口内显示的BookDetail.html的内容-->
+<div class="modal fade" id="bookDetailModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookDetailModalLabel">书籍详情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--调整窗口的大小-->
+            <div class="modal-body" id="bookDetailModalBody" >
+            </div>
+        </div>
     </div>
 </div>
