@@ -1,11 +1,23 @@
 #gushici {
     /* 调整gushici的字体大小 */
-    /* font-size: 1.3em; */
+     font-size: 1.3em;
 
     /* 加粗 */
     font-weight: bold;
 }
-
+/*整体页面的背景图片*/
+/*body::before {*/
+/*    content: "";*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    z-index: -1; !* 将伪元素置于背景之后 *!*/
+/*    background-image: url(https://w.wallhaven.cc/full/jx/wallhaven-jxqyrq.jpg);*/
+/*    background-size: cover;*/
+/*    filter: blur(2px); !* 调整虚化效果的程度 *!*/
+/*}*/
 .custom-logo{
     font-size: 25px;
 }
@@ -34,15 +46,22 @@
 }
 /* 导航栏 */
 .navbar-custom {
-    background-color: rgb(218, 218, 218)
-
+    background-color: rgba(218, 218, 218,0.5)
+/*    透明度*/
 }
+
 /* 侧边栏 */
 .sidebar-custom{
     background-color: rgb(205, 205, 205)
 }
-/* 卡片颜色 */
+/* 卡片背景图片 */
 .card-body{
-    background-color: rgba(103, 98, 98, 0.823);
+
+}
+.card-body .card-title{
+    color: #000000;
+    text-decoration: none;
+/*    加粗*/
+    font-weight: bold;
 }
 

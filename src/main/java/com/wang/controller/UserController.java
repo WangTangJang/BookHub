@@ -1,6 +1,7 @@
 package com.wang.controller;
 
 
+import com.wang.model.Books;
 import com.wang.model.User;
 import com.wang.service.BookRatingsService;
 import com.wang.service.BooksService;
@@ -36,15 +37,15 @@ public class UserController {
 
     /**
      * 登录
-     * @param data 用户名和密码
+     * @param password 用户名和密码
      * @param session 会话
      * @param model 模型
      * @return 登录结果
      */
-    @PostMapping("/login")
-    public String login(@RequestBody Map<String,String> data, HttpSession session, Model model){
-        String result = userService.login(data.get("username"), data.get("password"));
-        User user = userService.selectByUsername(data.get("username"));
+    @GetMapping("/login")
+    public String login(String username,String password, HttpSession session, Model model){
+        String result = userService.login(username, password);
+        User user = userService.selectByUsername(username);
         if(result.equals("ok")){
             session.setAttribute("user",user);
         }else {
@@ -63,15 +64,16 @@ public class UserController {
     }
 
     @PostMapping("saveRating")
-    public String saveRating(@RequestBody Map<String,Integer> data, HttpSession session){
+    public String saveRating(@RequestBody Map<String,Integer> data, HttpSession session,Model model){
         User user = (User) session.getAttribute("user");
         if (user != null) {
             int bookId = data.get("bookId");
             int rating = data.get("rating");
             bookRatingsService.rateBook(user.getId(),bookId, rating);
-            double AverageRating =  booksService.selectById(bookId).getAverageRating();
-            // 返回成功的响应
+            model.addAttribute("userRating",rating);
         }
-        return "userDisplay/component/BookDetails :: bookDetails";
+        Books books = booksService.selectById(data.get("bookId"));
+        model.addAttribute("book",books);
+        return "userDisplay/component/BookDetails";
     }
 }

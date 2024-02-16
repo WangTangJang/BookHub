@@ -1,58 +1,58 @@
 package demo;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+// 使用动态代理
 public class Demo {
     public static void main(String[] args) {
-        System.out.println("你好");
+        RealSubject realSubject = new RealSubject();
+        InvocationHandler handler = new MyInvocationHandler(realSubject);
+
+        // 创建动态代理对象
+        Subject proxy = (Subject) Proxy.newProxyInstance(
+                Subject.class.getClassLoader(),
+                new Class[] { Subject.class },
+                handler
+        );
+
+        // 通过代理调用真实对象的方法
+        proxy.request();
     }
 }
 
-// Address.java
- class Address {
-    private String city;
-    private String zipCode;
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-// Getter and Setter methods
+// 接口
+interface Subject {
+    void request();
 }
 
-// Person.java
- class Person {
-    private String name;
-    private Address address;
-
-    // Getter and Setter methods
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
+// 真实对象
+class RealSubject implements Subject {
+    public void request() {
+        System.out.println("RealSubject: Processing request.");
     }
 }
+
+// InvocationHandler 实现
+class MyInvocationHandler implements InvocationHandler {
+    private Object realSubject;
+
+    public MyInvocationHandler(Object realSubject) {
+        this.realSubject = realSubject;
+    }
+
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 额外的操作
+        System.out.println("Proxy: Pre-processing request.");
+
+        // 调用真实对象的方法
+        Object result = method.invoke(realSubject, args);
+
+        // 额外的操作
+        System.out.println("Proxy: Post-processing request.");
+
+        return result;
+    }
+}
+

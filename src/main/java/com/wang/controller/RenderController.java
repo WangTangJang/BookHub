@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
+@RequestMapping("render")
 public class RenderController {
 
 }

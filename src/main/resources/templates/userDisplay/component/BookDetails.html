@@ -22,7 +22,7 @@
                     <a href="#" class="btn btn-info btn-block mt-2">收藏</a>
                 </div>
                 <div th:if="${session.user==null}">
-                    <a href="#" class="btn btn-dark btn-block mt-2" data-toggle="modal" data-target="#loginModal">登录后收藏</a>
+                    <a th:href="@{book/toBookInfo/{id}(id=${book.id})}" class="btn btn-dark btn-block mt-2 loginRequest" >先登录吧</a>
                 </div>
             </div>
             <div class="col-6">
@@ -30,14 +30,14 @@
                 <div th:if="${session.user!=null}">
                     <div th:if="${userRating ==null}">
                         <!--点击打分后，弹出拟态框-->
-                        <a href="#" data-toggle="modal" data-target="#ratingPopover"  class="btn btn-primary btn-block mt-2">打分</a>
+                        <a th:href="@{/book/toBookInfo/{id}(id=${book.id})}" class="btn btn-primary btn-block mt-2" data-target="#rateModal" data-toggle="modal" id="RateToBook">打分</a>
                     </div>
                     <div th:if="${userRating !=null}">
                         <a href="#" class="btn btn-light btn-block mt-2">您打了<span th:text="${userRating}"></span>分</a>
                     </div>
                 </div>
                 <div th:if="${session.user==null}">
-                    <a href="#" class="btn btn-dark btn-block mt-2" data-toggle="modal" data-target="#loginModal">登录后打分</a>
+                    <a th:href="@{/book/toBookInfo/{id}(id=${book.id})}" class="btn btn-dark btn-block mt-2 loginRequest" >先登录吧</a>
                 </div>
             </div>
         </div>
@@ -50,49 +50,26 @@
             </div>
         </div>
     </div>
-    <!-- 弹出一个打分的弹窗 使用bootstrap的拟态框-->
-    <div class="modal fade" id="ratingPopover" tabindex="-1" role="dialog" aria-labelledby="ratingPopoverLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ratingPopoverLabel">您认为该书值几分呢</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="rating">
-                                    <!--一分到九分中选择一个-->
-                                    <select class="form-control mt-2" id="ratingSelect">
-                                        <option value="1">1分</option>
-                                        <option value="2">2分</option>
-                                        <option value="3">3分</option>
-                                        <option value="4">4分</option>
-                                        <option value="5">5分</option>
-                                        <option value="6">6分</option>
-                                        <option value="7">7分</option>
-                                        <option value="8">8分</option>
-                                        <option value="9">9分</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+</div>
+<!--打分的拟态-->
+<div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rateModalLabel">打分</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/user/saveRating}" method="post" id="rateBookFrom">
+                    <input type="hidden" name="bookId" th:value="${book.id}">
+                    <div class="form-group" >
+                        <label for="rating">打分</label>
+                        <input type="number" class="form-control" id="rating" name="rating" min="0" max="9" required placeholder="0到9分之间">
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button"
-                            class="btn btn-primary"
-                            id="ratingSubmit"
-                            th:data-book-id="${book.id}"
-                            th:data-save-url="@{/user/saveRating}"
-                    >
-                        提交
-                    </button>
-                </div>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </form>
             </div>
         </div>
     </div>

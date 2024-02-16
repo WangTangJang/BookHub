@@ -21,9 +21,16 @@ public class IndexController {
     private BooksService service;
 
     // 跳转到首页
-    @RequestMapping("/toIndex")
+    @RequestMapping("/index")
     public String toIndex(Model model,HttpSession session){
         List<Books> books = service.selectAll();
+        // 将获取到的books随机打乱
+        for (int i = 0; i < books.size(); i++) {
+            int randomIndex = (int) (Math.random() * books.size());
+            Books temp = books.get(i);
+            books.set(i, books.get(randomIndex));
+            books.set(randomIndex, temp);
+        }
         model.addAttribute("books", books);
         session.setAttribute("currentLocation", "index");
         return "userDisplay/index";

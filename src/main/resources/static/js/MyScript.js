@@ -24,9 +24,9 @@ $('#loginForm').submit(function (event) {
     let username = form.find('input[name="username"]').val();
     let password = form.find('input[name="password"]').val();
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: url,
-        data: JSON.stringify({username:username, password:password}),
+        data: {username:username, password:password},
         contentType: 'application/json',
         success: function(newNavbarHtml) {
             // 处理登录成功的情况
@@ -69,12 +69,47 @@ $(".toBookInfo").click(function (event) {
     let url = $(this).attr('href');
     $.ajax({
         url:url,
-        type: 'POST',
+        type: 'GET',
         success: function (bookDetailHtml) {
             // 弹出一个拟态框
-            $('#bookDetailModal .modal-body').html(bookDetailHtml);
             $('#bookDetailModal').modal('show');
+            $('#bookDetails').replaceWith(bookDetailHtml);
         }
     })
-
 });
+
+
+
+// 事件委托,点击登录请求时。
+$(document).on('click', '.loginRequest', function (event) {
+    event.preventDefault();
+    let url = event.target.href;
+    $('#loginModal').modal('show').on('hidden.bs.modal', function (e) {
+        $.ajax({
+            url : url,
+            type: "GET",
+            success: function (data){
+                $("#bookDetails").replaceWith(data);
+            }
+        })
+    });
+})
+
+// 事件委托，当rateModal提交时
+$(document).on('submit', '#rateBookFrom', function (event) {
+    event.preventDefault();
+    let url = $(this).attr('action');
+    // 将字符串转换为整数
+    let bookId = parseInt($(this).find('input[name="bookId"]').val());
+    let rating = parseInt($(this).find('input[name="rating"]').val());
+    $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({bookId: bookId, rating: rating}),
+        success: function (data) {
+            $('#rateModal').modal('hide');
+            $('#bookDetails').replaceWith(data);
+        }
+    })
+})

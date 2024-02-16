@@ -1,12 +1,13 @@
+<!--书籍展示-->
 <div class="row">
     <div class="col-sm-2 mb-3" th:each="book:${books}">
-        <a th:href="@{book/toBookInfo/{id}(id=${book.id})}" class="toBookInfo">
+        <a th:href="@{/book/toBookInfo/{id}(id=${book.id})}" class="toBookInfo">
             <div class="card shadow-lg" >
                 <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
                 <div class="card-body">
                     <h5 class="card-title text-center" th:text="${book.title}"></h5>
                     <!--评分图标-->
-                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-star" ></i>评分 <span class="badge badge-light" th:text="${book.ratingCount}"></span></a>
+                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-star" ></i>评分 <span class="badge badge-light" th:text="${book.averageRating}"></span></a>
                     <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light" th:text="${book.reviewsCount}"></span></a>
                 </div>
             </div>
@@ -25,7 +26,8 @@
                 </button>
             </div>
             <!--调整窗口的大小-->
-            <div class="modal-body" id="bookDetailModalBody" >
+            <div class="modal-body">
+                <div id="bookDetails"></div>
             </div>
         </div>
     </div>
