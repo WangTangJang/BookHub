@@ -13,21 +13,5 @@
     http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
     <!--开启注解扫描-->
     <context:component-scan base-package="demo"/>
-    <!-- Address Bean -->
-    <bean id="address2" class="demo.Address">
-        <property name="city" value="HeNan"/>
-        <property name="zipCode" value="10001"/>
-    </bean>
 
-    <bean id="address" class="demo.Address">
-        <property name="city" value="New York"/>
-        <property name="zipCode" value="10001"/>
-    </bean>
-
-    <!-- Person Bean -->
-    <!-- Person Bean with Autowiring byType -->
-    <bean id="person" class="demo.Person" autowire="byName">
-        <property name="name" value="John Doe" />
-        <!-- The 'address' property will be automatically injected by matching type -->
-    </bean>
 </beans>
