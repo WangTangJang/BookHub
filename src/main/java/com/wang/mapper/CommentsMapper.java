@@ -1,20 +1,23 @@
 package com.wang.mapper;
 
-import com.wang.model.Comments;
+import com.wang.model.Comment;
+
+import java.util.List;
 
 public interface CommentsMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Comments record);
+    int insert(Comment record);
 
-    int insertSelective(Comments record);
+    int insertSelective(Comment record);
 
-    Comments selectByPrimaryKey(Integer id);
+    Comment selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Comments record);
+    int updateByPrimaryKeySelective(Comment record);
 
-    int updateByPrimaryKeyWithBLOBs(Comments record);
+    int updateByPrimaryKeyWithBLOBs(Comment record);
 
-    int updateByPrimaryKey(Comments record);
+    int updateByPrimaryKey(Comment record);
 
+    List<Comment> selectByBookId(int bookId);
 }

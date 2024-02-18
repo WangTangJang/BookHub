@@ -6,9 +6,7 @@
                 <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
                 <div class="card-body">
                     <h5 class="card-title text-center" th:text="${book.title}"></h5>
-                    <!--评分图标-->
-                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-star" ></i>评分 <span class="badge badge-light" th:text="${book.averageRating}"></span></a>
-                    <a href="#" class="btn btn-dark btn-sm btn-block"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light" th:text="${book.reviewsCount}"></span></a>
+                    <a th:href="@{/viewComments/{id}(id=${book.id})}"  class="btn btn-dark btn-sm btn-block showComments"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light" th:text="${book.reviewsCount}"></span></a>
                 </div>
             </div>
         </a>
@@ -28,6 +26,24 @@
             <!--调整窗口的大小-->
             <div class="modal-body">
                 <div id="bookDetails"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--一个拟态框窗口,显示评论区内-->
+<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >书籍评论</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--调整窗口的大小-->
+            <div class="modal-body">
+                <div id="commentsSection"></div>
             </div>
         </div>
     </div>

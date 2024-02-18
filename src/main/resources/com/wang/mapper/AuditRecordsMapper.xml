@@ -5,8 +5,8 @@
 
 <mapper namespace="com.wang.mapper.AuditRecordsMapper">
     <insert id="insert" parameterType="AuditRecords">
-        insert into audit_records (book_id, result,  auditor_id, submitter_id, comments)
-        VALUE (#{bookId}, #{result}, #{auditorId}, #{submitterId}, #{comments})
+        insert into audit_records (book_id, result,  auditor_id, submitter_id, comment)
+        VALUE (#{bookId}, #{result}, #{auditorId}, #{submitterId}, #{comment})
     </insert>
     <select id="select" resultType="AuditRecords">
         select * from audit_records
@@ -16,7 +16,7 @@
             <if test="auditorId != null and auditorId != 0">AND auditor_id = #{auditorId}</if>
             <if test="submitterId != null and submitterId != 0">AND submitter_id = #{submitterId}</if>
             <if test="auditTime != null and auditTime != ''">AND audit_time = #{auditTime}</if>
-            <if test="comments != null and comments != ''">AND comments = #{comments}</if>
+            <if test="comment != null and comment != ''">AND comment = #{comment}</if>
         </where>
     </select>
     <delete id="delete" parameterType="AuditRecords">

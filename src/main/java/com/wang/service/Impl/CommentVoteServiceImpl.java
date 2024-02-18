@@ -1,8 +1,8 @@
 package com.wang.service.Impl;
 
 import com.wang.mapper.CommentVotesMapper;
+import com.wang.model.Comment;
 import com.wang.model.CommentVotes;
-import com.wang.model.Comments;
 import com.wang.service.CommentVoteService;
 import com.wang.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +44,13 @@ public class CommentVoteServiceImpl implements CommentVoteService {
         commentVotes.setCommentId(commentId);
         commentVotes.setVoteType(voteType);
         mapper.insert(commentVotes);
-        Comments comments = commentsService.getCommentById((int) commentId);
+        Comment comment = commentsService.getCommentById((int) commentId);
         if (voteType.equals("like")) {
-            comments.setLikes(comments.getLikes() + 1); // 给评论点赞量+1
+            comment.setLikes(comment.getLikes() + 1); // 给评论点赞量+1
         }else {
-            comments.setDislikes(comments.getDislikes() + 1); // 给评论点踩量+1
+            comment.setDislikes(comment.getDislikes() + 1); // 给评论点踩量+1
         }
-        commentsService.updateVote(comments);
+        commentsService.updateVote(comment);
     }
 
 
@@ -59,14 +59,14 @@ public class CommentVoteServiceImpl implements CommentVoteService {
     public void cancelVote(long userId, long commentId) {
 
         CommentVotes commentVotes = mapper.select(userId, commentId);
-        Comments comments = commentsService.getCommentById(commentId);
+        Comment comment = commentsService.getCommentById(commentId);
         if (commentVotes.getVoteType().equals("like")) {
-            comments.setLikes(comments.getLikes() - 1); // 给评论点赞量-1
+            comment.setLikes(comment.getLikes() - 1); // 给评论点赞量-1
         }else {
-            comments.setDislikes(comments.getDislikes() - 1); // 给评论点踩量-1
+            comment.setDislikes(comment.getDislikes() - 1); // 给评论点踩量-1
         }
 
-        commentsService.updateVote(comments);
+        commentsService.updateVote(comment);
         mapper.delete(userId, commentId);
     }
 

@@ -22,7 +22,7 @@
                     <a href="#" class="btn btn-info btn-block mt-2">收藏</a>
                 </div>
                 <div th:if="${session.user==null}">
-                    <a th:href="@{book/toBookInfo/{id}(id=${book.id})}" class="btn btn-dark btn-block mt-2 loginRequest" >先登录吧</a>
+                    <a th:href="@{/book/toBookInfo/{id}(id=${book.id})}" class="btn btn-dark btn-block mt-2 loginRequest" >先登录吧</a>
                 </div>
             </div>
             <div class="col-6">

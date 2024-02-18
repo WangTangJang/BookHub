@@ -78,8 +78,6 @@ $(".toBookInfo").click(function (event) {
     })
 });
 
-
-
 // 事件委托,点击登录请求时。
 $(document).on('click', '.loginRequest', function (event) {
     event.preventDefault();
@@ -110,6 +108,20 @@ $(document).on('submit', '#rateBookFrom', function (event) {
         success: function (data) {
             $('#rateModal').modal('hide');
             $('#bookDetails').replaceWith(data);
+        }
+    })
+})
+
+// 显示评论的功能
+$(document).on('click', '.showComments', function (event) {
+    event.preventDefault();
+    $('#commentsModal').modal('show');
+    let url = $(this).attr('href');
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (data) {
+            $('#commentsSection').replaceWith(data);
         }
     })
 })

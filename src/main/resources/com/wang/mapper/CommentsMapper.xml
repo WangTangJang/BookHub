@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wang.mapper.CommentsMapper">
-    <resultMap id="BaseResultMap" type="com.wang.model.Comments">
+    <resultMap id="BaseResultMap" type="com.wang.model.Comment">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="book_id" jdbcType="INTEGER" property="bookId"/>
@@ -11,7 +11,7 @@
         <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
-    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wang.model.Comments">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wang.model.Comment">
         <result column="context" jdbcType="LONGVARCHAR" property="context"/>
     </resultMap>
     <sql id="Base_Column_List">
@@ -20,6 +20,17 @@
     <sql id="Blob_Column_List">
         context
     </sql>
+
+    <select id="selectByBookId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+
+        from comments
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -33,7 +44,7 @@
         from comments
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comments" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comment" useGeneratedKeys="true">
         insert into comments (user_id, book_id, parent_comment_id,
                               likes, dislikes, creation_time,
                               update_time, context)
@@ -41,7 +52,7 @@
                 #{likes,jdbcType=INTEGER}, #{dislikes,jdbcType=INTEGER}, #{creationTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{context,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comments"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.wang.model.Comment"
             useGeneratedKeys="true">
         insert into comments
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -97,7 +108,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.wang.model.Comments">
+    <update id="updateByPrimaryKeySelective" parameterType="com.wang.model.Comment">
         update comments
         <set>
             <if test="userId != null">
@@ -127,7 +138,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wang.model.Comments">
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wang.model.Comment">
         update comments
         set user_id           = #{userId,jdbcType=INTEGER},
             book_id           = #{bookId,jdbcType=INTEGER},
@@ -139,7 +150,7 @@
             context           = #{context,jdbcType=LONGVARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.wang.model.Comments">
+    <update id="updateByPrimaryKey" parameterType="com.wang.model.Comment">
         update comments
         set user_id           = #{userId,jdbcType=INTEGER},
             book_id           = #{bookId,jdbcType=INTEGER},

@@ -99,7 +99,7 @@ create table audit_records(
     audit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     auditor_id int ,
     submitter_id int ,
-    comments TEXT,
+    comment TEXT,
     foreign key (book_id) references book_original_info(id) on DELETE CASCADE ,
     foreign key (auditor_id) references user_original_info (id),
     foreign key (submitter_id) references user_original_info (id)

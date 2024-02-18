@@ -1,6 +1,8 @@
 package com.wang.service;
 
-import com.wang.model.Comments;
+import com.wang.model.Comment;
+
+import java.util.List;
 
 /**
  * 评论服务
@@ -16,16 +18,16 @@ public interface CommentsService {
 
     /**
      * 添加评论
-     * @param comments 评论实体
+     * @param comment 评论实体
      */
-    void addComment(Comments comments);
+    void addComment(Comment comment);
 
     /**
      * 通过id获取评论
      * @param id 评论的id
      * @return 一条评论
      */
-    Comments getCommentById(long id);
+    Comment getCommentById(long id);
 
     /**
      * 修改一个评论
@@ -42,7 +44,9 @@ public interface CommentsService {
 
     /**
      * 更新评论的点赞数和点踩数
-     * @param comments 评论实体
+     * @param comment 评论实体
      */
-    void updateVote(Comments comments);
+    void updateVote(Comment comment);
+
+    List<Comment> getCommentByBookId(int bookId);
 }

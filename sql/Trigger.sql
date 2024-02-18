@@ -1,4 +1,5 @@
 -- 用触发器设置初始值
+
 -- 书籍表中的数据被插入的时候自动创建一条动态数据
 delimiter //
 create trigger after_insert_book_original_info
@@ -18,6 +19,21 @@ create trigger after_insert_user_original_info
         VALUE (NEW.id,1,0,'non-member');
     end;
 //
+-- 新增评论时，检查父评论是否属于同一本书
+drop trigger check_parent_comment_before_insert;
+CREATE TRIGGER check_parent_comment_before_insert BEFORE INSERT ON comments
+    FOR EACH ROW
+BEGIN
+    DECLARE _parent_book_id INT;
+    IF NEW.parent_comment_id IS NOT NULL THEN
+        SELECT book_id INTO _parent_book_id FROM comments WHERE id = NEW.parent_comment_id;
+        IF _parent_book_id != NEW.book_id THEN
+            SET NEW.context = 'Error: Parent comment is not from the same book';
+        END IF;
+    END IF;
+END;
+
+
 -- 触发器，当用户更新评论时候，自动更新评论的更新时间
 DROP TRIGGER before_update_comments;
 CREATE TRIGGER before_update_comments

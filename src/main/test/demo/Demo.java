@@ -12,8 +12,6 @@ public class Demo {
 
     public static void main(String[] args) {
         String resource = "mybatisContext.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = MybatisUtil
     }
 }
 interface UserMapper {
