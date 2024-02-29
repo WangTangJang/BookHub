@@ -90,3 +90,5 @@ idea每次更新maven后设置里的Java Compiler中target bytecode version都�
 mybatis的useGeneratedKeys真是神来之笔。
 
 可以尝试接入公益404的页面，或者是一个游戏。
+
+敏感词汇检测

@@ -32,6 +32,11 @@ public class BookshelfServiceImplTest {
     UserService userService;
 
     @Test
+    public void selectBook(){
+        booksService.selectAll();
+    }
+
+    @Test
     public void addToBookshelf(){
         Bookshelf bookshelf = new Bookshelf();
 
