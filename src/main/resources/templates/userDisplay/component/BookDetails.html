@@ -74,3 +74,35 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).on('submit', '#rateBookFrom', function (event) {
+        event.preventDefault();
+        let url = $(this).attr('action');
+        // 将字符串转换为整数
+        let bookId = parseInt($(this).find('input[name="bookId"]').val());
+        let rating = parseInt($(this).find('input[name="rating"]').val());
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({bookId: bookId, rating: rating}),
+            success: function (data) {
+                $('#rateModal').modal('hide');
+                $('#bookDetails').replaceWith(data);
+            }
+        })
+    })
+    $(document).on('click', '.loginRequest', function (event) {
+        event.preventDefault();
+        let url = event.target.href;
+        $('#loginModal').modal('show').on('hidden.bs.modal', function (e) {
+            $.ajax({
+                url : url,
+                type: "GET",
+                success: function (data){
+                    $("#bookDetails").replaceWith(data);
+                }
+            })
+        });
+    })
+</script>

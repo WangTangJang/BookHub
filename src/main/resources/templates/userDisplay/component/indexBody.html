@@ -48,3 +48,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(".toBookInfo").click(function (event) {
+        //    拦截当前
+        event.preventDefault();
+        let url = $(this).attr('href');
+        $.ajax({
+            url:url,
+            type: 'GET',
+            success: function (bookDetailHtml) {
+                // 弹出一个拟态框
+                $('#bookDetailModal').modal('show');
+                $('#bookDetails').replaceWith(bookDetailHtml);
+            }
+        })
+    });
+</script>

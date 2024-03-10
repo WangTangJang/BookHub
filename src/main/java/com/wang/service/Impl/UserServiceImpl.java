@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
             user.setAccountStatus("offline");
             user.setRoles("user");
             mapper.insert(user);
-            return "ok";
+            return "注册成功";
         }else {
-            return "existed";
+            return "此用户名已存在";
         }
     }
 
@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
             user.setAccountStatus("offline");
             user.setRoles("Admin");
             mapper.insert(user);
-            return "ok";
+            return "注册成功";
         }else {
-            return "existed";
+            return "此用户名已存在";
         }
     }
     @Override
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         }
         // 匹配从数据库中取出的密码和输入的密码是否一致
         if(passwordEncoder.matches(password,user.getPassword())){
-            return "ok";
+            return "登录成功";
         }else {
             return "密码错误";
         }

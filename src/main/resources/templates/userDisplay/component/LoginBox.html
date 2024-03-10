@@ -12,19 +12,72 @@
         <form th:action="@{/user/login}" id="loginForm" >
           <div class="form-group">
             <label for="username">用户名</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
           </div>
           <div class="form-group">
             <label for="password">密码</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
           </div>
-          <button id="loginBtn"
-                  type="submit"
-                  class="btn btn-primary"
-          >确认</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <div class="row">
+            <div class="col-md-3">
+              <button id="loginBtn"
+                      type="submit"
+                      class="btn btn-primary"
+              >确认</button>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+            <div class="col-md-6 text-left ">
+              <div  id="loginResult"></div>
+            </div>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $('#loginForm').submit(function (event) {
+      event.preventDefault();
+      let form = $(this);
+      let url = form.attr('action');
+      let username = form.find('input[name="username"]').val();
+      let password = form.find('input[name="password"]').val();
+      $.ajax({
+          type: 'POST',
+          url: url,
+          data: JSON.stringify({username:username, password:password}),
+          dataType: 'json',
+          contentType: 'application/json',
+          success: function(response) {
+                // 处理登录成功的情况
+                reloadNav();
+                displayAlert(response.responseText);
+                $('#loginModal').modal('hide');
+          },
+          error: function(error) {
+                // 处理登录失败的情况
+            displayAlert(error.responseText);
+          }
+      })
+  })
+
+  // 重新渲染导航栏
+  function reloadNav() {
+      $.ajax({
+        type: 'GET',
+        url: '/BookHub/view/Header',
+        success: function(response) {
+          $('#header').replaceWith(response);
+        }
+      })
+  }
+  function displayAlert(message) {
+    $('#loginResult').text(message).addClass('alert alert-danger');
+    // 让这个框5秒后消失
+    setTimeout(function() {
+      $('#loginResult').removeClass('alert alert-danger').text('');
+    }, 3000);  }
+
+</script>

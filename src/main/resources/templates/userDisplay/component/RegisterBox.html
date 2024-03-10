@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/user/register}" method="post">
+                <form th:action="@{/user/register}" method="post" id="registerForm">
                     <div class="form-group">
                         <label for="username_r">用户名</label>
                         <input type="text" class="form-control" id="username_r" name="username" placeholder="Enter username">
@@ -33,3 +33,41 @@
         </div>
     </div>
 </div>
+
+<script>
+$('#registerForm').submit(function (event) {
+    event.preventDefault();
+    let form = $(this);
+    let url = form.attr('action');
+    let username = form.find('input[name="username"]').val();
+    let email = form.find('input[name="email"]').val();
+    let password = form.find('input[name="password"]').val();
+    let checkPassword = form.find('input[name="checkPassword"]').val();
+    if (password !== checkPassword) {
+        alert("两次密码不一致");
+        return;
+    }
+    // 将表单数据封装到一个user对象中
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify({username: username, email: email, password: password}),
+        contentType: 'application/json;charset=utf-8',
+        success: function (response) {
+            $('#registerModal').modal('hide');
+            $('#loginModal').modal('show');
+            displaySuccess(response);
+        },
+        error: function (error) {
+            alert(error.responseText);
+        }
+    })
+})
+    function displaySuccess(message) {
+        $('#loginResult').text(message).addClass('alert alert-success');
+        // 让这个框5秒后消失
+        setTimeout(function() {
+            $('#loginResult').removeClass('alert alert-success').text('');
+        }, 3000);
+    }
+</script>

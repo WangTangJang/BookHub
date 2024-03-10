@@ -38,7 +38,7 @@ public class BookController {
             return "userDisplay/component/BookDetails";
         }
         else {
-            return "userDisplay/index :: indexMain";
+            return "userDisplay/component/errorPage";
         }
     }
 }

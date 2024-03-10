@@ -1,6 +1,6 @@
   <!-- 一个导航栏 -->
-  <nav class="navbar navbar-expand-sm navbar-custom navbar-light">
-    <a class="navbar-brand custom-logo" th:href="@{/toIndex}">BookHub</a>
+  <nav class="navbar navbar-expand-sm navbar-custom navbar-light" id="header">
+    <a class="navbar-brand custom-logo" th:href="@{/index}">BookHub</a>
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-search"></i>搜索</a>
@@ -47,3 +47,26 @@
       </li>
     </ul>
   </nav>
+<script>
+  // 注销
+  $('#logout').click(function(event) {
+    // 拦截
+    event.preventDefault();
+    let url = $(this).attr('href');
+    $.ajax({
+      url : url,
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function(response) {
+        // 处理退出成功的情况
+        $('#logoutModal').modal('hide');
+        reloadNav();
+      },
+      error: function(error) {
+        // 处理退出失败的情况
+        console.error('Logout failed:', error);
+      }
+    });
+  });
+</script>
