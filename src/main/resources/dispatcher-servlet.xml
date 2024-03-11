@@ -18,6 +18,12 @@
     <mvc:annotation-driven />
     <mvc:resources location="/WEB-INF/classes/static/" mapping="/static/**" />
 
+    <!--配置跨域支持-->
+    <mvc:cors>
+        <mvc:mapping path="/**" allowed-origins="*"
+                     allowed-methods="POST, GET, OPTIONS, DELETE, PUT"
+                     allowed-headers="*" />
+    </mvc:cors>
 
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/classes/templates/"/>

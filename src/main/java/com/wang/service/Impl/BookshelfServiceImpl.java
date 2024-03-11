@@ -21,8 +21,10 @@ public class BookshelfServiceImpl implements BookshelfService {
     BooksService booksService;
 
     @Override
-    public void addToBookshelf(Bookshelf bookshelf) {
-
+    public void addToBookshelf(long userid, long bookid) {
+        Bookshelf bookshelf = new Bookshelf();
+        bookshelf.setUserId(userid);
+        bookshelf.setBookId(bookid);
 
         LocalDate localDate = LocalDate.now();
 
@@ -33,8 +35,10 @@ public class BookshelfServiceImpl implements BookshelfService {
 
     }
     @Override
-    public void delFormBookshelf(Bookshelf bookshelf) {
-
+    public void delFormBookshelf(long userid, long bookId) {
+        Bookshelf bookshelf = new Bookshelf();
+        bookshelf.setUserId(userid);
+        bookshelf.setBookId(bookId);
         mapper.delete(bookshelf);
         booksService.updateAdded(bookshelf.getBookId());
 
@@ -44,5 +48,13 @@ public class BookshelfServiceImpl implements BookshelfService {
     public List<Bookshelf> lookOver(Bookshelf bookshelf) {
 
         return  mapper.select(bookshelf);
+    }
+
+    @Override
+    public boolean isCollected(long userid, long bookid) {
+        Bookshelf bookshelf = new Bookshelf();
+        bookshelf.setUserId(userid);
+        bookshelf.setBookId(bookid);
+        return mapper.select(bookshelf).size() > 0;
     }
 }

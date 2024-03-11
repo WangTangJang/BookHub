@@ -7,15 +7,15 @@ import java.util.List;
 public interface BookshelfService {
     /**
      * 用户向书架中添加书籍
-     * @param bookshelf 关联信息
+     * @param userid 关联信息
      */
-    void addToBookshelf(Bookshelf bookshelf);
+    void addToBookshelf(long userid, long bookId);
 
     /**
      * 从书架上删除信息
-     * @param bookshelf 书架信息
+     *
      */
-    void delFormBookshelf(Bookshelf bookshelf);
+    void delFormBookshelf(long userid, long bookId);
 
     /**
      * 用户检查书架中有哪些信息
@@ -24,4 +24,5 @@ public interface BookshelfService {
      */
     List<Bookshelf> lookOver(Bookshelf bookshelf);
 
+    boolean isCollected(long userid, long bookid);
 }

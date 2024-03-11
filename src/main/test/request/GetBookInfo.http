@@ -1,0 +1,39 @@
+
+###
+GET  http://localhost:8080/book/getInfo/1
+
+###
+POST http://localhost:8080/render/bookDetails
+Content-Type: application/json
+
+{
+  "bookInfo": {
+    "id": 1,
+    "title": "Mrs.",
+    "author": "q7BUsLxRoh",
+    "isbn": "LJP7UbQRmG",
+    "format": "VSzjtBv7aN",
+    "filePath": "/Users/Administrator/Pictures/img_748933.jpg",
+    "uploadedBy": "D1nukAqduN",
+    "status": "vQs4PdkBrs",
+    "cover": "static/images/cover/00001.jpg",
+    "categoryId": 0,
+    "fileSize": 742.45,
+    "averageRating": 8.0,
+    "reviewsCount": 0,
+    "ratingCount": 1,
+    "shelfCount": 0
+  },
+  "userRating": 0,
+  "collected": false,
+  "message": null
+}
+
+###
+POST  http://localhost:8080/book/saveRating
+Content-Type: application/json
+
+{
+ "bookId": 1,
+  "rating": 5
+}

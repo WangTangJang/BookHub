@@ -24,10 +24,6 @@ public class IndexController {
     @RequestMapping("/index")
     public String toIndex(Model model,HttpSession session){
         List<Books> books = service.selectAll();
-
-        // 只要留下id为15的书籍
-        books.removeIf(book -> book.getId() != 15);
-
         // 将获取到的books随机打乱
         //for (int i = 0; i < books.size(); i++) {
         //    int randomIndex = (int) (Math.random() * books.size());

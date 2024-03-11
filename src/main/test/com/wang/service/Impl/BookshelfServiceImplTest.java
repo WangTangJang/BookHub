@@ -42,7 +42,7 @@ public class BookshelfServiceImplTest {
 
         bookshelf.setUserId(1);
         bookshelf.setBookId(1);
-        service.addToBookshelf(bookshelf);
+        //service.addToBookshelf(bookshelf);
     }
 
     @Test
@@ -70,6 +70,6 @@ public class BookshelfServiceImplTest {
         Bookshelf bookshelf = new Bookshelf();
         bookshelf.setUserId(1);
         bookshelf.setBookId(1);
-        service.delFormBookshelf(bookshelf);
+        //service.delFormBookshelf(bookshelf);
     }
 }

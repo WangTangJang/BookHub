@@ -78,18 +78,4 @@ public class UserController {
             return ResponseEntity.badRequest().body("退出失败");
         }
     }
-
-    @PostMapping("saveRating")
-    public String saveRating(@RequestBody Map<String,Integer> data, HttpSession session,Model model){
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            int bookId = data.get("bookId");
-            int rating = data.get("rating");
-            bookRatingsService.rateBook(user.getId(),bookId, rating);
-            model.addAttribute("userRating",rating);
-        }
-        Books books = booksService.selectById(data.get("bookId"));
-        model.addAttribute("book",books);
-        return "userDisplay/component/BookDetails";
-    }
 }
