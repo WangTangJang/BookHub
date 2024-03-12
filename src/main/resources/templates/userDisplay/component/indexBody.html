@@ -1,7 +1,7 @@
 <!--书籍展示-->
-<div class="row">
-    <div class="col-sm-2 mb-3" th:each="book:${books}">
-        <a th:href="${book.id}" class="toBookInfo">
+<div class="row" id="bookDisplay">
+    <div class="col-sm-2 mb-3" th:each="book:${books}" id="aBook">
+        <a th:href="${book.id}" class="getInfo">
             <div class="card shadow-lg" >
                 <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
                 <div class="card-body">
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<!--一个拟态框窗口，窗口内显示的BookDetail.html的内容-->
+<!--一个拟态框窗口，窗口内显示的书籍详情的内容-->
 <div class="modal fade" id="bookDetailModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document" >
         <div class="modal-content">
@@ -23,9 +23,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!--调整窗口的大小-->
             <div class="modal-body">
-                <div id="bookInfo"></div>
+                <div id="bookInfo" th:replace="userDisplay/component/BookDetails"></div>
             </div>
         </div>
     </div>
@@ -40,7 +39,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!--调整窗口的大小-->
             <div class="modal-body">
                 <div id="commentsSection"></div>
             </div>
@@ -49,7 +47,8 @@
 </div>
 
 <script>
-    $(".toBookInfo").click(function (event) {
+    // 获取书籍详情信息
+    $(".getInfo").click(function (event) {
         //    拦截当前
         event.preventDefault();
         let url = $(this).attr('href');
@@ -62,6 +61,7 @@
             }
         })
     });
+    // 渲染书籍详情页面
     function showBookDetails(data) {
         $.ajax({
             url: '/render/bookDetails',
@@ -69,13 +69,13 @@
             contentType: 'application/json',
             type: 'POST',
             success: function (bookDetailHtml) {
-                $(document).find('#bookInfo').replaceWith(bookDetailHtml)
+                $('#bookInfoPage').replaceWith(bookDetailHtml)
                 $('#bookDetailModal').modal('show');
             }
         })
     }
 
-    // 显示评论的功能
+    // 获取到书籍下面的所有评论
     $(document).on('click', '.showComments', function (event) {
         event.preventDefault();
         let bookId = $(this).attr('href');
@@ -88,6 +88,7 @@
         })
     })
 
+    // 渲染评论区
     function showComments() {
         $.ajax({
             url: '/render/commentsSection',
@@ -95,6 +96,43 @@
             success: function (commentsHtml) {
                 $('#commentsSection').replaceWith(commentsHtml);
                 $('#commentsModal').modal('show');
+            }
+        })
+    }
+
+
+    var isLoadingBooks = false; // 标志位,用于控制是否正在加载书籍数据
+    var currentPage = 2; // 记录已加载的书籍索引
+    // 监听鼠标滚动事件
+    $(window).scroll(function () {
+        if (isLoadingBooks) {
+            return;
+        }
+        // 当滚动到最底部的时候，加载更多的书籍
+        if ($(document).height() - $(this).scrollTop() - $(this).height() < 50) {
+            loadMoreBooks();
+        }
+    })
+    function loadMoreBooks() {
+        isLoadingBooks = true;
+        $.ajax({
+            url: '/getMoreBooks/'+currentPage,
+            type: 'GET',
+            success: function(data) {
+                appendBooks(data);
+                currentPage ++;
+            }
+        });
+    }
+    function appendBooks(data) {
+        $.ajax({
+            url: '/render/bookDisplay',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            type: 'POST',
+            success: function (booksHtml) {
+                $('#bookDisplay').append(booksHtml);
+                isLoadingBooks = false;
             }
         })
     }

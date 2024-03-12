@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot Thymeleaf Example</title>
+
+    <!-- 引入jQuery -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- 引入popper.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- 引入Bootstrap JavaScript -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div id="bookInfo">
+
+    <!-- 此处展示书籍的详细信息 -->
+    <div class="row py-3" th:if="${book != null}" th:fragment="bookDetails" id="bookDetails">
+        <!-- 书籍封面 -->
+        <div class="col-sm-2 mb-3">
+            <img th:src="@{${book.cover}}" class="img-fluid rounded" alt="Book Cover">
+        </div>
+        <!-- 书籍信息 -->
+        <div class="col-sm-6">
+            <h1>《<span th:text="@{${book.title}}"></span>》</h1>
+            <h3>作者：<span th:text="@{${book.author}}"></span></h3>
+            <h3>ISBN：<span th:text="@{${book.isbn}}"></span></h3>
+            <h3>评分：<span id="bookRating" th:text="@{${book.averageRating}}"></span>/10</h3>
+            <h5  style="font-style: italic;">已有<span th:text="@{${book.shelfCount}}"></span>人收藏本书</h5>
+            <h5  style="font-style: italic;">已有<span th:text="@{${book.ratingCount}}"></span>人给本书打出了分数</h5>
+        </div>
+        <!--与书籍的交互组件-->
+        <div class="col-4 text-right">
+            <div class="row">
+                <div class="col-6">
+                    <!--只有登录后才可以收藏-->
+                </div>
+                <div class="col-6">
+                    <!--只有登录后才可以打分-->
+                    <div th:if="${session.user!=null}">
+                            <a href="#" class="btn btn-primary btn-block mt-2" data-target="#rateModal" data-toggle="modal" id="RateToBook">打分</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" class="btn btn-success btn-block mt-2">下载</a>
+                </div>
+                <div class="col-6">
+                    <a href="#" class="btn btn-danger btn-block mt-2">举报</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--打分的拟态-->
+    <div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rateModalLabel">打分</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  method="post" id="rateBookFrom">
+                        <input type="hidden" name="bookId" th:value="${book.id}">
+                        <div class="form-group" >
+                            <label for="rating">打分</label>
+                            <input type="number" class="form-control" id="rating" name="rating" min="0" max="9" required placeholder="0到9分之间">
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).on('submit', '#rateBookFrom', function (event) {
+            event.preventDefault();
+            // 将字符串转换为整数
+            let bookId = parseInt($(this).find('input[name="bookId"]').val());
+            let rating = parseInt($(this).find('input[name="rating"]').val());
+            $.ajax({
+                url: '/book/saveRating',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({bookId: bookId, rating: rating}),
+                success: function (data) {
+                    $.ajax({
+                        url: '/book/getInfo/' + bookId,
+                        type: 'GET',
+                        success: function (data) {
+                            showBookDetails(data);
+                            $('#rateModal').modal('hide');
+                        }
+                    })
+                }
+            })
+        })
+        $(document).on('click', '.loginRequest', function (event) {
+            event.preventDefault();
+            let bookId = $(this).attr('href');
+            $('#loginModal').modal('show').on('hidden.bs.modal', function (e) {
+                $.ajax({
+                    url: '/book/getInfo/' + bookId,
+                    type: 'GET',
+                    success: function (data) {
+                        showBookDetails(data);
+                    }
+                })
+            });
+        })
+
+        $(document).on('click', '.collect', function (event) {
+            event.preventDefault();
+            let bookId = $(this).attr('href');
+            $.ajax({
+                url: '/book/collect/' + bookId,
+                type: 'GET',
+                success: function (data) {
+                    $.ajax({
+                        url: '/book/getInfo/' + bookId,
+                        type: 'GET',
+                        success: function (data) {
+                            showBookDetails(data);
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</div>
+
+
+</body>
+</html>
