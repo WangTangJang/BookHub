@@ -14,7 +14,12 @@
   <div class="col-sm-12">
     <div class="row">
       <div class="col-sm-1">
-        <img src="https://example.com/user-avatar.jpg" class="img-fluid rounded" alt="Avatar">
+        <div th:if="${session.user != null}">
+          <img th:src="@{${session.user.country}}" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
+        </div>
+        <div th:if="${session.user == null}">
+          <img src="#" class="img-fluid rounded" alt="未登录">
+        </div>
       </div>
       <div class="col-sm-9">
         <input type="text" class="form-control" placeholder="发表评论...">
@@ -27,6 +32,9 @@
   </div>
   <!--评论区主体-->
   <div class="col-sm-12">
+    <div th:if="${comments == null}">
+      <h3>暂无评论</h3>
+    </div>
     <div class="row" th:each="comment : ${comments}">
       <!--用户头像-->
       <div class="col-sm-1">

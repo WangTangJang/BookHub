@@ -2,7 +2,10 @@ package com.wang.service.Impl;
 
 import com.wang.mapper.CommentsMapper;
 import com.wang.model.Comment;
+import com.wang.model.User;
+import com.wang.model.result.CommentResult;
 import com.wang.service.CommentsService;
+import com.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Autowired
     private CommentsService service;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public void addComment(Comment comment) {
@@ -55,39 +61,50 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<Comment> getCommentByBookId(int bookId) {
+    public List<CommentResult> getCommentByBookId(int bookId) {
 
         return organizeCommentsIntoTree(mapper.selectByBookId(bookId));
     }
+
     /* 这才是该写的东西！！！ */
     // 评论的树形结构
-    private List<Comment> organizeCommentsIntoTree(List<Comment> comments) {
-        Map<Integer, Comment> commentsMap = new HashMap<>();
-        for (Comment comment : comments) {
-            commentsMap.put(comment.getId(),comment);
-        }
-        // 遍历评论列表，将回复评论添加到对应的父评论的 replies 列表中
-        List<Comment> treeComments = new ArrayList<>();
-        // 循环遍历从数据库中查询到某书籍下的评论列表
+    private List<CommentResult> organizeCommentsIntoTree(List<Comment> comments) {
+
+        // 评论id和评论的映射
+        Map<Integer, CommentResult> commentResultMap = new HashMap<>();
         for (Comment comment : comments){
-            // 如果某条评论有父级
-            if (comment.getParentCommentId() != null ){
-                // 就获取到他的父级评论
-                Comment parentComment = commentsMap.get(comment.getParentCommentId());
-                if (parentComment != null){
-                    // 如果父级评论的回复列表为空，就创建一个新的列表
-                    if (parentComment.getReplies() == null){
-                        parentComment.setReplies(new ArrayList<>());
+            User user = userService.selectById(comment.getUserId());
+            CommentResult commentResult = new CommentResult(comment);
+            commentResult.setUserName(user.getUsername());
+            commentResult.setUserAvatar(user.getCountry());
+            commentResult.setUserLevel(user.getLevel());
+            commentResultMap.put(comment.getId(), commentResult);
+        }
+
+        // 评论的树形结构
+        List<CommentResult> commentResults = new ArrayList<>();
+        // 遍历所有评论
+        for (Comment comment : comments){
+            // 如果是一级评论
+            if (comment.getParentCommentId() == null){
+                // 添加到树形结构中
+                commentResults.add(commentResultMap.get(comment.getId()));
+            } else {
+                // 如果是二级评论
+                // 获取父评论
+                CommentResult parentCommentResult = commentResultMap.get(comment.getParentCommentId());
+                if (parentCommentResult == null){
+                    throw new RuntimeException("父评论不存在");
+                }else {
+                    // 添加到父评论的子评论中
+                    if (parentCommentResult.getReplies() == null){
+                        parentCommentResult.setReplies(new ArrayList<>());
                     }
-                    // 将这条评论加入到它的父级中
-                    parentComment.getReplies().add(comment);
+                    parentCommentResult.getReplies().add(commentResultMap.get(comment.getId()));
                 }
-            }else {
-                // 如果没有父级，就直接加入到树形评论列表中
-                treeComments.add(comment);
             }
         }
-        return treeComments;
+        return commentResults;
     }
 
     private void validate(String context) {

@@ -1,6 +1,7 @@
 package com.wang.service.Impl;
 
 import com.wang.model.Comment;
+import com.wang.model.result.CommentResult;
 import com.wang.service.CommentsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +21,8 @@ public class CommentServiceImplTest {
 
     @Test
     public void getCommentForBook() {
-        List<Comment> comments = commentsService.getCommentByBookId(15);
-        printCommentsTree(comments, 0);
+        List<CommentResult> comments = commentsService.getCommentByBookId(15);
+        //printCommentsTree(comments, 0);
     }
 
     // 辅助方法：生成缩进字符串

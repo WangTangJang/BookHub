@@ -1,6 +1,7 @@
 package com.wang.service;
 
 import com.wang.model.Comment;
+import com.wang.model.result.CommentResult;
 
 import java.util.List;
 
@@ -48,5 +49,5 @@ public interface CommentsService {
      */
     void updateVote(Comment comment);
 
-    List<Comment> getCommentByBookId(int bookId);
+    List<CommentResult> getCommentByBookId(int bookId);
 }

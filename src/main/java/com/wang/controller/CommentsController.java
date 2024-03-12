@@ -1,6 +1,7 @@
 package com.wang.controller;
 
 import com.wang.model.Comment;
+import com.wang.model.result.CommentResult;
 import com.wang.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -23,7 +26,11 @@ public class CommentsController {
 
     @RequestMapping("/get/{id}")
     public ResponseEntity<?> getComments(@PathVariable int id){
-        List<Comment> comments = commentService.getCommentByBookId(id);
-        return ResponseEntity.ok(comments);
+        List<CommentResult> commentResults = commentService.getCommentByBookId(id);
+        Map<String,Object> result = new HashMap<>();
+        result.put("comments",commentResults);
+        result.put("message","success");
+
+        return ResponseEntity.ok(result);
     }
 }

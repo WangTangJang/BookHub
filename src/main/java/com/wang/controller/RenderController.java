@@ -31,7 +31,8 @@ public class RenderController {
         return "userDisplay/component/BookDetails:: #bookInfoPage";
     }
     @RequestMapping("/commentsSection")
-    public String commentsSection(){
+    public String commentsSection(@RequestBody Map<String, Object> map, Model model){
+        model.addAttribute("comments",map.get("comments"));
         return "userDisplay/component/commentsSection";
     }
 }

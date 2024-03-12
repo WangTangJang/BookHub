@@ -1,15 +1,17 @@
 <!--书籍展示-->
-<div class="row" id="bookDisplay">
-    <div class="col-sm-2 mb-3" th:each="book:${books}" id="aBook">
-        <a th:href="${book.id}" class="getInfo">
-            <div class="card shadow-lg" >
-                <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
-                <div class="card-body">
-                    <h5 class="card-title text-center" th:text="${book.title}"></h5>
-                    <a th:href="${book.id}" class="btn btn-dark btn-sm btn-block showComments"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light" th:text="${book.reviewsCount}"></span></a>
+<div id="bookDisplay">
+    <div id="aBook" class="row">
+        <div class="col-sm-2 mb-3" th:each="book:${books}" >
+            <a th:href="${book.id}" class="getInfo">
+                <div class="card shadow-lg" >
+                    <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover" >
+                    <div class="card-body">
+                        <h5 class="card-title text-center" th:text="${book.title}"></h5>
+                        <a th:href="${book.id}" class="btn btn-dark btn-sm btn-block showComments"><i class="fas fa-comment" ></i>评论 <span class="badge badge-light" th:text="${book.reviewsCount}"></span></a>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -48,7 +50,7 @@
 
 <script>
     // 获取书籍详情信息
-    $(".getInfo").click(function (event) {
+    $(document).on('click', '.getInfo', function (event) {
         //    拦截当前
         event.preventDefault();
         let url = $(this).attr('href');
@@ -89,10 +91,12 @@
     })
 
     // 渲染评论区
-    function showComments() {
+    function showComments(data) {
         $.ajax({
             url: '/render/commentsSection',
-            type: 'GET',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            type: 'POST',
             success: function (commentsHtml) {
                 $('#commentsSection').replaceWith(commentsHtml);
                 $('#commentsModal').modal('show');
