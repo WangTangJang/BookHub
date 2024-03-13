@@ -4,6 +4,7 @@ import com.wang.model.Comment;
 import com.wang.model.result.CommentResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 评论服务
@@ -49,5 +50,5 @@ public interface CommentsService {
      */
     void updateVote(Comment comment);
 
-    List<CommentResult> getCommentByBookId(int bookId);
+    Map<Integer,CommentResult> getCommentByBookId(int bookId);
 }

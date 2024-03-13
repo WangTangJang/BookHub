@@ -26,11 +26,11 @@ public class CommentsController {
 
     @RequestMapping("/get/{id}")
     public ResponseEntity<?> getComments(@PathVariable int id){
-        List<CommentResult> commentResults = commentService.getCommentByBookId(id);
+        // 存放的每条根评论及其对应的ID
+        Map<Integer,CommentResult> rootComments = commentService.getCommentByBookId(id);
         Map<String,Object> result = new HashMap<>();
-        result.put("comments",commentResults);
+        result.put("rootComments",rootComments);
         result.put("message","success");
-
         return ResponseEntity.ok(result);
     }
 }

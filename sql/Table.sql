@@ -3,7 +3,7 @@ CREATE DATABASE bookHub;
 
 use bookHub;
 -- 书籍表
-DROP TABLE book_original_info;
+DROP TABLE IF EXISTS book_original_info;
 CREATE TABLE book_original_info
 (
     id        INT PRIMARY KEY AUTO_INCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE book_original_info
     status varchar(20)
 );
 -- 书籍的动态信息表
-drop table book_dynamic_info;
+drop table IF EXISTS book_dynamic_info;
 create table book_dynamic_info
 (
     id             INT PRIMARY KEY AUTO_INCREMENT,
@@ -32,14 +32,14 @@ create table book_dynamic_info
     foreign key (book_id) references book_original_info (id) ON DELETE CASCADE
 );
 -- 书籍分类表
-drop table book_categories;
+drop table IF EXISTS book_categories;
 create table book_categories
 (
     id   INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE
 );
 -- 书籍与分类的关联表
-drop table book_category_mapping;
+drop table IF EXISTS book_category_mapping;
 create table book_category_mapping
 (
     book_id     int,
@@ -53,7 +53,7 @@ create table book_category_mapping
 
 
 -- 用户表
-DROP TABLE user_original_info;
+DROP TABLE IF EXISTS user_original_info;
 CREATE TABLE user_original_info
 (
     id                    INT PRIMARY KEY AUTO_INCREMENT,
@@ -74,7 +74,7 @@ CREATE TABLE user_original_info
     profile_picture       BLOB
 );
 -- 用户的动态信息
-drop table user_dynamic_info;
+drop table IF EXISTS user_dynamic_info;
 create table user_dynamic_info
 (
     id                    int primary key auto_increment,
@@ -91,7 +91,7 @@ create table user_dynamic_info
 );
 
 -- 书籍添加的审核表
-drop table audit_records;
+drop table IF EXISTS audit_records;
 create table audit_records(
     id int primary key auto_increment,
     book_id int ,
@@ -106,7 +106,7 @@ create table audit_records(
 );
 
 -- 用户给书籍打分表
-drop table Book_ratings;
+drop table IF EXISTS book_ratings;
 create table book_ratings
 (
     user_id int,
@@ -118,7 +118,7 @@ create table book_ratings
 );
 
 -- 书架表
-drop table bookshelf;
+drop table IF EXISTS bookshelf;
 create table bookshelf
 (
     id        int primary key auto_increment,
@@ -131,7 +131,7 @@ create table bookshelf
 );
 
 -- 评论表
-DROP table comments;
+DROP table IF EXISTS comments;
 create table comments
 (
     id                int primary key auto_increment,
@@ -153,7 +153,7 @@ create table comments
 );
 
 -- 用户给评论点赞或踩
-drop table user_comment_votes;
+drop table IF EXISTS user_comment_votes;
 create table user_comment_votes
 (
     user_id    int,

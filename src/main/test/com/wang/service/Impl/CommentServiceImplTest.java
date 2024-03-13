@@ -19,10 +19,21 @@ public class CommentServiceImplTest {
     @Resource
     CommentsService commentsService;
 
+    @Resource
+    CommentsServiceImpl commentsServiceImpl;
+
     @Test
     public void getCommentForBook() {
-        List<CommentResult> comments = commentsService.getCommentByBookId(15);
+        //List<CommentResult> comments = commentsService.getCommentByBookId(15);
         //printCommentsTree(comments, 0);
+    }
+
+    // 获取一个评论的根级评论的id
+    @Test
+    public void getRootComment(){
+        //Comment comment = commentsService.getCommentById(6);
+        //Integer rootId = commentsServiceImpl.getRootComment(comment);
+        //System.out.println(rootId);
     }
 
     // 辅助方法：生成缩进字符串
@@ -59,6 +70,8 @@ public class CommentServiceImplTest {
     public void Reply(){
 
     }
+
+
 
     @Test
     public void updateComment(){

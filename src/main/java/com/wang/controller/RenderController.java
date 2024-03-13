@@ -32,7 +32,7 @@ public class RenderController {
     }
     @RequestMapping("/commentsSection")
     public String commentsSection(@RequestBody Map<String, Object> map, Model model){
-        model.addAttribute("comments",map.get("comments"));
+        model.addAttribute("rootComments",map.get("rootComments"));
         return "userDisplay/component/commentsSection";
     }
 }

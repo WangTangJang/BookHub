@@ -5,6 +5,8 @@ import com.wang.model.User;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +26,9 @@ public class CommentResult implements Serializable {
 
     private Integer dislikes;
 
-    private Date creationTime;
+    private String creationTime;
 
-    private Date updateTime;
+    private String updateTime;
 
     private String context;
 
@@ -38,6 +40,8 @@ public class CommentResult implements Serializable {
 
     private long userLevel;
 
+    private String parentUsername;
+
     private static final long serialVersionUID = 1L;
 
     public CommentResult(Comment comment) {
@@ -47,8 +51,12 @@ public class CommentResult implements Serializable {
         this.parentCommentId = comment.getParentCommentId();
         this.likes = comment.getLikes();
         this.dislikes = comment.getDislikes();
-        this.creationTime = comment.getCreationTime();
-        this.updateTime = comment.getUpdateTime();
+        // 将Date类型转换为String类型
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        creationTime = formatter.format(comment.getCreationTime().toInstant().atZone(ZoneId.systemDefault()));
+        if (comment.getUpdateTime() != null){
+            updateTime = formatter.format(comment.getUpdateTime().toInstant().atZone(ZoneId.systemDefault()));
+        }
         this.context = comment.getContext();
     }
 }
