@@ -2,7 +2,8 @@
 
 -- 书籍表中的数据被插入的时候自动创建一条动态数据
 delimiter //
-create trigger after_insert_book_original_info
+DROP TRIGGER IF EXISTS after_insert_book_original_info;
+create trigger  after_insert_book_original_info
     after insert on book_original_info for each row
     begin
         insert into book_dynamic_info(book_id, average_rating, reviews_count, shelf_count, rating_count)
@@ -11,7 +12,7 @@ create trigger after_insert_book_original_info
 //
 
 -- 用户表中新建用户是时，自动创建一个用户的动态数据
-drop trigger after_insert_user_original_info;
+drop trigger IF EXISTS after_insert_user_original_info;
 create trigger after_insert_user_original_info
     after insert on user_original_info for each row
     begin
@@ -20,7 +21,7 @@ create trigger after_insert_user_original_info
     end;
 //
 -- 新增评论时，检查父评论是否属于同一本书
-drop trigger check_parent_comment_before_insert;
+drop trigger IF EXISTS check_parent_comment_before_insert;
 CREATE TRIGGER check_parent_comment_before_insert BEFORE INSERT ON comments
     FOR EACH ROW
 BEGIN
@@ -35,7 +36,7 @@ END;
 
 
 -- 触发器，当用户更新评论时候，自动更新评论的更新时间
-DROP TRIGGER before_update_comments;
+DROP TRIGGER IF EXISTS before_update_comments;
 CREATE TRIGGER before_update_comments
     BEFORE UPDATE ON comments
     FOR EACH ROW

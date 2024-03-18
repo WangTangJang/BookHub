@@ -102,4 +102,11 @@ public interface BooksMapper {
      * @param booId 书籍id
      */
     void updateRatingCount(@Param("bookId") long booId);
+
+    /**
+     * 更新一本书的评论数量
+     * @param booId 书籍id
+     */
+    void updateReviewsCount(@Param("bookId") long booId);
+
 }

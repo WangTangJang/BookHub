@@ -1,109 +1,183 @@
-<div class="row py-3" id="commentsSection">
-  <!--评论区顶部栏-->
-  <div class="col-sm-12">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-      <h2 class="d-inline">评论</h2>
-      <span class="ml-3">最新</span>
-      <span class="ml-3">最热</span>
+<div id="commentsSectionPage">
+  <div class="row py-3" id="commentsSection">
+    <!--评论区顶部栏-->
+    <div class="col-sm-12">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+        <h2 class="d-inline">评论(已有<span th:text="${reviewsCount}"></span>条)</h2>
+        <span class="ml-3">最新</span>
+        <span class="ml-3">最热</span>
+      </div>
+      <hr>
     </div>
-    <hr>
-  </div>
 
-  <!--评论输入框-->
-  <div class="col-sm-12">
-    <div class="row">
-      <div class="col-sm-1">
-        <div th:if="${session.user != null}">
-          <img th:src="@{${session.user.country}}" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
-        </div>
-        <div th:if="${session.user == null}">
-          <img src="#" class="img-fluid rounded" alt="未登录">
-        </div>
-      </div>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="发表评论...">
-      </div>
-      <div class="col-sm-2">
-        <button type="button" class="btn btn-primary">发送</button>
-      </div>
-    </div>
-    <hr>
-  </div>
-
-  <!--评论区主体-->
-  <div class="col-sm-12">
-    <div th:each="rootComment : ${rootComments}" class="comment-tree">
-      <!--根评论-->
-      <div class="root-comment row">
-        <!--用户头像-->
+    <!--评论输入框-->
+    <div class="col-sm-12">
+      <div class="row">
         <div class="col-sm-1">
-          <img th:src="${rootComment.value.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
+          <div th:if="${session.user != null}">
+            <img th:src="@{${session.user.country}}" id="userAvatar" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
+          </div>
+          <div th:if="${session.user == null}">
+            <img src="#" class="img-fluid rounded" alt="未登录">
+          </div>
         </div>
-        <div class="col-sm-11">
-          <!-- 评论内容的头部 -->
-          <div class="row comment-header">
-            <div class="col-sm-3">
-              <h5 th:text="${rootComment.value.userName}"></h5>
-            </div>
-            <div class="comment-date col-9 text-right">
-              <span  th:text="${rootComment.value.creationTime}"></span>
-            </div>
-          </div>
-          <!-- 评论内容的主体 -->
-          <div class="row ">
-            <p th:text="${rootComment.value.context}"></p>
-          </div>
-          <!-- 评论交互区 -->
-          <div class="comment-actions">
-            <!-- 点赞图标 -->
-            <div class="btn  btn-sm"><i class="fas fa-thumbs-up"> <span th:text="${rootComment.value.likes}"></span></i></div>
-            <!-- 点踩图标 -->
-            <div class="btn  btn-sm"><i class="fas fa-thumbs-down"> <span th:text="${rootComment.value.dislikes}"></span></i></div>
-            <!-- 回复图标 -->
-            <div class="btn  btn-sm"> <i class="fas fa-reply">回复</i></div>
-          </div>
-          <hr>
+        <div class="col-sm-9">
+          <input type="text" class="form-control"  id="commentBox" placeholder="发表评论...">
+        </div>
+        <div class="col-sm-2">
+          <button type="button"  class="btn btn-primary" id="sendComment">发送</button>
         </div>
       </div>
+      <hr>
+    </div>
 
-      <!--回复评论-->
-      <div th:each="reply : ${rootComment.value.replies}" class="reply-comment ml-5">
-        <div class="row" >
+    <div th:text="${bookId}" id="bookId" style="display: none;"></div>
+
+    <!--评论区主体-->
+    <div class="col-sm-12">
+      <div th:each="rootComment : ${rootComments}" class="comment-tree">
+        <!--根评论-->
+        <div class="root-comment row">
           <!--用户头像-->
           <div class="col-sm-1">
-            <img th:src="${reply.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
+            <img th:src="${rootComment.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
           </div>
           <div class="col-sm-11">
             <!-- 评论内容的头部 -->
-            <div class="row reply-header">
+            <div class="row comment-header">
               <div class="col-sm-3">
-                <h5 th:text="${reply.userName}"></h5>
+                <h5 th:text="${rootComment.userName}"></h5>
               </div>
               <div class="comment-date col-9 text-right">
-                <span  th:text="${reply.creationTime}"></span>
+                <span  th:text="${rootComment.creationTime}"></span>
               </div>
             </div>
             <!-- 评论内容的主体 -->
-            <div class="row">
-              <p>回复_<span th:text="${reply.parentUsername}"></span>：<span th:text="${reply.context}"></span></p>
+            <div class="row ">
+              <p th:text="${rootComment.context}"></p>
             </div>
             <!-- 评论交互区 -->
-            <div class="reply-actions">
+            <div class="comment-actions">
               <!-- 点赞图标 -->
-              <div class="btn  btn-sm"><i class="fas fa-thumbs-up"> <span th:text="${rootComment.value.likes}"></span></i></div>
+              <div class="btn  btn-sm likeComment" th:data="${rootComment.id}"><i class="fas fa-thumbs-up"> <span th:text="${rootComment.likes}"></span></i></div>
               <!-- 点踩图标 -->
-              <div class="btn  btn-sm"><i class="fas fa-thumbs-down"> <span th:text="${rootComment.value.dislikes}"></span></i></div>
+              <div class="btn  btn-sm dislikeComment" th:data="${rootComment.id}"><i class="fas fa-thumbs-down"> <span th:text="${rootComment.dislikes}"></span></i></div>
               <!-- 回复图标 -->
               <div class="btn  btn-sm"> <i class="fas fa-reply">回复</i></div>
             </div>
             <hr>
           </div>
         </div>
+
+        <!--回复评论-->
+        <div th:each="reply : ${rootComment.replies}" class="reply-comment ml-5">
+          <div class="row" >
+            <!--用户头像-->
+            <div class="col-sm-1">
+              <img th:src="${reply.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;"  alt="Avatar">
+            </div>
+            <div class="col-sm-11">
+              <!-- 回复内容的头部 -->
+              <div class="row reply-header">
+                <div class="col-sm-3">
+                  <h5 th:text="${reply.userName}"></h5>
+                </div>
+                <div class="comment-date col-9 text-right">
+                  <span  th:text="${reply.creationTime}"></span>
+                </div>
+              </div>
+              <!-- 评论内容的主体 -->
+              <div class="row">
+                <p>回复_<span th:text="${reply.parentUsername}"></span>：<span th:text="${reply.context}"></span></p>
+              </div>
+              <!-- 评论交互区 -->
+              <div class="reply-actions">
+                <!-- 点赞图标 -->
+                <div class="btn  btn-sm likeComment" th:data="${reply.id}"><i class="fas fa-thumbs-up"> <span th:text="${reply.likes}"></span></i></div>
+                <!-- 点踩图标 -->
+                <div class="btn  btn-sm dislikeComment" th:data="${reply.id}"><i class="fas fa-thumbs-down"> <span th:text="${reply.dislikes}"></span></i></div>
+                <!-- 回复图标 -->
+                <div class="btn  btn-sm"> <i class="fas fa-reply">回复</i></div>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  <!--发送评论-->
+  $(document).on('click', '#sendComment', function (event) {
+
+    if (!document.getElementById('userAvatar')){
+      alert("未登录");
+      return;
+    }
+
+    const commentBox = document.getElementById('commentBox');
+    const commentContent = commentBox.value;
+    const bookInfo = document.getElementById('bookId');
+    const bookId = bookInfo.textContent;
+    $.ajax({
+      url: '/comments/sendComment',
+      type:'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({commentContent:commentContent,bookId:bookId}),
+      success:function (data){
+        showComments(data)
+      }
+    })
+  })
+  $(document).on('click','.likeComment',function (event){
+
+    if (!document.getElementById('userAvatar')){
+      alert("未登录");
+      return;
+    }
+    //这种获取id的方式我不喜欢
+    const bookInfo = document.getElementById('bookId');
+    const bookId = bookInfo.textContent;
+    const commentId = $(this).attr('data');
+
+    $.ajax({
+      url: '/comments/like',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({commentId:commentId,bookId:bookId}),
+      success:function (data){
+        showComments(data)
+      }
+    })
+  })
+  $(document).on('click','.dislikeComment',function (event){
+
+    if (!document.getElementById('userAvatar')){
+      alert("未登录");
+      return;
+    }
+    //这种获取id的方式我不喜欢
+    const bookInfo = document.getElementById('bookId');
+    const bookId = bookInfo.textContent;
+    const commentId = $(this).attr('data');
+
+    $.ajax({
+      url: '/comments/dislike',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({commentId:commentId,bookId:bookId}),
+      success:function (data){
+        showComments(data)
+      }
+    })
+  })
+</script>
+
+
+
 <style>
 
   .reply-comment {
@@ -114,5 +188,11 @@
 
   .comment-actions {
 
+  }
+  .likeComment {
+    cursor: pointer;
+  }
+  .dislikeComment {
+    cursor: pointer;
   }
 </style>

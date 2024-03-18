@@ -4,15 +4,13 @@ import com.wang.mapper.CommentsMapper;
 import com.wang.model.Comment;
 import com.wang.model.User;
 import com.wang.model.result.CommentResult;
+import com.wang.service.BooksService;
 import com.wang.service.CommentsService;
 import com.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
@@ -26,13 +24,22 @@ public class CommentsServiceImpl implements CommentsService {
     @Autowired
     private UserService userService;
 
-    @Override
-    public void addComment(Comment comment) {
-        validate(comment.getContext());
+    @Autowired
+    private BooksService booksService;
 
+    @Override
+    public void addComment(int bookId,int userId,String commentContent) {
+        validate(commentContent);
+        Comment comment = new Comment();
+        comment.setContext(commentContent);
+        comment.setBookId(bookId);
+        comment.setUserId(userId);
         // 在业务逻辑中设置初始值
         comment.setLikes(0);
         comment.setDislikes(0);
+
+        booksService.updateReviewsCount(bookId);
+
         mapper.insertSelective(comment);
     }
 
@@ -61,9 +68,13 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public Map<Integer,CommentResult> getCommentByBookId(int bookId) {
+    public List<CommentResult> getCommentByBookId(int bookId) {
+        Map<Integer,CommentResult> rootComments = organizeCommentsIntoTree(mapper.selectByBookId(bookId));
+        // 将根评论按时间排序
+        List<CommentResult> sortedRootComments = new ArrayList<>(rootComments.values());
+        sortedRootComments.sort(Comparator.comparing(CommentResult::getCreationTime).reversed());
 
-        return organizeCommentsIntoTree(mapper.selectByBookId(bookId));
+        return sortedRootComments;
     }
 
     /* 这才是该写的东西！！！ */

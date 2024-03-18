@@ -97,6 +97,11 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
+    public void updateReviewsCount(long bookId) {
+        mapper.updateReviewsCount(bookId);
+    }
+
+    @Override
     public String userUpload(Books book, String username) {
         // 检查isbn是否重复
         if (mapper.checkDuplicateISBN(book.getIsbn())){

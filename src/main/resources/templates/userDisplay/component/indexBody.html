@@ -42,7 +42,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="commentsSection"></div>
+                <div id="commentsSection" th:replace="userDisplay/component/commentsSection"></div>
             </div>
         </div>
     </div>
@@ -98,12 +98,12 @@
             contentType: 'application/json',
             type: 'POST',
             success: function (commentsHtml) {
-                $('#commentsSection').replaceWith(commentsHtml);
+
+                $('#commentsSectionPage').replaceWith(commentsHtml);
                 $('#commentsModal').modal('show');
             }
         })
     }
-
 
     var isLoadingBooks = false; // 标志位,用于控制是否正在加载书籍数据
     var currentPage = 2; // 记录已加载的书籍索引

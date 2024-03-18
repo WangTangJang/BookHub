@@ -22,7 +22,7 @@ public interface CommentsService {
      * 添加评论
      * @param comment 评论实体
      */
-    void addComment(Comment comment);
+    void addComment(int bookId,int userId,String comment);
 
     /**
      * 通过id获取评论
@@ -50,5 +50,5 @@ public interface CommentsService {
      */
     void updateVote(Comment comment);
 
-    Map<Integer,CommentResult> getCommentByBookId(int bookId);
+    List<CommentResult> getCommentByBookId(int bookId);
 }

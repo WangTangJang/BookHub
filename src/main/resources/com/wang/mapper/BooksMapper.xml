@@ -80,7 +80,10 @@
     </select>
 
     <select id="selectPage" resultType="Books">
-        SELECT * FROM book_original_info LIMIT #{start},#{size}
+        SELECT * FROM book_original_info
+        INNER JOIN book_dynamic_info
+        ON book_dynamic_info.book_id = book_original_info.id
+        LIMIT #{start},#{size}
     </select>
 
     <select id="selectByListId" resultType="Books">
@@ -103,6 +106,12 @@
     <update id="updateRatingCount">
         update book_dynamic_info
         set rating_count = (select count(*) from book_ratings where book_ratings.book_id=#{bookId})
+        where book_id = #{bookId}
+    </update>
+
+    <update id="updateReviewsCount">
+        update BookHub.book_dynamic_info
+        set reviews_count = (select count(*) from comments where comments.book_id = #{bookId})
         where book_id = #{bookId}
     </update>
 </mapper>

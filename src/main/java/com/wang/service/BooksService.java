@@ -84,6 +84,14 @@ public interface BooksService {
     void updateRatingCount(long bookId);
 
     /**
+     * 更新一本书的评论
+     * @param bookId 书籍id
+     */
+    void updateReviewsCount(long bookId);
+
+
+
+    /**
      * 用户上传书籍
      * @param book 书籍的信息
      * @param username 上传者的id

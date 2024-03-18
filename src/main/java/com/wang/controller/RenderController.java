@@ -33,6 +33,8 @@ public class RenderController {
     @RequestMapping("/commentsSection")
     public String commentsSection(@RequestBody Map<String, Object> map, Model model){
         model.addAttribute("rootComments",map.get("rootComments"));
-        return "userDisplay/component/commentsSection";
+        model.addAttribute("bookId",map.get("bookId"));
+        model.addAttribute("reviewsCount",map.get("reviewsCount"));
+        return "userDisplay/component/commentsSection:: #commentsSectionPage";
     }
 }

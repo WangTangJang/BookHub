@@ -59,11 +59,8 @@ public class CommentServiceImplTest {
 
     @Test
     public void addComments() {
-        Comment comment = new Comment();
-        comment.setUserId(1);
-        comment.setBookId(1);
-        comment.setContext("好书");
-        commentsService.addComment(comment);
+
+        commentsService.addComment(1,1,"好");
     }
 
     @Test
