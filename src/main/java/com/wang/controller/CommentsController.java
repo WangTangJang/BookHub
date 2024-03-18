@@ -58,8 +58,14 @@ public class CommentsController {
         User user = (User) session.getAttribute("user");
         int bookId = Integer.parseInt((String) map.get("bookId"));
         int commentId = Integer.parseInt((String) map.get("commentId"));
-        commentVoteService.likeComment(user.getId(),commentId);
-        return getComments(bookId);
+        try {
+            commentVoteService.likeComment(user.getId(),commentId);
+            return getComments(bookId);
+        }catch (Exception e){
+            Map<String,Object> result = new HashMap<>();
+            result.put("message",e.getMessage());
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @PostMapping("/dislike")
@@ -67,7 +73,13 @@ public class CommentsController {
         User user = (User) session.getAttribute("user");
         int bookId = Integer.parseInt((String) map.get("bookId"));
         int commentId = Integer.parseInt((String) map.get("commentId"));
-        commentVoteService.dislikeComment(user.getId(),commentId);
-        return getComments(bookId);
+        try {
+            commentVoteService.dislikeComment(user.getId(),commentId);
+            return getComments(bookId);
+        }catch (Exception e){
+            Map<String,Object> result = new HashMap<>();
+            result.put("message",e.getMessage());
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 }

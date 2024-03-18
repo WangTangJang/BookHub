@@ -150,6 +150,11 @@
       data: JSON.stringify({commentId:commentId,bookId:bookId}),
       success:function (data){
         showComments(data)
+      },
+      error:function (data){
+        const response = JSON.parse(data.responseText);
+        const message = response.message;
+        alert(message);
       }
     })
   })
@@ -171,6 +176,11 @@
       data: JSON.stringify({commentId:commentId,bookId:bookId}),
       success:function (data){
         showComments(data)
+      },
+      error:function (data){
+        const response = JSON.parse(data.responseText);
+        const message = response.message;
+        alert(message);
       }
     })
   })

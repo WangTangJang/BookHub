@@ -34,11 +34,16 @@ public class CommentVoteServiceImpl implements CommentVoteService {
 
     // 投票方法, voteType为like或dislike, 用于判断是点赞还是点踩, 以便修改评论的点赞量或点踩量
     public void voteComment(long userId , long commentId, String voteType) {
-        if(mapper.select(userId,commentId) != null){
-            // 如果已经投票过了，将原来的投票取消
-            commentVoteService.cancelVote(userId, commentId);
+        CommentVotes oldCommentVotes = mapper.select(userId,commentId);
+        // 原来是否投过票
+        if (oldCommentVotes!=null){
+            // 如果原来投的票与现在投的票相同则抛出
+            if (oldCommentVotes.getVoteType().equals(voteType)){
+                throw new IllegalArgumentException("您已经投过相同类型的票！");
+            }else {
+                commentVoteService.cancelVote(userId, commentId);
+            }
         }
-
         CommentVotes commentVotes = new CommentVotes();
         commentVotes.setUserId(userId);
         commentVotes.setCommentId(commentId);
@@ -52,7 +57,6 @@ public class CommentVoteServiceImpl implements CommentVoteService {
         }
         commentsService.updateVote(comment);
     }
-
 
     // 取消投票
     @Override
@@ -69,10 +73,4 @@ public class CommentVoteServiceImpl implements CommentVoteService {
         commentsService.updateVote(comment);
         mapper.delete(userId, commentId);
     }
-
-
-
-
-
-
 }

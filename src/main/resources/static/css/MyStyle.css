@@ -8,19 +8,19 @@
 
 
 /*整体页面的背景图片*/
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* 将伪元素置于背景之后 */
-    /*background-image: url(https://w.wallhaven.cc/full/jx/wallhaven-jxqyrq.jpg);*/
-    background-image: url("/static/images/background.jpg");
-    background-size: cover;
-    filter: blur(2px); /* 调整虚化效果的程度 */
-}
+/*body::before {*/
+/*    content: "";*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    z-index: -1; !* 将伪元素置于背景之后 *!*/
+/*    !*background-image: url(https://w.wallhaven.cc/full/jx/wallhaven-jxqyrq.jpg);*!*/
+/*    background-image: url("/static/images/background.jpg");*/
+/*    background-size: cover;*/
+/*    filter: blur(2px); !* 调整虚化效果的程度 *!*/
+/*}*/
 .custom-logo{
     font-size: 25px;
 }
