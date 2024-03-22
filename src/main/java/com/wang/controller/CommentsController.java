@@ -53,6 +53,16 @@ public class CommentsController {
         commentService.addComment(bookId,userId,comment);
         return getComments(bookId);
     }
+    @PostMapping("/replyComment")
+    public ResponseEntity<?> replyComment(@RequestBody Map<String,Object> map,HttpSession session){
+        String comment = (String) map.get("commentContent");
+        User user = (User) session.getAttribute("user");
+        int userId = (int) user.getId();
+        int parentId =Integer.parseInt((String) map.get("parentId"));
+        int bookId =Integer.parseInt((String) map.get("bookId")) ;
+        commentService.replyComment(parentId,userId,bookId,comment);
+        return getComments(bookId);
+    }
     @PostMapping("/like")
     public ResponseEntity<?> like(@RequestBody Map<String,Object> map, HttpSession  session){
         User user = (User) session.getAttribute("user");

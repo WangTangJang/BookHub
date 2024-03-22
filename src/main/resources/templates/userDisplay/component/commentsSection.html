@@ -22,11 +22,9 @@
             <img src="#" class="img-fluid rounded" alt="未登录">
           </div>
         </div>
-        <div class="col-sm-9">
-          <input type="text" class="form-control"  id="commentBox" placeholder="发表评论...">
-        </div>
-        <div class="col-sm-2">
-          <button type="button"  class="btn btn-primary" id="sendComment">发送</button>
+        <div class="input-group mb-3 col-sm-11">
+          <input type="text" class="form-control"  id="commentBox" placeholder="发表评论..." aria-label="发表评论..." aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" id="sendComment">发送</button>
         </div>
       </div>
       <hr>
@@ -58,13 +56,20 @@
               <p th:text="${rootComment.context}"></p>
             </div>
             <!-- 评论交互区 -->
-            <div class="comment-actions">
+            <div class="comment-actions row">
               <!-- 点赞图标 -->
               <div class="btn  btn-sm likeComment" th:data="${rootComment.id}"><i class="fas fa-thumbs-up"> <span th:text="${rootComment.likes}"></span></i></div>
               <!-- 点踩图标 -->
               <div class="btn  btn-sm dislikeComment" th:data="${rootComment.id}"><i class="fas fa-thumbs-down"> <span th:text="${rootComment.dislikes}"></span></i></div>
               <!-- 回复图标 -->
-              <div class="btn  btn-sm"> <i class="fas fa-reply">回复</i></div>
+              <div class="btn  btn-sm reply" th:data="|reply_${rootComment.id}|"> <i class="fas fa-reply">回复</i></div>
+            </div>
+            <!--回复输入框-->
+            <div class="reply-input row" style="display: none;" th:id="|reply_${rootComment.id}|" >
+              <div class="input-group mb-3">
+                <input type="text" class="form-control replyBox" th:id="|reply_context_${rootComment.id}|" placeholder="回复评论..." aria-label="回复评论..." aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary reply-btn" type="button" th:data="${rootComment.id}" th:id="|reply_btn_${rootComment.id}|">回复</button>
+              </div>
             </div>
             <hr>
           </div>
@@ -98,7 +103,13 @@
                 <!-- 点踩图标 -->
                 <div class="btn  btn-sm dislikeComment" th:data="${reply.id}"><i class="fas fa-thumbs-down"> <span th:text="${reply.dislikes}"></span></i></div>
                 <!-- 回复图标 -->
-                <div class="btn  btn-sm"> <i class="fas fa-reply">回复</i></div>
+                <div class="btn  btn-sm reply" th:data="|reply_${reply.id}|"> <i class="fas fa-reply">回复</i></div>
+              </div>
+              <div class="reply-input row" style="display: none;" th:id="|reply_${reply.id}|" >
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control replyBox" th:id="|reply_context_${reply.id}|" placeholder="回复评论..." aria-label="回复评论..." aria-describedby="button-addon2">
+                  <button class="btn btn-outline-secondary reply-btn" type="button" th:data="${reply.id}" th:id="|reply_btn_${reply.id}|">回复</button>
+                </div>
               </div>
               <hr>
             </div>
@@ -184,6 +195,39 @@
       }
     })
   })
+
+  $(document).on('click','.reply',function (event){
+    if (!document.getElementById('userAvatar')){
+      alert("未登录");
+      return;
+    }
+  //  获取按钮对应的id
+
+    const replyId = $(this).attr('data');
+    document.getElementById(replyId).style.display = "block";
+  })
+
+  $(document).on('click','.reply-btn',function (event){
+
+    const bookInfo = document.getElementById('bookId');
+    const bookId = bookInfo.textContent;
+    const parentId = $(this).attr('data');
+    const reply_contextId='reply_context_'+parentId
+    let replyComment = document.getElementById(reply_contextId).value;
+    if (!replyComment){
+      alert("回复不能为空哦");
+      return;
+    }
+    $.ajax({
+      url:'/comments/replyComment',
+      type:'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({commentContent:replyComment,bookId:bookId,parentId:parentId}),
+      success:function (data){
+        showComments(data)
+      }
+    })
+  })
 </script>
 
 
@@ -198,6 +242,9 @@
 
   .comment-actions {
 
+  }
+  .reply{
+    cursor: pointer;
   }
   .likeComment {
     cursor: pointer;

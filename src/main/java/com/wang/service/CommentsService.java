@@ -24,6 +24,8 @@ public interface CommentsService {
      */
     void addComment(int bookId,int userId,String comment);
 
+    void replyComment(int parentId,int userId,int bookId,String comment);
+
     /**
      * 通过id获取评论
      * @param id 评论的id

@@ -44,6 +44,20 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
+    public void replyComment(int parentId, int userId,int bookId,String commentContent) {
+        validate(commentContent);
+        Comment replyComment = new Comment();
+        replyComment.setUserId(userId);
+        replyComment.setContext(commentContent);
+        replyComment.setParentCommentId(parentId);
+        replyComment.setBookId(bookId);
+        replyComment.setDislikes(0);
+        replyComment.setLikes(0);
+        booksService.updateReviewsCount(bookId);
+
+        mapper.insertSelective(replyComment);
+    }
+    @Override
     public Comment getCommentById(long id) {
         return mapper.selectByPrimaryKey((int) id);
     }
