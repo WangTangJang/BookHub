@@ -14,7 +14,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class CommentServiceImplTest {
+public class CommentsServiceImplTest {
 
     @Resource
     CommentsService commentsService;
@@ -78,5 +78,15 @@ public class CommentServiceImplTest {
     @Test
     public void deleteComment(){
         commentsService.deleteComment(2);
+    }
+
+    @Test
+    public void count() {
+        System.out.println(commentsService.count());
+    }
+
+    @Test
+    public void countYesterday() {
+        System.out.println(commentsService.countYesterday());
     }
 }

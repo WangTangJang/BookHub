@@ -101,8 +101,8 @@ create table audit_records(
     submitter_id int ,
     comment TEXT,
     foreign key (book_id) references book_original_info(id) on DELETE CASCADE ,
-    foreign key (auditor_id) references user_original_info (id),
-    foreign key (submitter_id) references user_original_info (id)
+    foreign key (auditor_id) references user_original_info (id) ON DELETE CASCADE,
+    foreign key (submitter_id) references user_original_info (id) ON DELETE CASCADE
 );
 
 -- 用户给书籍打分表
@@ -113,8 +113,8 @@ create table book_ratings
     book_id int,
     rating  int not null,
     primary key (user_id, book_id),
-    foreign key (user_id) references user_original_info (id),
-    foreign key (book_id) references book_original_info (id)
+    foreign key (user_id) references user_original_info (id) ON DELETE CASCADE,
+    foreign key (book_id) references book_original_info (id) ON DELETE CASCADE
 );
 
 -- 书架表
@@ -126,8 +126,8 @@ create table bookshelf
     book_id   int,
     status    varchar(100),
     join_date date,
-    foreign key (user_id) references user_original_info (id),
-    foreign key (book_id) references book_original_info (id)
+    foreign key (user_id) references user_original_info (id) ON DELETE CASCADE,
+    foreign key (book_id) references book_original_info (id) ON DELETE CASCADE
 );
 
 -- 评论表
@@ -147,9 +147,9 @@ create table comments
     dislikes          int,
     creation_time     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_time       DATETIME DEFAULT null,
-    FOREIGN KEY (user_id) references user_original_info (id),
-    foreign key (book_id) references book_original_info (id),
-    foreign key (parent_comment_id) references comments (id)
+    FOREIGN KEY (user_id) references user_original_info (id) ON DELETE CASCADE,
+    foreign key (book_id) references book_original_info (id) ON DELETE CASCADE,
+    foreign key (parent_comment_id) references comments (id) ON DELETE CASCADE
 );
 
 -- 用户给评论点赞或踩
@@ -161,7 +161,7 @@ create table user_comment_votes
     vote_type  enum ('like','dislike') not null,
     vote_date  TIMESTAMP default current_timestamp,
     primary key (user_id, comment_id),
-    foreign key (user_id) references user_original_info (id),
-    foreign key (comment_id) references comments (id)
+    foreign key (user_id) references user_original_info (id) ON DELETE CASCADE,
+    foreign key (comment_id) references comments (id) ON DELETE CASCADE
 );
 

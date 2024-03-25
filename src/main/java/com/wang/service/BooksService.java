@@ -2,6 +2,9 @@ package com.wang.service;
 
 import com.wang.model.Books;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -89,7 +92,7 @@ public interface BooksService {
      */
     void updateReviewsCount(long bookId);
 
-
+    String uploadCover(MultipartFile cover);
 
     /**
      * 用户上传书籍
@@ -115,4 +118,6 @@ public interface BooksService {
      * @return 审核驳回的书籍
      */
     List<Books> searchRejectedBooks();
+
+    Page<Books> findAllBooks(Pageable pageable);
 }

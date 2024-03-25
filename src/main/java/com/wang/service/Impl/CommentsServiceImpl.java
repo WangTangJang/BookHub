@@ -91,6 +91,38 @@ public class CommentsServiceImpl implements CommentsService {
         return sortedRootComments;
     }
 
+    @Override
+    public List<CommentResult> getCommentByLike(int bookId) {
+        Map<Integer,CommentResult> rootComments = organizeCommentsIntoTree(mapper.selectByBookId(bookId));
+        // 将根评论按时间排序
+        List<CommentResult> sortedRootComments = new ArrayList<>(rootComments.values());
+        sortedRootComments.sort(Comparator.comparing(CommentResult::getLikes).reversed());
+
+        return sortedRootComments;
+    }
+
+    @Override
+    public int count() {
+        List<Comment> comments =mapper.selectAll();
+        return comments.size();
+    }
+
+    @Override
+    public int countYesterday() {
+        List<Comment> comments = mapper.selectAll();
+        Date now = new Date(System.currentTimeMillis());
+        // 昨天的时间
+        Date yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        List<Comment> result = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            if (comment.getCreationTime().after(yesterday)) {
+                result.add(comment);
+            }
+        }
+        return result.size();
+    }
+
     /* 这才是该写的东西！！！ */
     // 评论的树形结构
     private Map<Integer,CommentResult> organizeCommentsIntoTree(List<Comment> comments) {

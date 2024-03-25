@@ -4,33 +4,28 @@ import lombok.Data;
 
 @Data
 public class LoginResult {
-    private int code;
-    private String msg;
+
+    private Meta meta;
     private Data data;
 
+    @lombok.Data
+    public static class Meta{
+        private int status;
+        private String massage;
+        public Meta(int c ,String m){
+            this.status = c;
+            this.massage = m;
+        }
+    }
+
+    @lombok.Data
     public static class Data {
         private int uid;
         private String token;
 
         public Data(int i, String s) {
-            uid = i;
-            token = s;
-        }
-
-        public int getUid() {
-            return uid;
-        }
-
-        public void setUid(int uid) {
-            this.uid = uid;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
+            this.uid = i;
+            this.token = s;
         }
     }
 }

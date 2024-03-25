@@ -53,4 +53,12 @@ public interface CommentsService {
     void updateVote(Comment comment);
 
     List<CommentResult> getCommentByBookId(int bookId);
+
+    List<CommentResult> getCommentByLike(int bookId);
+    // 评论的数量
+    int count();
+
+    // 昨日新增评论数量
+    int countYesterday();
+
 }

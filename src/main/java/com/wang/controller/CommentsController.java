@@ -44,6 +44,18 @@ public class CommentsController {
 
         return ResponseEntity.ok(result);
     }
+    @RequestMapping("/getByLike/{id}")
+    public ResponseEntity<?> getCommentByLike(@PathVariable int id){
+        // 存放的每条根评论及其对应的ID
+        List<CommentResult> rootComments = commentService.getCommentByLike(id);
+        Map<String,Object> result = new HashMap<>();
+        result.put("rootComments",rootComments);
+        result.put("bookId",id);
+        result.put("message","success");
+        result.put("reviewsCount",booksService.selectById(id).getReviewsCount());
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/sendComment")
     public ResponseEntity<?> sendComment(@RequestBody Map<String,Object> map, HttpSession session){
         String comment = (String) map.get("commentContent");

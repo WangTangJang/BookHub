@@ -1,56 +1,64 @@
 package com.wang.controller.admin;
 
-import com.wang.model.User;
-import com.wang.model.request.LoginRequest;
-import com.wang.model.result.LoginResult;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.wang.model.Books;
+import com.wang.service.BooksService;
+import com.wang.service.CommentsService;
+import com.wang.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.print.Book;
+import java.sql.Date;
+import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest data) {
-        String username = data.getUsername();
-        String password = data.getPassword();
+    @Autowired
+    UserService userService;
+    @Autowired
+    BooksService booksService;
+    @Autowired
+    CommentsService commentsService;
 
-        if ("admin".equals(username) && "111111".equals(password)) {
+    @GetMapping("/toLogin")
+    public String toLogin(){
+        return "admin/book/loginPage";
+    }
 
-            LoginResult result = new LoginResult();
-            result.setCode(20000);
-            result.setMsg("登录成功");
-            result.setData(new LoginResult.Data(1, "7-66da5204d15b; d_c0=AODaYiXlRRiPTuPw7B4J"));
-            return ResponseEntity.ok().body(result);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("error login");
+    @PostMapping("/doLogin")
+    public String doLogin(@RequestParam("username") String username,
+                          @RequestParam("password") String password, Model model){
+        String result = userService.adminLogin(username, password);
+        if (!result.equals("登录成功")){
+            model.addAttribute("result",result);
+            return "admin/book/loginPage";
+        }else{
+            return "redirect: /admin/index";
         }
     }
-    @GetMapping(value = "/info")
-    public ResponseEntity<?> info() {
-        Map<String, Object> result = new HashMap<>();
+    @RequestMapping("index")
+    public String index(Model model){
+        int bookCount = booksService.count();
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("roles", "editor");
-        data.put("introduction", "I am a super administrator");
-        data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        data.put("name", "Super Admin");
+        int userCount = userService.count();
+        int userNewAdd = userService.countYesterday();
 
-        result.put("data", data);
+        int commentCount = commentsService.count();
+        int commentCountYesterday = commentsService.countYesterday();
 
-        result.put("code", 20000);
+        model.addAttribute("bookCount",bookCount);
+        model.addAttribute("userCount",userCount);
+        model.addAttribute("userNewAdd",userNewAdd);
+        model.addAttribute("commentCount",commentCount);
+        model.addAttribute("commentCountYesterday",commentCountYesterday);
 
-        return ResponseEntity.ok().body(result);
-    }
-    @PostMapping(value = "/logout")
-    public ResponseEntity<?> logout() {
-        LoginResult result = new LoginResult();
-        result.setCode(20000);
-        return ResponseEntity.ok().body(result);
+        return "admin/book/index";
     }
 }

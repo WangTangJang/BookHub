@@ -5,7 +5,9 @@ import com.wang.model.User;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +55,11 @@ public class CommentResult implements Serializable {
         this.dislikes = comment.getDislikes();
         // 将Date类型转换为String类型
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        creationTime = formatter.format(comment.getCreationTime().toInstant().atZone(ZoneId.systemDefault()));
+        // 此处有误
+        Date utilDate = new Date(comment.getCreationTime().getTime());
+        Instant instant = utilDate.toInstant();
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        creationTime = formatter.format(zonedDateTime);
         if (comment.getUpdateTime() != null){
             updateTime = formatter.format(comment.getUpdateTime().toInstant().atZone(ZoneId.systemDefault()));
         }

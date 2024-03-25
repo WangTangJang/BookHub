@@ -3,6 +3,8 @@ package com.wang.mapper;
 import com.wang.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserMapper {
     /**
      * 插入用户信息
@@ -55,5 +57,6 @@ public interface UserMapper {
     void likeComment(@Param("userId") String userId,@Param("commentId") String commentId);
     void disLikeComment(@Param("userId") String userId,@Param("commentId") String commentId);
 
+    List<User> selectAll();
 
 }

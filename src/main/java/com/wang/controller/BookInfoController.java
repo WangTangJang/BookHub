@@ -41,7 +41,7 @@ public class BookInfoController {
         model.addAttribute("totalPages",totalPages);
         // 用于告知前端当前所在页面，用来控制导航栏激活状态
         model.addAttribute("currentHtml" ,"list");
-        return "admin/book/list";
+        return "bookList";
     }
     @RequestMapping("toAddView")
     public String toAddView(Model model){
@@ -83,6 +83,6 @@ public class BookInfoController {
     public String search(@RequestParam("keyword") String keyword,Model model){
         List<Books> books = service.search(keyword);
         model.addAttribute("books",books);
-        return "admin/book/list";
+        return "bookList";
     }
 }

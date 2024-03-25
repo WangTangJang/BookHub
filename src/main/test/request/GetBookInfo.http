@@ -37,3 +37,5 @@ Content-Type: application/json
  "bookId": 1,
   "rating": 5
 }
+###
+GET http://localhost:8080/admin/book/toEdits

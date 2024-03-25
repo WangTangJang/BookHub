@@ -7,6 +7,8 @@ import java.util.List;
 public interface CommentsMapper {
     int deleteByPrimaryKey(Integer id);
 
+    List<Comment> selectAll();
+
     int insert(Comment record);
 
     int insertSelective(Comment record);

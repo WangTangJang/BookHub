@@ -2,6 +2,8 @@ package com.wang.service;
 
 import com.wang.model.User;
 
+import java.sql.Date;
+
 public interface UserService {
 
     /**
@@ -25,6 +27,9 @@ public interface UserService {
      * @return 登录结果
      */
     String login(String username,String password);
+
+
+    String adminLogin(String username ,String password);
 
     /**
      * 查找用户
@@ -53,4 +58,8 @@ public interface UserService {
      * @param id 用户的id
      */
     void delete(int id);
+
+    int count();
+
+    int countYesterday();
 }

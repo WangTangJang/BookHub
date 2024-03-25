@@ -39,8 +39,8 @@ public class UserServiceImplTest {
     @Test
     public void adminRegister(){
         User user = new User();
-        user.setUsername("王唐将");
-        user.setPassword("123456");
+        user.setUsername("admin");
+        user.setPassword("admin");
         user.setPhone("1238902343");
         user.setDataOfBirth(Date.valueOf("2002-5-25"));
         user.setEmail("1424435163@qq.com");
@@ -87,5 +87,12 @@ public class UserServiceImplTest {
         book.setFileSize(10);
         User user = service.selectById(1);
         System.out.println(booksService.userUpload(book,user.getUsername()));
+    }
+
+    @Test
+    public void newAdd() {
+
+        System.out.println(service.countYesterday());
+
     }
 }

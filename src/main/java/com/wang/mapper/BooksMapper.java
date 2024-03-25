@@ -2,6 +2,8 @@ package com.wang.mapper;
 
 import com.wang.model.Books;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -55,6 +57,7 @@ public interface BooksMapper {
      * @return 全部书籍
      */
     List<Books> selectAll();
+
 
     /**
      * 通过关键字搜素书籍
