@@ -48,7 +48,9 @@ public class AdminUserController {
             String cover = userService.uploadFile(profilePictureFIle);
             //user.setProfilePicture(cover);
         }
-        //userService.updateUserProfile(user);
+
+
+        //userService.updateUserProfile(user1);
         return "redirect: /admin/user/list";
     }
 }
