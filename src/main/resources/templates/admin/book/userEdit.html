@@ -56,11 +56,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/admin/index"><i class="fas fa-tachometer-alt"></i> 控制台</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/user/list"><i class="fas fa-users"></i> 用户管理</a>
-                </li>
                 <li class="nav-item disabled">
                     <a class="nav-link" href="/admin/book/list"><i class="fas fa-book"></i> 书籍管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/user/list"><i class="fas fa-users"></i> 用户管理</a>
                 </li>
                 <li class="nav-item disabled">
                     <a class="nav-link" href="/admin/comment/list"><i class="fas fa-comments"></i> 评论管理</a>
@@ -97,6 +97,7 @@
                             <label for="username">用户名</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名" th:value="${user.username}">
                         </div>
+                        <!-- 密码肯定不能就这样显示的吧，虽然是加密后的。-->
                         <div class="form-group">
                             <label for="password">密码</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" th:value="${user.password}">
@@ -111,7 +112,7 @@
                         </div>
                         <div class="form-group">
                             <label for="lastLoginDate">最后登录时间</label>
-                            <input type="text" class="form-control" id="lastLoginDate" name="lastLoginDate" placeholder="请输入最后登录时间" th:value="${#dates.format(user.lastLoginDate, 'yyyy-MM-dd')}">
+                            <input type="text" class="form-control" id="lastLoginDate" name="lastLoginDates" placeholder="请输入最后登录时间" th:value="${#dates.format(user.lastLoginDate, 'yyyy-MM-dd')}">
                         </div>
                         <div class="form-group">
                             <label for="accountStatus">账户状态</label>
@@ -119,7 +120,7 @@
                         </div>
                         <div class="form-group">
                             <label for="createDate">创建日期</label>
-                            <input type="text" class="form-control" id="createDate" name="createDate" placeholder="请输入创建日期" th:value="${#dates.format(user.createDate, 'yyyy-MM-dd')}" readonly>
+                            <input type="text" class="form-control" id="createDate" name="createDates" placeholder="请输入创建日期" th:value="${#dates.format(user.createDate, 'yyyy-MM-dd')}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="level">等级</label>
@@ -131,7 +132,11 @@
                         </div>
                         <div class="form-group">
                             <label for="roles">角色</label>
-                            <input type="text" class="form-control" id="roles" name="roles" placeholder="请输入角色" th:value="${user.roles}">
+                            <select class="form-control" id="roles" name="roles" th:value="${user.roles}">
+                                <option value="user" th:selected="${user.roles == 'user'}">用户</option>
+                                <option value="Admin" th:selected="${user.roles == 'Admin'}">管理员</option>
+                            <!--    为什么大小写不一致呀？？？？？？？？？-->
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="email">电子邮箱</label>
@@ -141,17 +146,22 @@
                             <label for="phone">手机号码</label>
                             <input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号码" th:value="${user.phone}">
                         </div>
+
                         <div class="form-group">
                             <label for="gender">性别</label>
-                            <input type="text" class="form-control" id="gender" name="gender" placeholder="请输入性别" th:value="${user.gender}">
+                            <select class="form-control" id="gender" name="gender" th:value="${user.gender}">
+                                <option value="man" th:selected="${user.gender == 'man'}">男</option>
+                                <option value="woman" th:selected="${user.gender == 'woman'}">女</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="country">国家</label>
                             <input type="text" class="form-control" id="country" name="country" placeholder="请输入国家" th:value="${user.country}">
                         </div>
+
                         <div class="form-group">
                             <label for="dataOfBirth">出生日期</label>
-                            <input type="text" class="form-control" id="dataOfBirth" name="dataOfBirth" placeholder="请输入出生日期" th:value="${#dates.format(user.dataOfBirth, 'yyyy-MM-dd')}">
+                            <input type="text" class="form-control" id="dataOfBirth" name="dataOfBirths" placeholder="请输入出生日期" th:value="${#dates.format(user.dataOfBirth, 'yyyy-MM-dd')}">
                         </div>
                         <div class="form-group">
                             <label for="socialMediaLinks">社交媒体链接</label>
@@ -165,18 +175,18 @@
                             <label for="profilePictureFile">重新上传个人头像</label>
                             <input type="file" class="form-control-file" id="profilePictureFile" name="profilePictureFile">
                         </div>
-                        <div class="form-group">
-                            <label for="membershipStatus">会员状态</label>
-                            <input type="text" class="form-control" id="membershipStatus" name="membershipStatus" placeholder="请输入会员状态" th:value="${user.membershipStatus}">
-                        </div>
-                        <div class="form-group">
-                            <label for="membershipStartDate">会员开始日期</label>
-                            <input type="text" class="form-control" id="membershipStartDate" name="membershipStartDate" placeholder="请输入会员开始日期" th:value="${#dates.format(user.membershipStartDate, 'yyyy-MM-dd')}">
-                        </div>
-                        <div class="form-group">
-                            <label for="membershipEndDate">会员结束日期</label>
-                            <input type="text" class="form-control" id="membershipEndDate" name="membershipEndDate" placeholder="请输入会员结束日期" th:value="${#dates.format(user.membershipEndDate, 'yyyy-MM-dd')}">
-                        </div>
+                        <!--<div class="form-group">-->
+                        <!--    <label for="membershipStatus">会员状态</label>-->
+                        <!--    <input type="text" class="form-control" id="membershipStatus" name="membershipStatus" placeholder="请输入会员状态" th:value="${user.membershipStatus}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--    <label for="membershipStartDate">会员开始日期</label>-->
+                        <!--    <input type="text" class="form-control" id="membershipStartDate" name="membershipStartDates" placeholder="请输入会员开始日期" th:value="${#dates.format(user.membershipStartDate, 'yyyy-MM-dd')}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--    <label for="membershipEndDate">会员结束日期</label>-->
+                        <!--    <input type="text" class="form-control" id="membershipEndDate" name="membershipEndDates" placeholder="请输入会员结束日期" th:value="${#dates.format(user.membershipEndDate, 'yyyy-MM-dd')}">-->
+                        <!--</div>-->
                         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
                         <a href="#" class="btn btn-secondary"><i class="fas fa-times"></i> 取消</a>
                     </form>

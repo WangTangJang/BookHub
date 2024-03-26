@@ -61,23 +61,58 @@
     </delete>
 
     <update id="update" parameterType="User">
-        UPDATE user_original_info
+        <!--UPDATE user_original_info,user_dynamic_info-->
+        <!--<set>-->
+        <!--    <if test="username != null">username = #{username},</if>-->
+        <!--    <if test="password != null">password = #{password},</if>-->
+        <!--    <if test="securityQuestion != null">security_question = #{securityQuestion},</if>-->
+        <!--    <if test="accountStatus != null">account_status = #{accountStatus},</if>-->
+        <!--    <if test="createDate != null">create_date = #{createDate},</if>-->
+        <!--    <if test="roles != null">roles = #{roles},</if>-->
+        <!--    <if test="email != null">email = #{email},</if>-->
+        <!--    <if test="phone != null">phone = #{phone},</if>-->
+        <!--    <if test="gender != null">gender = #{gender},</if>-->
+        <!--    <if test="country != null">country = #{country},</if>-->
+        <!--    <if test="dataOfBirth != null">data_of_birth = #{dataOfBirth},</if>-->
+        <!--    <if test="socialMediaLinks != null">social_media_links = #{socialMediaLinks},</if>-->
+        <!--    <if test="profilePicture != null">profile_picture = #{profilePicture, jdbcType=BLOB},</if>-->
+        <!--    # 用户动态信息，话说我为什么要将他们分开呢？-->
+        <!--    <if test="lastLoginIpAddress != null">last_login_ip_address = #{lastLoginIpAddress},</if>-->
+        <!--    <if test="lastLoginDate != null">last_login_date = #{lastLoginDate},</if>-->
+        <!--    <if test="level != null">level = #{level},</if>-->
+        <!--    <if test="experience != null">experience = #{experience},</if>-->
+        <!--    # 用户的会员信息，我甚至都不打算实现这个功能了。-->
+        <!--    <if test="membershipStatus != null">membership_status = #{membershipStatus},</if>-->
+        <!--    <if test="membershipStartDate != null">membership_start_date = #{membershipStartDate},</if>-->
+        <!--    <if test="membershipEndDate != null">membership_end_date = #{membershipEndDate},</if>-->
+        <!--</set>-->
+        <!--    # id忘了修改了，捞的淌口水 , 分开成两张表干啥都麻烦。-->
+        <!--WHERE user_original_info.id = #{id} and user_dynamic_info.user_id = user_original_info.id-->
+        UPDATE user_original_info o
+        JOIN user_dynamic_info d ON o.id = d.user_id
         <set>
-            <if test="username != null">username = #{username},</if>
-            <if test="password != null">password = #{password},</if>
-            <if test="securityQuestion != null">security_question = #{securityQuestion},</if>
-            <if test="accountStatus != null">account_status = #{accountStatus},</if>
-            <if test="createDate != null">create_date = #{createDate},</if>
-            <if test="roles != null">roles = #{roles},</if>
-            <if test="email != null">email = #{email},</if>
-            <if test="phone != null">phone = #{phone},</if>
-            <if test="gender != null">gender = #{gender},</if>
-            <if test="country != null">country = #{country},</if>
-            <if test="dataOfBirth != null">data_of_birth = #{dataOfBirth},</if>
-            <if test="socialMediaLinks != null">social_media_links = #{socialMediaLinks},</if>
-            <if test="profilePicture != null">profile_picture = #{profilePicture, jdbcType=BLOB},</if>
+            <if test="username != null">o.username = #{username},</if>
+            <if test="password != null">o.password = #{password},</if>
+            <if test="securityQuestion != null">o.security_question = #{securityQuestion},</if>
+            <if test="accountStatus != null">o.account_status = #{accountStatus},</if>
+            <if test="createDate != null">o.create_date = #{createDate},</if>
+            <if test="roles != null">o.roles = #{roles},</if>
+            <if test="email != null">o.email = #{email},</if>
+            <if test="phone != null">o.phone = #{phone},</if>
+            <if test="gender != null">o.gender = #{gender},</if>
+            <if test="country != null">o.country = #{country},</if>
+            <if test="dataOfBirth != null">o.data_of_birth = #{dataOfBirth},</if>
+            <if test="socialMediaLinks != null">o.social_media_links = #{socialMediaLinks},</if>
+            <if test="profilePicture != null">o.profile_picture = #{profilePicture, jdbcType=BLOB},</if>
+            <if test="lastLoginIpAddress != null">d.last_login_ip_address = #{lastLoginIpAddress},</if>
+            <if test="lastLoginDate != null">d.last_login_date = #{lastLoginDate},</if>
+            <if test="level != null">d.level = #{level},</if>
+            <if test="experience != null">d.experience = #{experience},</if>
+            <if test="membershipStatus != null">d.membership_status = #{membershipStatus},</if>
+            <if test="membershipStartDate != null">d.membership_start_date = #{membershipStartDate},</if>
+            <if test="membershipEndDate != null">d.membership_end_date = #{membershipEndDate},</if>
         </set>
-        WHERE id = #{id}
+        WHERE o.id = #{id}
     </update>
 
     <select id="login" resultType="User">

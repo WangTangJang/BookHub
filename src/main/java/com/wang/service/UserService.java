@@ -24,6 +24,7 @@ public interface UserService {
      */
     String AdminRegister(User user);
 
+
     /**
      * 用户登录
      * @param username 用户名
@@ -52,6 +53,8 @@ public interface UserService {
      * @param user 修改后的部分信息
      */
     void updateUserProfile(User user);
+
+    void updateUser(User user);
 
     Page<User> findAllUser(Pageable pageable);
 

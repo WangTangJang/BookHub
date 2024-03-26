@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增用户</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            padding-top: 4rem;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 1rem;
+            border-bottom: none;
+        }
+
+        .card-header h5 {
+            margin-bottom: 0;
+        }
+
+        .card-body {
+            background-color: #fff;
+            padding: 1.25rem;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(to right, #66a5ea, #8b8890);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏同编辑页面 -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-user"></i> 图书管理系统</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/admin/index"><i class="fas fa-tachometer-alt"></i> 控制台</a>
+                </li>
+                <li class="nav-item disabled">
+                    <a class="nav-link" href="/admin/book/list"><i class="fas fa-book"></i> 书籍管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/user/list"><i class="fas fa-users"></i> 用户管理</a>
+                </li>
+                <li class="nav-item disabled">
+                    <a class="nav-link" href="/admin/comment/list"><i class="fas fa-comments"></i> 评论管理</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i> 管理员
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><i class="fas fa-user-edit"></i> 修改个人信息</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/admin/toLogin"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-plus"></i> 新增用户</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/admin/user/doAdd" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="username">用户名</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="请输入密码" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="securityQuestion">安全问题</label>
+                            <input type="text" class="form-control" id="securityQuestion" name="securityQuestion"
+                                   placeholder="请输入安全问题">
+                        </div>
+                        <!--<div class="form-group">-->
+                        <!--  <label for="accountStatus">账户状态</label>-->
+                        <!--  <input type="text" class="form-control" id="accountStatus" name="accountStatus" placeholder="请输入账户状态">-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <label for="level">等级</label>
+                            <input type="text" class="form-control" id="level" name="level" placeholder="请输入等级"
+                                   value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">经验值</label>
+                            <input type="text" class="form-control" id="experience" name="experience"
+                                   placeholder="请输入经验值" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="roles">角色</label>
+                            <select class="form-control" id="roles" name="roles">
+                                <option value="user">用户</option>
+                                <option value="Admin">管理员</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">电子邮箱</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="请输入电子邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">手机号码</label>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号码">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">性别</label>
+                            <input type="text" class="form-control" id="gender" name="gender" placeholder="请输入性别">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">国家</label>
+                            <input type="text" class="form-control" id="country" name="country" placeholder="请输入国家">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataOfBirth">出生日期</label>
+                            <input type="text" class="form-control" id="dataOfBirth" name="dataOfBirths"
+                                   placeholder="请输入出生日期">
+                        </div>
+                        <div class="form-group">
+                            <label for="socialMediaLinks">社交媒体链接</label>
+                            <input type="text" class="form-control" id="socialMediaLinks" name="socialMediaLinks"
+                                   placeholder="请输入社交媒体链接">
+                        </div>
+                        <div class="form-group">
+                            <label for="profilePictureFile">上传个人头像</label>
+                            <input type="file" class="form-control-file" id="profilePictureFile" name="profilePictureFile">
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-times"></i> 取消</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

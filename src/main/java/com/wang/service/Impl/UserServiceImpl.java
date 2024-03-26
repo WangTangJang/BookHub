@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
             String hashedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(hashedPassword);
             user.setAccountStatus("offline");
-            user.setRoles("Admin");
             mapper.insert(user);
             return "注册成功";
         }else {
@@ -127,6 +126,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserProfile(User user) {
+        mapper.update(user);
+    }
+
+    // 这个没有用了吧，它跟上面那个一样，但是我也懒得删除了。
+    @Override
+    public void updateUser(User user) {
         mapper.update(user);
     }
 

@@ -1,104 +1,95 @@
-    <!-- 此处展示书籍的详细信息 -->
-    <div id="bookInfoPage">
-        <div class="row py-3" th:if="${book != null}" >
-            <!-- 书籍封面 -->
-            <div class="col-sm-2 mb-3">
-                <img th:src="@{${book.cover}}" class="img-fluid rounded" alt="Book Cover">
+<!-- 此处展示书籍的详细信息 -->
+<div id="bookInfoPage" class="container my-5">
+    <div class="row py-3" th:if="${book != null}">
+        <!-- 书籍封面 -->
+        <div class="col-md-4 mb-3">
+            <img th:src="@{${book.cover}}" class="img-fluid rounded shadow bookCover" alt="Book Cover">
+        </div>
+        <!-- 书籍信息 -->
+        <div class="col-md-8">
+            <h1 class="mb-4">《<span th:text="@{${book.title}}"></span>》</h1>
+            <div class="mb-3 bookAuthor">
+                <h4 class="d-inline-block mr-3">作者:</h4>
+                <span th:text="@{${book.author}}"></span>
             </div>
-            <!-- 书籍信息 -->
-            <div class="col-sm-6">
-                <h1>《<span th:text="@{${book.title}}"></span>》</h1>
-                <h3>作者：<span th:text="@{${book.author}}"></span></h3>
-                <h3>ISBN：<span th:text="@{${book.isbn}}"></span></h3>
-                <h3>评分：<span id="bookRating" th:text="@{${book.averageRating}}"></span>/10</h3>
-                <h5  style="font-style: italic;">已有<span th:text="@{${book.shelfCount}}"></span>人收藏本书</h5>
-                <h5  style="font-style: italic;">已有<span th:text="@{${book.ratingCount}}"></span>人给本书打出了分数</h5>
+            <div class="mb-3 bookIsbn">
+                <h4 class="d-inline-block mr-3">ISBN:</h4>
+                <span th:text="@{${book.isbn}}"></span>
+            </div>
+            <div class="mb-3 bookRating">
+                <h4 class="d-inline-block mr-3">评分:</h4>
+                <span id="bookRating" th:text="@{${book.averageRating}}"></span>/10
+                <small class="text-muted ml-2">(已有<span th:text="@{${book.ratingCount}}"></span>人给本书打出分数)</small>
+            </div>
+            <div class="mb-3 bookShelfCount">
+                <h4 class="d-inline-block mr-3">收藏:</h4>
+                <span th:text="@{${book.shelfCount}}"></span>人已收藏本书
             </div>
             <!--与书籍的交互组件-->
-            <div class="col-4 text-right">
+            <div class="row">
                 <!-- 打分框 -->
-                <div th:if="${session.user != null} ">
-                    <div th:if="${userRating == 0}" class="row" >
-                        <input type="number" class="form-control" id="rating" name="rating" min="0" max="9" required placeholder="输入评分：0到9分之间">
+                <div th:if="${session.user != null}" class="col-md-6 mb-3">
+                    <div th:if="${userRating == 0}" class="input-group">
+                        <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" required
+                               placeholder="输入评分：0到10分之间">
+                        <div class="input-group-append">
+                            <a th:href="${book.id}" class="btn btn-primary"
+                               id="rateToBook">打分</a>
+                        </div>
+                    </div>
+                    <div th:if="${userRating != 0}">
+                        <span class="badge badge-pill badge-success p-3">您给本书打了<span
+                                th:text="${userRating}"></span>分</span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <!--只有登录后才可以打分-->
-                        <div th:if="${session.user!=null}">
-                            <div th:if="${userRating == 0 }">
-                                <a th:href="${book.id}" class="btn btn-primary btn-block mt-2"  id="rateToBook">打分</a>
-                            </div>
-                            <div th:if="${userRating != 0}">
-                                <a href="#" class="btn btn-light btn-block mt-2">您打了<span th:text="${userRating}"></span>分</a>
-                            </div>
-                        </div>
-                        <div th:if="${session.user==null}">
-                            <a th:href="${book.id}" class="btn btn-dark btn-block mt-2 loginRequest" >先登录吧</a>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <!--只有登录后才可以收藏-->
-                        <div th:if="${session.user!=null}">
-                            <div th:if="${collected}">
-                                <a href="#" class="btn btn-light btn-block mt-2 cancelCollect" th:href="${book.id}">已收藏</a>
-                            </div>
-                            <div th:if="${!collected}">
-                                <a href="#" class="btn btn-warning btn-block mt-2 collect" th:href="${book.id}">收藏</a>
-                            </div>
-                        </div>
-                        <div th:if="${session.user==null}">
-                            <a th:href="${book.id}" class="btn btn-dark btn-block mt-2 loginRequest" >先登录吧</a>
-                        </div>
-                    </div>
-
+                <div th:if="${session.user==null}" class="col-md-6 mb-3">
+                    <a th:href="@{/login}" class="btn btn-dark btn-block toLogin">先登录吧</a>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <a href="#" class="btn btn-success btn-block mt-2">下载</a>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <!--只有登录后才可以收藏-->
+                    <div th:if="${session.user!=null}">
+                        <div th:if="${collected}">
+                            <a href="#" class="btn btn-light btn-block cancelCollect"
+                               th:href="${book.id}">已收藏</a>
+                        </div>
+                        <!--把BookId绑定到href上，真是的-->
+                        <div th:if="${!collected}">
+                            <a href="#" class="btn btn-warning btn-block collect"
+                               th:href="${book.id}">收藏</a>
+                        </div>
+
                     </div>
-                    <div class="col-6">
-                        <a href="#" class="btn btn-danger btn-block mt-2">举报</a>
+                    <div th:if="${session.user==null}">
+                        <a th:href="@{/login}" class="btn btn-dark btn-block toLogin">先登录吧</a>
                     </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <a href="#" class="btn btn-success btn-block download">下载</a>
                 </div>
             </div>
         </div>
-
     </div>
-
-    <script>
-        // 提交对书籍的评分
-        $(document).on('click', '#rateToBook', function (event) {
-            event.preventDefault();
-            // 将字符串转换为整数
-            let bookId = $(this).attr('href');
-            const ratingInput = document.getElementById('rating');
-            const rating = ratingInput.value;
-            if (rating == null || rating <= 0 || rating > 9){
-                alert("请输入0到9之间的数字");
-                return;
-            }
-            $.ajax({
-                url: '/book/saveRating',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({bookId: bookId, rating: rating}),
-                success: function (data) {
-                    $.ajax({
-                        url: '/book/getInfo/' + bookId,
-                        type: 'GET',
-                        success: function (data) {
-                            showBookDetails(data);
-                        }
-                    })
-                }
-            })
-        })
-        $(document).on('click', '.loginRequest', function (event) {
-            event.preventDefault();
-            let bookId = $(this).attr('href');
-            $('#loginModal').modal('show').on('hidden.bs.modal', function (e) {
+</div>
+<script>
+    // 提交对书籍的评分
+    $(document).on('click', '#rateToBook', function (event) {
+        event.preventDefault();
+        // 将字符串转换为整数
+        let bookId = $(this).attr('href');
+        const ratingInput = document.getElementById('rating');
+        const rating = ratingInput.value;
+        if (rating == null || rating <= 0 || rating > 9) {
+            alert("请输入0到9之间的数字");
+            return;
+        }
+        $.ajax({
+            url: '/book/saveRating',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({bookId: bookId, rating: rating}),
+            success: function (data) {
                 $.ajax({
                     url: '/book/getInfo/' + bookId,
                     type: 'GET',
@@ -106,42 +97,104 @@
                         showBookDetails(data);
                     }
                 })
-            });
+            }
         })
-
-        $(document).on('click', '.collect', function (event) {
-            event.preventDefault();
-            let bookId = $(this).attr('href');
+    })
+    $(document).on('click', '.loginRequest', function (event) {
+        event.preventDefault();
+        let bookId = $(this).attr('href');
+        $('#loginModal').modal('show').on('hidden.bs.modal', function (e) {
             $.ajax({
-                url: '/book/collect/' + bookId,
+                url: '/book/getInfo/' + bookId,
                 type: 'GET',
                 success: function (data) {
-                    $.ajax({
-                        url: '/book/getInfo/' + bookId,
-                        type: 'GET',
-                        success: function (data) {
-                            showBookDetails(data);
-                        }
-                    })
+                    showBookDetails(data);
                 }
             })
-        })
-        $(document).on('click','.cancelCollect',function (event) {
-            event.preventDefault();
-            let bookId = $(this).attr('href');
-            $.ajax({
-                url: '/book/cancelCollect/' + bookId,
-                type: 'GET',
-                success: function (data) {
-                    $.ajax({
-                        url: '/book/getInfo/' + bookId,
-                        type: 'GET',
-                        success: function (data) {
-                            showBookDetails(data);
-                        }
-                    })
-                }
-            })
-        })
-    </script>
+        });
+    })
 
+    $(document).on('click', '.collect', function (event) {
+        event.preventDefault();
+        let bookId = $(this).attr('href');
+        $.ajax({
+            url: '/book/collect/' + bookId,
+            type: 'GET',
+            success: function (data) {
+                $.ajax({
+                    url: '/book/getInfo/' + bookId,
+                    type: 'GET',
+                    success: function (data) {
+                        showBookDetails(data);
+                    }
+                })
+            }
+        })
+    })
+    $(document).on('click', '.cancelCollect', function (event) {
+        event.preventDefault();
+        let bookId = $(this).attr('href');
+        $.ajax({
+            url: '/book/cancelCollect/' + bookId,
+            type: 'GET',
+            success: function (data) {
+                $.ajax({
+                    url: '/book/getInfo/' + bookId,
+                    type: 'GET',
+                    success: function (data) {
+                        showBookDetails(data);
+                    }
+                })
+            }
+        })
+    })
+</script>
+
+<style>
+    /* 书籍封面 */
+    .bookCover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .bookCover:hover {
+        transform: scale(1.05);
+    }
+
+    /* 书籍信息 */
+    .bookAuthor span,
+    .bookIsbn span,
+    .bookRating span,
+    .bookShelfCount span {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .bookRating small {
+        font-size: 0.9rem;
+    }
+
+    /* 打分框 */
+    .input-group .btn-primary {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .badge-success {
+        font-size: 1.1rem;
+    }
+
+    /* 登录按钮 */
+    .toLogin {
+        font-weight: 600;
+    }
+
+    /* 收藏和下载按钮 */
+    .collect,
+    .cancelCollect,
+    .download {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+    }
+</style>

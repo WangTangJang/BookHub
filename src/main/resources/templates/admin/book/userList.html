@@ -98,7 +98,7 @@
                             <th>邮箱</th>
                             <th>手机号</th>
                             <th>性别</th>
-                            <th>头像路径</th>
+                            <th>国籍</th>
                             <!--<th>出生日期</th>-->
                             <!--<th>社交媒体</th>-->
                             <!--<th>头像</th>-->
@@ -114,7 +114,11 @@
                             <td th:text="${user.username}">用户名</td>
                             <td th:text="${user.email}">邮箱</td>
                             <td th:text="${user.phone}">手机号</td>
-                            <td th:text="${user.gender}">性别</td>
+                            <td>
+                                <span th:if="${user.gender == 'man'}">男</span>
+                                <span th:if="${user.gender == 'woman'}">女</span>
+                                <span th:unless="${user.gender == 'man' || user.gender == 'woman'}">武装直升机</span>
+                            </td>
                             <td th:text="${user.country}">国家</td>
                             <!--<td th:text="${#dates.format(user.dataOfBirth, 'yyyy-MM-dd')}">出生日期</td>-->
                             <!--<td th:text="${user.socialMediaLinks}">社交媒体</td>-->

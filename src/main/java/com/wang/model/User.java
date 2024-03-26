@@ -1,6 +1,8 @@
 package com.wang.model;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class User {
 
   private long id;
@@ -8,8 +10,10 @@ public class User {
   private String password;
   private String securityQuestion;
   private String lastLoginIpAddress;
+
   private java.sql.Date lastLoginDate;
   private String accountStatus;
+
   private java.sql.Date createDate;
   private long level;
   private long experience;

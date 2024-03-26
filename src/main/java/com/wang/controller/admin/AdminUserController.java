@@ -2,7 +2,6 @@ package com.wang.controller.admin;
 
 import com.wang.model.Books;
 import com.wang.model.User;
-import com.wang.model.Users;
 import com.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,15 +41,54 @@ public class AdminUserController {
         return "admin/book/userEdit";
     }
     @PostMapping("/doEdit")
-    public String doEdit(@ModelAttribute Users user , @RequestParam("profilePictureFile") MultipartFile profilePictureFIle){
+    public String doEdit(@ModelAttribute User user ,
+                         @RequestParam("profilePictureFile") MultipartFile profilePictureFIle,
+                         @RequestParam("lastLoginDates") String lastLoginDates,
+                         @RequestParam("dataOfBirths") String dataOfBirths){
+        if (!profilePictureFIle.isEmpty()){
+            String cover = userService.uploadFile(profilePictureFIle);
+            user.setProfilePicture(cover);
+        }
+        // todo 还是要做一个非空检测呀。
+        if (lastLoginDates != null){
+            if (!lastLoginDates.equals(""))
+            user.setLastLoginDate(java.sql.Date.valueOf(lastLoginDates));
+        }
+        if (dataOfBirths!=null){
+            if (!dataOfBirths.equals(""))
+            user.setDataOfBirth(java.sql.Date.valueOf(dataOfBirths));
+        }
+        userService.updateUserProfile(user);
+        return "redirect: /admin/user/list";
+    }
+    @GetMapping("doDel/{id}")
+    public String doDel(@PathVariable("id") int bookId){
+        userService.delete(bookId);
+        return "redirect: /admin/user/list";
+    }
+
+    @GetMapping("/toAdd")
+    public String toAdd(){
+        return "admin/book/userAdd";
+    }
+
+    @PostMapping("/doAdd")
+    public String doAdd(@ModelAttribute User user ,
+                        @RequestParam("profilePictureFile") MultipartFile profilePictureFIle,
+                        @RequestParam("dataOfBirths") String dataOfBirths){
 
         if (!profilePictureFIle.isEmpty()){
             String cover = userService.uploadFile(profilePictureFIle);
-            //user.setProfilePicture(cover);
+            user.setProfilePicture(cover);
         }
-
-
-        //userService.updateUserProfile(user1);
+        if (dataOfBirths!=null ){
+            // 还要再判断一层呀。
+            if (!dataOfBirths.equals("")){
+                user.setDataOfBirth(java.sql.Date.valueOf(dataOfBirths));
+            }
+        }
+        // 不标准的方法，但是就这样吧
+        userService.AdminRegister(user);
         return "redirect: /admin/user/list";
     }
 }
