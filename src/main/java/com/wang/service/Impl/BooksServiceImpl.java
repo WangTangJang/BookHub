@@ -110,23 +110,19 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public String uploadCover(MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                // 文件存放服务端的位置
-                String rootPath = "C:\\Users\\Administrator\\Desktop\\ProxyZerl\\WebAppBuild\\nginx-1.25.4\\html\\img";
-                File dir = new File(rootPath + File.separator + "cover");
-                if (!dir.exists())
-                    dir.mkdirs();
-                // 写文件到服务器
-                File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
-                file.transferTo(serverFile);
-                // 你就说存没存上去吧。。。
-                return "http://localhost:8081/img/cover/" +  file.getOriginalFilename();
-            } catch (Exception e) {
-                return "You failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " +  file.getOriginalFilename() + " because the file was empty.";
+        try {
+            // 文件存放服务端的位置
+            String rootPath = "C:\\Users\\Administrator\\Desktop\\ProxyZerl\\WebAppBuild\\nginx-1.25.4\\html\\img";
+            File dir = new File(rootPath + File.separator + "cover");
+            if (!dir.exists())
+                dir.mkdirs();
+            // 写文件到服务器
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            file.transferTo(serverFile);
+            // 你就说存没存上去吧。。。
+            return "http://localhost:8081/img/cover/" +  file.getOriginalFilename();
+        } catch (Exception e) {
+            return "You failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage();
         }
     }
 

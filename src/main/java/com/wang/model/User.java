@@ -25,6 +25,8 @@ public class User {
   private java.sql.Date membershipStartDate;
   private java.sql.Date membershipEndDate;
 
+  public User() {
+  }
 
   public long getId() {
     return id;

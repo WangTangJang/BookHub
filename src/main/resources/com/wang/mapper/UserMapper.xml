@@ -23,6 +23,17 @@
         </where>
     </select>
 
+    <select id="selectPage" resultType="User">
+        SELECT * FROM user_original_info
+                          INNER JOIN user_dynamic_info
+                                     ON user_dynamic_info.user_id = user_original_info.id
+        LIMIT #{start},#{size}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM user_original_info
+    </select>
+
     <insert id="insert" parameterType="User">
         INSERT INTO user_original_info
         <set>

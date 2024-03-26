@@ -132,7 +132,7 @@ public class CommentsServiceImpl implements CommentsService {
             User user = userService.selectById(comment.getUserId());
             CommentResult commentResult = new CommentResult(comment);
             commentResult.setUserName(user.getUsername());
-            commentResult.setUserAvatar(user.getCountry());
+            commentResult.setUserAvatar(user.getProfilePicture());
             commentResult.setUserLevel(user.getLevel());
             commentResultMap.put(comment.getId(), commentResult);
         }

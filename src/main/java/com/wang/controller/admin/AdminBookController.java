@@ -44,9 +44,10 @@ public class AdminBookController {
     }
     @PostMapping("/doEdit")
     public String doEdit(@ModelAttribute("book") Books book ,@RequestParam("coverFile") MultipartFile coverFile){
-
-        String cover = booksService.uploadCover(coverFile);
-        book.setCover(cover);
+        if (!coverFile.isEmpty()){
+            String cover = booksService.uploadCover(coverFile);
+            book.setCover(cover);
+        }
         booksService.update(book);
 
         return "redirect: /admin/book/list";

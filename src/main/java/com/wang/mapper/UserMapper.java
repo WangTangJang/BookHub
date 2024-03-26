@@ -1,5 +1,6 @@
 package com.wang.mapper;
 
+import com.wang.model.Books;
 import com.wang.model.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -59,4 +60,7 @@ public interface UserMapper {
 
     List<User> selectAll();
 
+    List<User> selectPage(@Param("start") int start,@Param("size") int size);
+
+    int count();
 }

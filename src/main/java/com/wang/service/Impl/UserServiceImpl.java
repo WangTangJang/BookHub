@@ -1,13 +1,19 @@
 package com.wang.service.Impl;
 
 import com.wang.mapper.UserMapper;
+import com.wang.model.Books;
 import com.wang.model.User;
 import com.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,6 +130,34 @@ public class UserServiceImpl implements UserService {
         mapper.update(user);
     }
 
+    @Override
+    public Page<User> findAllUser(Pageable pageable) {
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+        List<User> users = mapper.selectPage(offset, pageable.getPageSize());
+        // 获取数据总量
+        int total = mapper.count();
+
+        // 创建PageImpl对象
+        return new PageImpl<>(users, pageable, total);
+    }
+
+    @Override
+    public String uploadFile(MultipartFile file) {
+        try {
+            // 文件存放服务端的位置
+            String rootPath = "C:\\Users\\Administrator\\Desktop\\ProxyZerl\\WebAppBuild\\nginx-1.25.4\\html\\img";
+            File dir = new File(rootPath + File.separator + "avatar");
+            if (!dir.exists())
+                dir.mkdirs();
+            // 写文件到服务器
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            file.transferTo(serverFile);
+            // 你就说存没存上去吧。。。
+            return "http://localhost:8081/img/avatar/" +  file.getOriginalFilename();
+        } catch (Exception e) {
+            return "You failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage();
+        }
+    }
     @Override
     public void selectPro(User user) {
         mapper.selectPro(user);

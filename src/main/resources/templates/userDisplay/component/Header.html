@@ -26,7 +26,7 @@
       <!-- 如果用户已登录，显示用户头像和下拉菜单 -->
       <li class="nav-item dropdown" th:if="${session.user!=null}">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img th:src="@{${session.user.country}}" class="rounded-circle" style="width: 30px;height: 30px;">
+          <img th:src="@{${session.user.profilePicture}}" class="rounded-circle" style="width: 30px;height: 30px;">
           <span th:text="${session.user.username}"></span>
         </a>
         <div class="dropdown-menu" aria-labelledby="userDropdown">

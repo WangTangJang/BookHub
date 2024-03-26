@@ -1,6 +1,10 @@
 package com.wang.service;
 
+import com.wang.model.Books;
 import com.wang.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
@@ -31,6 +35,8 @@ public interface UserService {
 
     String adminLogin(String username ,String password);
 
+
+
     /**
      * 查找用户
      * 此接口id的值直接查找
@@ -46,6 +52,11 @@ public interface UserService {
      * @param user 修改后的部分信息
      */
     void updateUserProfile(User user);
+
+    Page<User> findAllUser(Pageable pageable);
+
+    String uploadFile(MultipartFile cover);
+
 
     /**
      * 查找用户

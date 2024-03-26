@@ -17,7 +17,7 @@
       <div class="d-flex align-items-center">
         <div>
           <div th:if="${session.user != null}">
-            <img th:src="@{${session.user.country}}" id="userAvatar" class="rounded-circle" style="width: 40px;height: 40px;" alt="Avatar">
+            <img th:src="@{${session.user.profilePicture}}" id="userAvatar" class="rounded-circle" style="width: 40px;height: 40px;" alt="Avatar">
           </div>
           <div th:if="${session.user == null}">
             <img src="#" class="img-fluid rounded" alt="未登录">

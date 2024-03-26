@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>书籍管理</title>
+    <title>用户管理</title>
     <!-- 引入Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- 引入Font Awesome图标库 -->
@@ -44,6 +44,7 @@
     </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-gradient fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#"><i class="fas fa-book-open"></i> 图书管理系统</a>
@@ -85,41 +86,45 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <h5 class="card-title col-11"><i class="fas fa-book"></i> 书籍列表</h5>
-                        <a href="/admin/book/toAdd" class=" text-right btn btn-success btn-sm"><div ><i class="fas fa-plus-circle"></i> 新增书籍</div></a>
+                        <h5 class="card-title col-11"><i class="fas fa-users"></i> 用户列表</h5>
+                        <a href="/admin/user/toAdd" class="text-right btn btn-success btn-sm"><div><i class="fas fa-plus-circle"></i> 新增用户</div></a>
                     </div>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>书名</th>
-                            <th>作者</th>
-                            <th>格式</th>
-                            <th>上传者</th>
-                            <th>文件大小</th>
-                            <th>评分</th>
-                            <th>评论数</th>
-                            <th>评分人数</th>
-                            <th>收藏数</th>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>手机号</th>
+                            <th>性别</th>
+                            <th>头像路径</th>
+                            <!--<th>出生日期</th>-->
+                            <!--<th>社交媒体</th>-->
+                            <!--<th>头像</th>-->
+                            <!--<th>会员状态</th>-->
+                            <!--<th>会员开始日期</th>-->
+                            <!--<th>会员结束日期</th>-->
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- 循环输出书籍列表 -->
-                        <tr th:each="book : ${books}">
-                            <td th:text="${book.title}">书籍标题</td>
-                            <td th:text="${book.author}">作者</td>
-                            <td th:text="${book.format}">格式</td>
-                            <td th:text="${book.uploadedBy}">上传者</td>
-                            <td th:text="${book.fileSize}">10 MB</td>
-                            <td th:text="${book.averageRating}">4.5</td>
-                            <td th:text="${book.reviewsCount}">50</td>
-                            <td th:text="${book.ratingCount}">100</td>
-                            <td th:text="${book.shelfCount}">200</td>
+                        <!-- 循环输出用户列表 -->
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.username}">用户名</td>
+                            <td th:text="${user.email}">邮箱</td>
+                            <td th:text="${user.phone}">手机号</td>
+                            <td th:text="${user.gender}">性别</td>
+                            <td th:text="${user.country}">国家</td>
+                            <!--<td th:text="${#dates.format(user.dataOfBirth, 'yyyy-MM-dd')}">出生日期</td>-->
+                            <!--<td th:text="${user.socialMediaLinks}">社交媒体</td>-->
+                            <!--<td><img th:src="@{${user.profilePicture}}" class="rounded-circle" style="width: 40px; height: 40px;" alt="头像"></td>-->
+                            <!--<td th:text="${user.membershipStatus}">会员状态</td>-->
+                            <!--<td th:text="${#dates.format(user.membershipStartDate, 'yyyy-MM-dd')}">会员开始日期</td>-->
+                            <!--<td th:text="${#dates.format(user.membershipEndDate, 'yyyy-MM-dd')}">会员结束日期</td>-->
                             <td>
-                                <a th:href="|/admin/book/toEdit/${book.id}|" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> 编辑</a>
-                                <a th:href="|/admin/book/doDel/${book.id}|" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> 删除</a>
+                                <a th:href="|/admin/user/toEdit/${user.id}|" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> 编辑</a>
+                                <a th:href="|/admin/user/doDel/${user.id}|" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> 删除</a>
                             </td>
                         </tr>
                         </tbody>
@@ -130,25 +135,25 @@
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/admin/book/list(page=0, size=${size})}" aria-label="First">
+                    <a class="page-link" th:href="@{/admin/user/list(page=0, size=${size})}" aria-label="First">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/admin/book/list(page=${currentPage - 1}, size=${size})}" aria-label="Previous">
+                    <a class="page-link" th:href="@{/admin/user/list(page=${currentPage - 1}, size=${size})}" aria-label="Previous">
                         <span aria-hidden="true">&lsaquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == i} ? 'active'" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a class="page-link" th:href="@{/admin/book/list(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+                    <a class="page-link" th:href="@{/admin/user/list(page=${i}, size=${size})}" th:text="${i + 1}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == (totalPages - 1)} ? 'disabled'">
-                    <a class="page-link" th:href="@{/admin/book/list(page=${currentPage + 1}, size=${size})}" aria-label="Next">
+                    <a class="page-link" th:href="@{/admin/user/list(page=${currentPage + 1}, size=${size})}" aria-label="Next">
                         <span aria-hidden="true">&rsaquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == (totalPages - 1)} ? 'disabled'">
-                    <a class="page-link" th:href="@{/admin/book/list(page=${totalPages - 1}, size=${size})}" aria-label="Last">
+                    <a class="page-link" th:href="@{/admin/user/list(page=${totalPages - 1}, size=${size})}" aria-label="Last">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
