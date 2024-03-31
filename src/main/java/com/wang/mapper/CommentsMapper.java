@@ -1,6 +1,7 @@
 package com.wang.mapper;
 
 import com.wang.model.Comment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,9 @@ public interface CommentsMapper {
     int updateByPrimaryKey(Comment record);
 
     List<Comment> selectByBookId(int bookId);
+
+
+    List<Comment> selectPage(@Param("start") int start, @Param("size") int size);
+
+    int count();
 }

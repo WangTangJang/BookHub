@@ -43,19 +43,25 @@ public class AdminBookController {
         return "admin/book/bookEdit";
     }
     @PostMapping("/doEdit")
-    public String doEdit(@ModelAttribute("book") Books book ,@RequestParam("coverFile") MultipartFile coverFile){
+    public String doEdit(@ModelAttribute("book") Books book ,@RequestParam("coverFile") MultipartFile coverFile,@RequestParam("bookFile") MultipartFile bookFile){
         if (!coverFile.isEmpty()){
             String cover = booksService.uploadCover(coverFile);
             book.setCover(cover);
+        }
+        if (!bookFile.isEmpty()){
+            String filePath = booksService.uploadFile(bookFile);
+            book.setFilePath(filePath);
+            long fileSizeKB = bookFile.getSize() / 1024;
+            book.setFileSize(fileSizeKB);
         }
         booksService.update(book);
 
         return "redirect: /admin/book/list";
     }
-    @GetMapping("doDel/{id}")
-    public String doDel(@PathVariable("id") int bookId){
+    @GetMapping("doDel/{id},{pageNum}")
+    public String doDel(@PathVariable("id") int bookId,@PathVariable("pageNum")  int pageNum){
         booksService.deleteById(bookId);
-        return "redirect: /admin/book/list";
+        return "redirect: /admin/book/list?page="+pageNum;
     }
 
     @GetMapping("/toAdd")
@@ -64,11 +70,40 @@ public class AdminBookController {
     }
 
     @PostMapping("/doAdd")
-    public String doAdd(@ModelAttribute("book") Books book ,@RequestParam("coverFile") MultipartFile coverFile){
-
+    public String doAdd(@ModelAttribute("book") Books book ,@RequestParam("coverFile") MultipartFile coverFile,@RequestParam("bookFile") MultipartFile bookFile){
+        String filePath = booksService.uploadFile(bookFile);
         String cover = booksService.uploadCover(coverFile);
+        long fileSizeKB = bookFile.getSize() / 1024;
+        book.setFileSize(fileSizeKB);
         book.setCover(cover);
+        book.setFilePath(filePath);
         booksService.adminUpload(book);
         return "redirect: /admin/book/list";
+    }
+    @GetMapping("/toAuditList")
+    public String toAudit(@RequestParam(defaultValue = "0") int page,
+                          @RequestParam(defaultValue = "10") int size,
+                          Model model){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Books> booksPage = booksService.getUnauditedByPage(pageable);
+        model.addAttribute("books", booksPage.getContent());
+        model.addAttribute("currentPage", booksPage.getNumber());
+        model.addAttribute("totalPages", booksPage.getTotalPages());
+        model.addAttribute("totalItems", booksPage.getTotalElements());
+        return "admin/book/auditList";
+    }
+
+    @GetMapping("/toAudit/{id}")
+    public String toAudit(@PathVariable("id") Long bookId, Model model){
+
+        Books book = booksService.selectUnaudited(bookId);
+        model.addAttribute("book", book);
+
+        return "admin/book/auditView";
+    }
+    @RequestMapping("/pass/{id}")
+    public String pass(@PathVariable("id") Long bookId, Model model){
+        booksService.pass(bookId);
+        return "redirect: /admin/book/toAuditList";
     }
 }

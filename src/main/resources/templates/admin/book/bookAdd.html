@@ -103,40 +103,46 @@
                         </div>
                         <div class="form-group">
                             <label for="bookFormat">格式</label>
-                            <input type="text" class="form-control" id="bookFormat" name="format" placeholder="请输入格式" >
+                            <select class="form-control" id="bookFormat" name="format">
+                                <option value="Epub">Epub</option>
+                                <option value="Txt">Txt</option>
+                                <option value="Mobi">Mobi</option>
+                                <option value="PDF">PDF</option>
+                            </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="bookFilePath">文件路径</label>
-                            <input type="text" class="form-control" id="bookFilePath" name="filePath" placeholder="请输入文件路径" >
+                            <label for="bookFilePath">文件上传</label>
+                            <input type="file" class="form-control-file" id="bookFilePath" name="bookFile" placeholder="请输入文件路径" >
                         </div>
-                        <div class="form-group">
-                            <label for="bookStatus">状态</label>
-                            <input type="text" class="form-control" id="bookStatus" name="status" placeholder="请输入状态" >
-                        </div>
+                        <!--<div class="form-group">-->
+                        <!--    <label for="bookStatus">状态</label>-->
+                        <!--    <input type="text" class="form-control" id="bookStatus" name="status" placeholder="请输入状态" >-->
+                        <!--</div>-->
                         <div class="form-group">
                             <label for="bookCover">封面</label>
                             <input type="file" class="form-control-file" id="bookCover" name="coverFile" accept="image/*">
                         </div>
-                        <div class="form-group">
-                            <label for="bookFileSize">文件大小</label>
-                            <input type="text" class="form-control" id="bookFileSize" name="fileSize" placeholder="请输入文件大小" >
-                        </div>
-                        <div class="form-group">
-                            <label for="bookAverageRating">平均评分</label>
-                            <input type="text" class="form-control" id="bookAverageRating" name="averageRating" placeholder="请输入平均评分" >
-                        </div>
-                        <div class="form-group">
-                            <label for="bookReviewsCount">评论数</label>
-                            <input type="text" class="form-control" id="bookReviewsCount" name="reviewsCount" placeholder="请输入评论数" >
-                        </div>
-                        <div class="form-group">
-                            <label for="bookRatingCount">评分人数</label>
-                            <input type="text" class="form-control" id="bookRatingCount" name="ratingCount" placeholder="请输入评分人数" >
-                        </div>
-                        <div class="form-group">
-                            <label for="bookShelfCount">收藏数</label>
-                            <input type="text" class="form-control" id="bookShelfCount" name="shelfCount" placeholder="请输入收藏数" >
-                        </div>
+                        <!--<div class="form-group">-->
+                        <!--    <label for="bookFileSize">文件大小</label>-->
+                        <!--    <input type="text" class="form-control" id="bookFileSize" name="fileSize" placeholder="请输入文件大小" >-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--    <label for="bookAverageRating">平均评分</label>-->
+                        <!--    <input type="text" class="form-control" id="bookAverageRating" name="averageRating" placeholder="请输入平均评分" >-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--    <label for="bookReviewsCount">评论数</label>-->
+                        <!--    <input type="text" class="form-control" id="bookReviewsCount" name="reviewsCount" placeholder="请输入评论数" >-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--    <label for="bookRatingCount">评分人数</label>-->
+                        <!--    <input type="text" class="form-control" id="bookRatingCount" name="ratingCount" placeholder="请输入评分人数" >-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <!--    <label for="bookShelfCount">收藏数</label>-->
+                        <!--    <input type="text" class="form-control" id="bookShelfCount" name="shelfCount" placeholder="请输入收藏数" >-->
+                        <!--</div>-->
                         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
                         <a href="#" class="btn btn-secondary"><i class="fas fa-times"></i> 取消</a>
                     </form>

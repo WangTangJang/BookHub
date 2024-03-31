@@ -80,3 +80,59 @@
       $('#loginResult').removeClass('alert alert-danger').text('');
     }, 3000);  }
 </script>
+<style>
+  /* 模态框样式 */
+  .modal-content {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+  }
+
+  .modal-header {
+    background: linear-gradient(to right, #c9a7eb, #9f86e7);
+    color: #fff;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  /* 输入框样式 */
+  .form-control {
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0.5rem rgba(201, 167, 235, 0.5);
+  }
+
+  /* 按钮样式 */
+  .btn-primary {
+    background: linear-gradient(to right, #c9a7eb, #9f86e7);
+    border: none;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-secondary {
+    border-radius: 0.25rem;
+    background-color: #6c757d;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  /* 警告信息样式 */
+  .alert-danger {
+    border-radius: 0.25rem;
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
+</style>

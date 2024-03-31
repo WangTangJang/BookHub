@@ -1,71 +1,170 @@
-  <!-- 一个导航栏 -->
-  <nav class="navbar navbar-expand-sm navbar-custom navbar-light" id="header">
+<!-- 一个导航栏 -->
+<nav class="navbar navbar-expand-sm navbar-custom navbar-light" id="header">
     <a class="navbar-brand custom-logo" th:href="@{/index}">BookHub</a>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-search"></i>搜索</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-upload"></i>上传</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-trophy"></i>排行榜</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-info-circle"></i>关于</a>
-      </li>
-    </ul>
+
+    <nav class="navbar-nav">
+        <a class="nav-link toSearch" href="#"><i class="fas fa-search"></i> 搜索</a>
+        <a class="nav-link toUpload" href="#"><i class="fas fa-upload"></i> 上传</a>
+        <a class="nav-link" href="#"><i class="fas fa-trophy"></i> 排行榜</a>
+        <a class="nav-link " href="#"><i class="fas fa-info-circle"></i> 关于</a>
+    </nav>
 
     <!-- 一行诗词 -->
-    <div class="navbar-text ml-auto" id="gushici">
-
-    </div>
+    <div class="navbar-text ml-auto" id="gushici"></div>
 
     <!--用户交互组件-->
     <ul class="navbar-nav ml-auto" id="userCenter" th:fragment="userCenter">
-      <!-- 如果用户已登录，显示用户头像和下拉菜单 -->
-      <li class="nav-item dropdown" th:if="${session.user!=null}">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img th:src="@{${session.user.profilePicture}}" class="rounded-circle" style="width: 30px;height: 30px;">
-          <span th:text="${session.user.username}"></span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#"><i class="fas fa-user"></i>个人中心</a>
-          <a class="dropdown-item" href="#"><i class="fas fa-cog"></i>设置</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item"  href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>退出</a>
-          <div th:replace="userDisplay/component/MessagePopover :: logoutModal"></div>
-        </div>
-      </li>
-      <!-- 如果用户未登录，显示登录和注册链接 -->
-      <li class="nav-item" th:unless="${session.user!=null}">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i>登录</a>
-      </li>
-      <li class="nav-item" th:unless="${session.user!=null}">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal"><i class="fas fa-user-plus"></i>注册</a>
-      </li>
+        <!-- 如果用户已登录，显示用户头像和下拉菜单 -->
+        <li class="nav-item dropdown" th:if="${session.user!=null}">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <img th:src="@{${session.user.profilePicture}}" class="rounded-circle"
+                     style="width: 30px;height: 30px;">
+                <span th:text="${session.user.username}"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#"><i class="fas fa-user"></i> 个人中心</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> 设置</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i
+                        class="fas fa-sign-out-alt"></i> 退出</a>
+                <div th:replace="userDisplay/component/MessagePopover :: logoutModal"></div>
+            </div>
+        </li>
+
+        <!-- 如果用户未登录，显示登录和注册链接 -->
+        <li class="nav-item" th:unless="${session.user!=null}">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal"><i
+                    class="fas fa-sign-in-alt"></i> 登录</a>
+        </li>
+        <li class="nav-item" th:unless="${session.user!=null}">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal"><i
+                    class="fas fa-user-plus"></i> 注册</a>
+        </li>
     </ul>
-  </nav>
+</nav>
 <script>
-  // 注销
-  $('#logout').click(function(event) {
-    // 拦截
-    event.preventDefault();
-    let url = $(this).attr('href');
-    $.ajax({
-      url : url,
-      method: 'POST',
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function(response) {
-        // 处理退出成功的情况
-        $('#logoutModal').modal('hide');
-        reloadNav();
-      },
-      error: function(error) {
-        // 处理退出失败的情况
-        console.error('Logout failed:', error);
-      }
+    // 注销
+    $('#logout').click(function (event) {
+        // 拦截
+        event.preventDefault();
+        let url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                // 处理退出成功的情况
+                $('#logoutModal').modal('hide');
+                reloadNav();
+            },
+            error: function (error) {
+                // 处理退出失败的情况
+                console.error('Logout failed:', error);
+            }
+        });
     });
-  });
+    $('.toSearch').click(function() {
+        $('#searchBody').slideToggle('fast', function() {
+            // 可选: 搜索框显示后执行其他操作
+        });
+    });
+
+    $('.toUpload').click(function() {
+        $('#uploadBookBody').slideToggle('fast', function() {
+            // 可选: 搜索框显示后执行其他操作
+        });
+    });
 </script>
+<style>
+    /* 导航栏整体样式 */
+    .navbar-custom {
+        background: linear-gradient(to right, #c9a7eb, #9f86e7);
+        padding: 0.5rem 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 导航栏品牌Logo样式 */
+    .navbar-brand.custom-logo {
+        color: #fff;
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 导航链接样式 */
+    .navbar-nav .nav-link {
+        color: #ffffff; /* 更亮的白色 */
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+    }
+
+    /* 导航链接悬停样式 */
+    .navbar-nav .nav-link:hover {
+        color: #ffff00; /* 纯黄色 */
+    }
+
+    /* 导航链接下划线效果 */
+    .navbar-nav .nav-link::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #ffff00; /* 纯黄色 */
+        visibility: hidden;
+        transform: scaleX(0);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover::before {
+        visibility: visible;
+        transform: scaleX(1);
+    }
+
+    /* 用户下拉菜单样式 */
+    .dropdown-menu {
+        background-color: #9f86e7;
+        border: none;
+        border-radius: 0;
+        padding: 0.5rem 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .dropdown-item {
+        color: #ffffff; /* 更亮的白色 */
+        transition: all 0.3s ease-in-out;
+        padding: 0.5rem 1rem;
+    }
+
+    .dropdown-item:hover {
+        color: #ffff00; /* 纯黄色 */
+        background-color: #c9a7eb;
+    }
+
+    /* 用户头像样式 */
+    .rounded-circle {
+        border: 2px solid #fff;
+    }
+
+    /* 诗词部分样式 */
+    #gushici {
+        color: #fff6f3; /* 设置诗词颜色为鲜艳的橙红色 */
+        font-size: 1.1rem;
+        font-style: italic;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 添加文字阴影 */
+        transition: all 0.3s ease-in-out; /* 添加平滑过渡效果 */
+    }
+
+    /* 鼠标悬停时的动态效果 */
+    #gushici:hover {
+        color: #170202; /* 悬停时变为鲜红色 */
+        transform: scale(1.1); /* 放大1.1倍 */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 增加更深的阴影效果 */
+    }
+</style>

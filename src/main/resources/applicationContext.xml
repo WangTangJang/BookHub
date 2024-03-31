@@ -33,6 +33,14 @@
         <!--<property name="minEvictableIdleTimeMillis" value="1800000" />-->
     </bean>
 
+    <!--文件上传根路径-->
+    <bean id="fileStorageConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:fileStorage.properties"/>
+    </bean>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties" ref="fileStorageConfig"/>
+    </bean>
 
     <!--由Spring来创建SqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

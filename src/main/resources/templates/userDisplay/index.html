@@ -5,45 +5,44 @@
     <meta charset="utf-8">
     <!-- 引入jQuery -->
     <!--<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>-->
-
     <script th:src="@{/static/js/jquery_3.2.1.js}"></script>
-
     <!-- 引入popper.js -->
     <!--<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>-->
-
     <script th:src="@{/static/js/popper.js_1.15.0.js}"></script>
-
-
     <!-- 引入Bootstrap CSS -->
     <!--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">-->
-
     <link rel="stylesheet" th:href="@{/static/css/bootstrap_4.3.1.css}">
-
     <!-- 引入Bootstrap JavaScript -->
     <!--<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
-
     <script th:src="@{/static/js/bootstrap_4.3.1.js}"></script>
-
     <!-- 引入Font Awesome -->
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">-->
-
     <link rel="stylesheet" th:href="@{/static/fontawesome-free-5.15.4/css/all.css}">
-
 </head>
+
 <body >
     <!--弹窗-->
     <div th:replace="userDisplay/component/MessagePopover"></div>
     <!--导航栏-->
     <div th:replace="userDisplay/component/Header"></div>
+    <!--加入看板娘，可爱捏-->
+    <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 
-    <div class="container " >
+
+
+    <div class="container-fluid" >
         <!--主体-->
         <div class="row main py-3" th:fragment="indexMain" id="indexMain" >
+            <div class="col-sm-2">
+                <!--搜索框-->
+                <div th:replace="userDisplay/component/searchBody" ></div>
+            </div>
             <!-- 正文栏 -->
-            <div class="col-sm-12 content-custom" th:switch="${session.currentLocation}">
+            <div class="col-sm-8 content-custom" th:switch="${session.currentLocation}" id="mainBody">
                 <div th:case="index" th:replace="userDisplay/component/indexBody"></div>
-                <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
-
+            </div>
+            <div class="col-sm-2">
+                <div th:replace="userDisplay/component/addBookBody"></div>
             </div>
         </div>
     </div>
@@ -51,46 +50,45 @@
     <div th:replace="userDisplay/component/LoginBox"></div>
     <!--注册框-->
     <div th:replace="userDisplay/component/RegisterBox"></div>
+
 </body>
 <link rel="stylesheet" href="../../static/css/MyStyle.css" th:href="@{/static/css/MyStyle.css}">
-<script src="../../static/js/MyScript.js" th:src="@{/static/js/MyScript.js}"></script>
 
 <script>
-    var currentPage = 1; //当前页码
-
-    //页面初始加载时加载第一页数据
-    loadData(currentPage);
-
-    //监听滚动事件,滚动到底部时加载更多
-    $(window).scroll(function() {
-        var scrollHeight = $(document).height();
-        var scrollPosition = $(window).height() + $(window).scrollTop();
-        if ((scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
-            currentPage++;
-            loadData(currentPage);
+    //   这是一个诗词API
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://v1.jinrishici.com/all.json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var data = JSON.parse(xhr.responseText);
+            var gushici = document.getElementById('gushici');
+            gushici.innerText = data.content;
         }
-    });
-
-    function loadData(page) {
-        $.ajax({
-            type: "GET",
-            url: "/data",
-            data: {
-                page: page
-            },
-            success: function(data) {
-                //渲染数据到页面
-                renderData(data);
-            }
-        });
+    };
+    xhr.send();
+    // 重新渲染主体
+    function reloadMain(data){
+        $('#mainBody').html(data);
     }
-
-    function renderData(data) {
-        var container = $("#dataContainer");
-        $.each(data, function(index, item) {
-            //根据数据结构拼接HTML
-            container.append(...);
+    // 检测用户是否登录
+    function isLoggedIn() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/user/checkLogin', // 检查登录状态的 URL
+                type: 'GET',
+                success: function(response) {
+                    if (response.isLoggedIn) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    reject(error);
+                }
+            });
         });
     }
 </script>
+
 </html>

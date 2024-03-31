@@ -38,6 +38,14 @@
         where book_id = #{bookId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectPage" resultMap="ResultMapWithBLOBs">
+        SELECT * FROM comments LIMIT #{start},#{size}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from comments
+    </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>

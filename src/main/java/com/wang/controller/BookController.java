@@ -3,6 +3,7 @@ package com.wang.controller;
 import com.wang.model.Books;
 import com.wang.model.Bookshelf;
 import com.wang.model.User;
+import com.wang.model.request.SearchCriteria;
 import com.wang.model.result.BookDetailResult;
 import com.wang.service.BookRatingsService;
 import com.wang.service.BooksService;
@@ -12,9 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -85,4 +89,29 @@ public class BookController {
             return ResponseEntity.badRequest().body("User not found");
         }
     }
+    @PostMapping("/doSearch")
+    public ResponseEntity<?> doSearch(@RequestBody SearchCriteria searchCriteria, HttpSession session){
+        List<Books> booksList = bookService.search(searchCriteria.getKeyword());
+        Map<String,Object> result = new HashMap<>();
+        result.put("books",booksList);
+        return ResponseEntity.ok(result);
+    }
+    @PostMapping("/userUpload")
+    public ResponseEntity<?> userUpload(@ModelAttribute("book") Books book ,
+                                        @RequestParam("coverFile") MultipartFile coverFile,
+                                        @RequestParam("bookFile") MultipartFile bookFile,
+                                        HttpSession session){
+        String filePath = bookService.uploadFile(bookFile);
+        String cover = bookService.uploadCover(coverFile);
+        book.setFileSize(bookFile.getSize());
+        book.setCover(cover);
+        book.setFilePath(filePath);
+        User user = (User) session.getAttribute("user");
+        String uploadResult = bookService.userUpload(book,user.getUsername());
+        Map<String,Object> result = new HashMap<>();
+        result.put("result",uploadResult);
+        result.put("message","上传成功等待审核");
+        return ResponseEntity.ok(result);
+    }
+
 }

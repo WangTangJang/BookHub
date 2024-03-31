@@ -86,6 +86,8 @@
         LIMIT #{start},#{size}
     </select>
 
+
+
     <select id="selectByListId" resultType="Books">
         select * from book_original_info ,book_dynamic_info where book_original_info.id in
         <foreach collection="list" item="bookIds" index="index" open="(" close=")" separator=",">
@@ -114,4 +116,32 @@
         set reviews_count = (select count(*) from comments where comments.book_id = #{bookId})
         where book_id = #{bookId}
     </update>
+
+    <insert id="userUpload" parameterType="Books" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO unaudited_books
+        SET title = #{title},
+            author = #{author},
+            isbn = #{isbn},
+            cover = #{cover},
+            format = #{format},
+            file_path = #{filePath},
+            file_size = #{fileSize},
+            uploaded_by = #{uploadedBy},
+            status = #{status}
+    </insert>
+
+    <select id="getUnaudited" resultType="Books">
+        select  * FROM  unaudited_books
+    </select>
+
+    <select id="selectUnaudited" resultType="Books">
+        SELECT * FROM unaudited_books where id = #{id}
+    </select>
+    <delete id="deleteUnaudited" parameterType="int">
+        delete from unaudited_books where id = #{id}
+    </delete>
+    <select id="selectUnauditedPage" resultType="Books">
+        SELECT * FROM unaudited_books
+        LIMIT #{start},#{size}
+    </select>
 </mapper>

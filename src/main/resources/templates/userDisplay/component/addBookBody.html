@@ -1,10 +1,120 @@
-<!doctype html>
-<html lang="ch" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Spring Boot Thymeleaf Example</title>
-</head>
-<body>
 
-</body>
-</html>
+<div class="container" id="uploadBookBody">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-edit"></i> 上传书籍</h5>
+                </div>
+                <div class="card-body">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="bookTitle">书名</label>
+                            <input type="text" class="form-control" id="bookTitle" name="title" placeholder="请输入书名" required >
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor">作者</label>
+                            <input type="text" class="form-control" id="bookAuthor" name="author" placeholder="请输入作者" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookIsbn">ISBN</label>
+                            <input type="text" class="form-control" id="bookIsbn" name="isbn" placeholder="请输入ISBN/或者置空" >
+                        </div>
+                        <div class="form-group">
+                            <label for="bookFormat">格式</label>
+                            <select class="form-control" id="bookFormat" name="format" >
+                                <option value="Epub">Epub</option>
+                                <option value="Txt">Txt</option>
+                                <option value="Mobi">Mobi</option>
+                                <option value="PDF">PDF</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookFilePath">文件上传</label>
+                            <input type="file" class="form-control-file" id="bookFilePath" name="bookFile" placeholder="请输入文件路径" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookCover">封面</label>
+                            <input type="file" class="form-control-file" id="bookCover" name="coverFile" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
+                        <a href="#" class="btn btn-secondary " id="uploadCancel"><i class="fas fa-times"></i> 取消</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#uploadCancel').click(function() {
+        $('#uploadBookBody').slideUp('fast', function() {
+
+        });
+    });
+    $('#uploadForm').on('submit', function(event) {
+        event.preventDefault(); // 阻止表单的默认提交行为
+
+        // 检查用户是否已登录
+        isLoggedIn()
+            .then(() => {
+                // 用户已登录,继续执行上传逻辑
+                // 创建 FormData 对象
+                const formData = new FormData();
+
+                // 添加普通表单字段
+                formData.append('title', $('#bookTitle').val());
+                formData.append('author', $('#bookAuthor').val());
+                formData.append('isbn', $('#bookIsbn').val());
+                formData.append('format', $('#bookFormat').val());
+
+                // 添加文件字段
+                formData.append('bookFile', $('#bookFilePath')[0].files[0]);
+                formData.append('coverFile', $('#bookCover')[0].files[0]);
+
+                // 发送 AJAX 请求
+                $.ajax({
+                    url: '/book/userUpload',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false, // 不设置请求体的内容类型
+                    processData: false, // 不处理请求数据
+                    success: function(response) {
+                        $('#uploadBookBody').slideUp('fast', function() {
+                            alert(response.message);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX 请求失败:', error);
+                    }
+                });
+            })
+            .catch((error) => {
+                alert('请先登录!');
+                console.error('登录检查失败:', error);
+            });
+    });
+</script>
+
+<style>
+    #uploadBookBody {
+        display: none;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .card-header {
+        background-color: #343a40;
+        color: #fff;
+        padding: 1rem;
+        border-bottom: none;
+    }
+    .card-body {
+        background-color: #fff;
+        padding: 1.25rem;
+    }
+</style>

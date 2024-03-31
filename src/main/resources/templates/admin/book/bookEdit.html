@@ -107,11 +107,20 @@
             </div>
             <div class="form-group">
               <label for="bookFormat">格式</label>
-              <input type="text" class="form-control" id="bookFormat" name="format" placeholder="请输入格式" th:value="${book.format}">
+              <select class="form-control" id="bookFormat" name="format">
+                <option value="Epub">Epub</option>
+                <option value="Txt">Txt</option>
+                <option value="Mobi">Mobi</option>
+                <option value="PDF">PDF</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="bookFilePath">文件路径</label>
               <input type="text" class="form-control" id="bookFilePath" name="filePath" placeholder="请输入文件路径" th:value="${book.filePath}">
+            </div>
+            <div class="form-group">
+              <label for="bookFile">文件上传</label>
+              <input type="file" class="form-control-file" id="bookFile" name="bookFile" placeholder="请输入文件路径" >
             </div>
             <div class="form-group">
               <label for="bookUploadedBy">上传者</label>

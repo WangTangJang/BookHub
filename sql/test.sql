@@ -48,3 +48,12 @@ SELECT * FROM book_original_info
                              ON book_dynamic_info.book_id = book_original_info.id
 LIMIT 0, 10;
 
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'book_original_info';
+
+alter table book_original_info drop constraint isbn
+
+update book_original_info set uploaded_by = 'Admin'
+
+select * from comments where book_id =31;

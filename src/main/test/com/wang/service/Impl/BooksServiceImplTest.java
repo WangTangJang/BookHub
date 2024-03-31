@@ -8,11 +8,13 @@ import com.wang.service.BooksService;
 import com.wang.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Properties;
 
 @RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -88,5 +90,14 @@ public class BooksServiceImplTest {
             b.setStatus(auditRecords.getResult());
             service.update(b);
         }
+    }
+
+    @Autowired
+    private Properties fileStorageConfig;
+
+    @Test
+    public void upLoad(){
+        String rootPath = fileStorageConfig.getProperty("upload.root-path");
+        System.out.println(rootPath);
     }
 }

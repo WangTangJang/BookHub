@@ -8,13 +8,13 @@ CREATE TABLE book_original_info
 (
     id        INT PRIMARY KEY AUTO_INCREMENT,
     -- 书籍自身信息
-    title     VARCHAR(255) NOT NULL,
+    title     VARCHAR(255) NOT NULL ,
     author    VARCHAR(255),
-    isbn      varchar(100) UNIQUE,
-    cover     varchar(100),
+    isbn      varchar(100) ,
+    cover     varchar(255),
     -- 电子版信息
     format    VARCHAR(255),
-    file_path varchar(100),
+    file_path varchar(255),
     file_size float,
     uploaded_by varchar(50),
     status varchar(20)
@@ -30,6 +30,23 @@ create table book_dynamic_info
     shelf_count    int,
     rating_count   int,
     foreign key (book_id) references book_original_info (id) ON DELETE CASCADE
+);
+
+drop table IF EXISTS unaudited_books;
+create table unaudited_books
+(
+    id        INT PRIMARY KEY AUTO_INCREMENT,
+    -- 书籍自身信息
+    title     VARCHAR(255) NOT NULL,
+    author    VARCHAR(255),
+    isbn      varchar(100) UNIQUE,
+    cover     varchar(100),
+    -- 电子版信息
+    format    VARCHAR(255),
+    file_path varchar(100),
+    file_size float,
+    uploaded_by varchar(50),
+    status varchar(20)
 );
 -- 书籍分类表
 drop table IF EXISTS book_categories;

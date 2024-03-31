@@ -120,4 +120,18 @@ public interface BooksService {
     List<Books> searchRejectedBooks();
 
     Page<Books> findAllBooks(Pageable pageable);
+
+    String uploadFile(MultipartFile bookFile);
+
+    int unauditedCount();
+
+    List<Books> getUnaudited();
+
+    Page<Books> getUnauditedByPage(Pageable pageable);
+
+    Books selectUnaudited(long bookId);
+
+    void pass(Long bookId);
+
+    void reject(Long bookId);
 }

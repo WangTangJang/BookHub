@@ -45,7 +45,11 @@
                 <div th:if="${session.user==null}" class="col-md-6 mb-3">
                     <a th:href="@{/login}" class="btn btn-dark btn-block toLogin">先登录吧</a>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <a th:href="${book.filePath}" id="toRead" class="btn btn-primary btn-block">阅读</a>
+                </div>
             </div>
+
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <!--只有登录后才可以收藏-->
@@ -66,13 +70,30 @@
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <a href="#" class="btn btn-success btn-block download">下载</a>
+                    <a th:href="${book.filePath}" class="btn btn-success btn-block download">下载</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+
+    $(document).one('click','#toRead',function (event){
+
+        event.preventDefault(); // 原来的链接
+        const bookUrl = $(this).attr('href'); // 获取书籍的地址
+        $.ajax({
+            url: '/render/reader/',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({bookUrl: bookUrl}),
+            success: function (data){
+                $('#bookDetailModal').modal('hide');
+                $('.modal-backdrop').remove();
+                reloadMain(data)
+            }
+        })
+    })
     // 提交对书籍的评分
     $(document).on('click', '#rateToBook', function (event) {
         event.preventDefault();

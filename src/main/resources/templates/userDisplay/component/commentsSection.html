@@ -1,464 +1,494 @@
 <div id="commentsSectionPage">
-  <div class="row py-3" id="commentsSection">
-    <!-- 评论区顶部栏 -->
-    <div class="col-12">
-      <div class="d-flex justify-content-between align-items-center">
-        <h2 class="d-inline mb-0">评论(已有<span th:text="${reviewsCount}"></span>条)</h2>
-        <div>
-          <span class="ml-3 SortByTime">最新</span>
-          <span class="ml-3 SortByPopularity">最热</span>
+    <div class="row py-3" id="commentsSection">
+        <!-- 评论区顶部栏 -->
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="d-inline mb-0">评论(已有<span th:text="${reviewsCount}"></span>条)</h2>
+                <div>
+                    <span class="ml-3 SortByTime">最新</span>
+                    <span class="ml-3 SortByPopularity">最热</span>
+                </div>
+            </div>
+            <hr>
         </div>
-      </div>
-      <hr>
+
+        <!-- 评论输入框 -->
+        <div class="col-12">
+            <div class="d-flex align-items-center">
+                <div>
+                    <div th:if="${session.user != null}">
+                        <img th:src="@{${session.user.profilePicture}}" id="userAvatar" class="rounded-circle"
+                             style="width: 40px;height: 40px;" alt="Avatar">
+                    </div>
+                    <div th:if="${session.user == null}">
+                        <img src="#" class="img-fluid rounded" alt="未登录">
+                    </div>
+                </div>
+                <div class="flex-grow-1 mx-3">
+                    <input type="text" class="form-control" id="commentBox" placeholder="发表评论..." aria-label="发表评论..."
+                           aria-describedby="button-addon2">
+                </div>
+                <button class="btn btn-outline-secondary" type="button" id="sendComment">发送</button>
+            </div>
+            <hr>
+        </div>
+
+        <div th:text="${bookId}" id="bookId" style="display: none;"></div>
+
+        <!-- 评论区主体 -->
+        <div class="col-12">
+            <div th:each="rootComment : ${rootComments}" class="comment-tree mb-4">
+                <!-- 根评论 -->
+                <div class="d-flex">
+                    <div>
+                        <img th:src="${rootComment.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;"
+                             alt="Avatar">
+                    </div>
+                    <div class="flex-grow-1 ml-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 th:text="${rootComment.userName}"></h5>
+                            <span th:text="${rootComment.creationTime}"></span>
+                        </div>
+                        <p th:text="${rootComment.context}" class="comment-text"></p>
+                        <div class="d-flex">
+                            <div class="btn btn-sm likeComment mr-2" th:data="${rootComment.id}"><i
+                                    class="fas fa-thumbs-up"></i> <span th:text="${rootComment.likes}"></span></div>
+                            <div class="btn btn-sm dislikeComment mr-2" th:data="${rootComment.id}"><i
+                                    class="fas fa-thumbs-down"></i> <span th:text="${rootComment.dislikes}"></span>
+                            </div>
+                            <div class="btn btn-sm reply mr-2" th:data="|reply_${rootComment.id}|"><i
+                                    class="fas fa-reply"></i> 回复
+                            </div>
+                        </div>
+                        <div class="reply-input mt-3" style="display: none;" th:id="|reply_${rootComment.id}|">
+                            <input type="text" class="form-control replyBox mb-2"
+                                   th:id="|reply_context_${rootComment.id}|" placeholder="回复评论..." aria-label="回复评论..."
+                                   aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary reply-btn" type="button"
+                                    th:data="${rootComment.id}" th:id="|reply_btn_${rootComment.id}|">回复
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <!-- 回复评论 -->
+                <div th:each="reply : ${rootComment.replies}" class="reply-comment ml-5 mt-3">
+                    <div class="d-flex">
+                        <div>
+                            <img th:src="${reply.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;"
+                                 alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ml-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 th:text="${reply.userName}"></h5>
+                                <span th:text="${reply.creationTime}"></span>
+                            </div>
+                            <p class="comment-text">回复@<span th:text="${reply.parentUsername}"></span>：<span
+                                    th:text="${reply.context}"></span></p>
+                            <div class="d-flex">
+                                <div class="btn btn-sm likeComment mr-2" th:data="${reply.id}"><i
+                                        class="fas fa-thumbs-up"></i> <span th:text="${reply.likes}"></span></div>
+                                <div class="btn btn-sm dislikeComment mr-2" th:data="${reply.id}"><i
+                                        class="fas fa-thumbs-down"></i> <span th:text="${reply.dislikes}"></span></div>
+                                <div class="btn btn-sm reply mr-2" th:data="|reply_${reply.id}|"><i
+                                        class="fas fa-reply"></i> 回复
+                                </div>
+                            </div>
+                            <div class="reply-input mt-3" style="display: none;" th:id="|reply_${reply.id}|">
+                                <input type="text" class="form-control replyBox mb-2"
+                                       th:id="|reply_context_${reply.id}|" placeholder="回复评论..." aria-label="回复评论..."
+                                       aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary reply-btn" type="button" th:data="${reply.id}"
+                                        th:id="|reply_btn_${reply.id}|">回复
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- 评论输入框 -->
-    <div class="col-12">
-      <div class="d-flex align-items-center">
-        <div>
-          <div th:if="${session.user != null}">
-            <img th:src="@{${session.user.profilePicture}}" id="userAvatar" class="rounded-circle" style="width: 40px;height: 40px;" alt="Avatar">
-          </div>
-          <div th:if="${session.user == null}">
-            <img src="#" class="img-fluid rounded" alt="未登录">
-          </div>
-        </div>
-        <div class="flex-grow-1 mx-3">
-          <input type="text" class="form-control" id="commentBox" placeholder="发表评论..." aria-label="发表评论..." aria-describedby="button-addon2">
-        </div>
-        <button class="btn btn-outline-secondary" type="button" id="sendComment">发送</button>
-      </div>
-      <hr>
-    </div>
-
-    <div th:text="${bookId}" id="bookId" style="display: none;"></div>
-
-    <!-- 评论区主体 -->
-    <div class="col-12">
-      <div th:each="rootComment : ${rootComments}" class="comment-tree mb-4">
-        <!-- 根评论 -->
-        <div class="d-flex">
-          <div>
-            <img th:src="${rootComment.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;" alt="Avatar">
-          </div>
-          <div class="flex-grow-1 ml-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h5 th:text="${rootComment.userName}"></h5>
-              <span th:text="${rootComment.creationTime}"></span>
-            </div>
-            <p th:text="${rootComment.context}" class="comment-text"></p>
-            <div class="d-flex">
-              <div class="btn btn-sm likeComment mr-2" th:data="${rootComment.id}"><i class="fas fa-thumbs-up"></i> <span th:text="${rootComment.likes}"></span></div>
-              <div class="btn btn-sm dislikeComment mr-2" th:data="${rootComment.id}"><i class="fas fa-thumbs-down"></i> <span th:text="${rootComment.dislikes}"></span></div>
-              <div class="btn btn-sm reply mr-2" th:data="|reply_${rootComment.id}|"><i class="fas fa-reply"></i> 回复</div>
-            </div>
-            <div class="reply-input mt-3" style="display: none;" th:id="|reply_${rootComment.id}|">
-              <input type="text" class="form-control replyBox mb-2" th:id="|reply_context_${rootComment.id}|" placeholder="回复评论..." aria-label="回复评论..." aria-describedby="button-addon2">
-              <button class="btn btn-outline-secondary reply-btn" type="button" th:data="${rootComment.id}" th:id="|reply_btn_${rootComment.id}|">回复</button>
-            </div>
-          </div>
-        </div>
-        <hr>
-
-        <!-- 回复评论 -->
-        <div th:each="reply : ${rootComment.replies}" class="reply-comment ml-5 mt-3">
-          <div class="d-flex">
-            <div>
-              <img th:src="${reply.userAvatar}" class="rounded-circle" style="width: 40px;height: 40px;" alt="Avatar">
-            </div>
-            <div class="flex-grow-1 ml-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 th:text="${reply.userName}"></h5>
-                <span th:text="${reply.creationTime}"></span>
-              </div>
-              <p class="comment-text">回复_<span th:text="${reply.parentUsername}"></span>：<span th:text="${reply.context}"></span></p>
-              <div class="d-flex">
-                <div class="btn btn-sm likeComment mr-2" th:data="${reply.id}"><i class="fas fa-thumbs-up"></i> <span th:text="${reply.likes}"></span></div>
-                <div class="btn btn-sm dislikeComment mr-2" th:data="${reply.id}"><i class="fas fa-thumbs-down"></i> <span th:text="${reply.dislikes}"></span></div>
-                <div class="btn btn-sm reply mr-2" th:data="|reply_${reply.id}|"><i class="fas fa-reply"></i> 回复</div>
-              </div>
-              <div class="reply-input mt-3" style="display: none;" th:id="|reply_${reply.id}|">
-                <input type="text" class="form-control replyBox mb-2" th:id="|reply_context_${reply.id}|" placeholder="回复评论..." aria-label="回复评论..." aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary reply-btn" type="button" th:data="${reply.id}" th:id="|reply_btn_${reply.id}|">回复</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <script>
-  <!--发送评论-->
-  $(document).on('click', '#sendComment', function (event) {
 
-    if (!document.getElementById('userAvatar')){
-      alert("未登录");
-      return;
-    }
+    $(document).on('click', '#sendComment', function (event) {
 
-    const commentBox = document.getElementById('commentBox');
-    const commentContent = commentBox.value;
-    const bookInfo = document.getElementById('bookId');
-    const bookId = bookInfo.textContent;
-    $.ajax({
-      url: '/comments/sendComment',
-      type:'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({commentContent:commentContent,bookId:bookId}),
-      success:function (data){
-        showComments(data)
-      }
+        if (!document.getElementById('userAvatar')) {
+            alert("未登录");
+            return;
+        }
+
+        const commentBox = document.getElementById('commentBox');
+        const commentContent = commentBox.value;
+        const bookInfo = document.getElementById('bookId');
+        const bookId = bookInfo.textContent;
+        $.ajax({
+            url: '/comments/sendComment',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({commentContent: commentContent, bookId: bookId}),
+            success: function (data) {
+                showComments(data)
+            }
+        })
     })
-  })
-  // 点赞
-  $(document).on('click','.likeComment',function (event){
+    // 点赞
+    $(document).on('click', '.likeComment', function (event) {
 
-    if (!document.getElementById('userAvatar')){
-      alert("未登录");
-      return;
-    }
-    //这种获取id的方式我不喜欢
-    const bookInfo = document.getElementById('bookId');
-    const bookId = bookInfo.textContent;
-    const commentId = $(this).attr('data');
+        if (!document.getElementById('userAvatar')) {
+            alert("未登录");
+            return;
+        }
+        //这种获取id的方式我不喜欢
+        const bookInfo = document.getElementById('bookId');
+        const bookId = bookInfo.textContent;
+        const commentId = $(this).attr('data');
 
-    $.ajax({
-      url: '/comments/like',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({commentId:commentId,bookId:bookId}),
-      success:function (data){
-        showComments(data)
-      },
-      error:function (data){
-        const response = JSON.parse(data.responseText);
-        const message = response.message;
-        alert(message);
-      }
+        $.ajax({
+            url: '/comments/like',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({commentId: commentId, bookId: bookId}),
+            success: function (data) {
+                showComments(data)
+            },
+            error: function (data) {
+                const response = JSON.parse(data.responseText);
+                const message = response.message;
+                alert(message);
+            }
+        })
     })
-  })
-  // 点踩
-  $(document).on('click','.dislikeComment',function (event){
+    // 点踩
+    $(document).on('click', '.dislikeComment', function (event) {
 
-    if (!document.getElementById('userAvatar')){
-      alert("未登录");
-      return;
-    }
-    //这种获取id的方式我不喜欢
-    const bookInfo = document.getElementById('bookId');
-    const bookId = bookInfo.textContent;
-    const commentId = $(this).attr('data');
+        if (!document.getElementById('userAvatar')) {
+            alert("未登录");
+            return;
+        }
+        //这种获取id的方式我不喜欢
+        const bookInfo = document.getElementById('bookId');
+        const bookId = bookInfo.textContent;
+        const commentId = $(this).attr('data');
 
-    $.ajax({
-      url: '/comments/dislike',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({commentId:commentId,bookId:bookId}),
-      success:function (data){
-        showComments(data)
-      },
-      error:function (data){
-        const response = JSON.parse(data.responseText);
-        const message = response.message;
-        alert(message);
-      }
+        $.ajax({
+            url: '/comments/dislike',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({commentId: commentId, bookId: bookId}),
+            success: function (data) {
+                showComments(data)
+            },
+            error: function (data) {
+                const response = JSON.parse(data.responseText);
+                const message = response.message;
+                alert(message);
+            }
+        })
     })
-  })
-  //展示回复框
-  $(document).on('click','.reply',function (event){
-    if (!document.getElementById('userAvatar')){
-      alert("未登录");
-      return;
-    }
-  //  获取按钮对应的id
-
-    const replyId = $(this).attr('data');
-    document.getElementById(replyId).style.display = "block";
-  })
-  //回复按钮
-  $(document).on('click','.reply-btn',function (event){
-
-    const bookInfo = document.getElementById('bookId');
-    const bookId = bookInfo.textContent;
-    const parentId = $(this).attr('data');
-    const reply_contextId='reply_context_'+parentId
-    let replyComment = document.getElementById(reply_contextId).value;
-    if (!replyComment){
-      alert("回复不能为空哦");
-      return;
-    }
-    $.ajax({
-      url:'/comments/replyComment',
-      type:'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({commentContent:replyComment,bookId:bookId,parentId:parentId}),
-      success:function (data){
-        showComments(data)
-      }
+    //展示回复框
+    $(document).on('click', '.reply', function (event) {
+        if (!document.getElementById('userAvatar')) {
+            alert("未登录");
+            return;
+        }
+        //  获取按钮对应的id
+        const replyId = $(this).attr('data');
+        const replyElement = document.getElementById(replyId);
+        if (replyElement.style.display === "block"){
+            replyElement.style.display="none"
+        }else {
+            replyElement.style.display = "block";
+        }
     })
-  })
+    //回复按钮
+    $(document).on('click', '.reply-btn', function (event) {
 
-  $(document).on('click','.SortByPopularity',function (event){
-    const bookInfo = document.getElementById('bookId');
-    const bookId = bookInfo.textContent;
-    $.ajax({
-      url: '/comments/getByLike/' + bookId,
-      type: 'GET',
-      success: function (data) {
-        showComments(data);
-      }
+        const bookInfo = document.getElementById('bookId');
+        const bookId = bookInfo.textContent;
+        const parentId = $(this).attr('data');
+        const reply_contextId = 'reply_context_' + parentId
+        let replyComment = document.getElementById(reply_contextId).value;
+        if (!replyComment) {
+            alert("回复不能为空哦");
+            return;
+        }
+        $.ajax({
+            url: '/comments/replyComment',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({commentContent: replyComment, bookId: bookId, parentId: parentId}),
+            success: function (data) {
+                showComments(data)
+            }
+        })
     })
-  })
 
-  $(document).on('click','.SortByTime',function (event){
-    const bookInfo = document.getElementById('bookId');
-    const bookId = bookInfo.textContent;
-    $.ajax({
-      url: '/comments/get/' + bookId,
-      type: 'GET',
-      success: function (data) {
-        showComments(data);
-      }
+    $(document).on('click', '.SortByPopularity', function (event) {
+        const bookInfo = document.getElementById('bookId');
+        const bookId = bookInfo.textContent;
+        $.ajax({
+            url: '/comments/getByLike/' + bookId,
+            type: 'GET',
+            success: function (data) {
+                showComments(data);
+            }
+        })
     })
-  })
+
+    $(document).on('click', '.SortByTime', function (event) {
+        const bookInfo = document.getElementById('bookId');
+        const bookId = bookInfo.textContent;
+        $.ajax({
+            url: '/comments/get/' + bookId,
+            type: 'GET',
+            success: function (data) {
+                showComments(data);
+            }
+        })
+    })
 </script>
 <style>
 
-  .reply-comment {
-    /* 回复评论的样式 */
-    border-left: 2px solid #ededed;
-    padding-left: 10px;
-  }
+    .reply-comment {
+        /* 回复评论的样式 */
+        border-left: 2px solid #ededed;
+        padding-left: 10px;
+    }
 
-  .comment-actions {
+    .reply {
+        cursor: pointer;
+    }
 
-  }
-  .reply{
-    cursor: pointer;
-  }
-  .likeComment {
-    cursor: pointer;
-  }
-  .dislikeComment {
-    cursor: pointer;
-  }
-  .SortByTime{
-    cursor: pointer;
-  }
-  .SortByPopularity{
-    cursor: pointer;
-  }
-  .comment-container {
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
+    .likeComment {
+        cursor: pointer;
+    }
 
-  .comment-item {
-    display: flex;
-    margin-bottom: 1rem;
-  }
+    .dislikeComment {
+        cursor: pointer;
+    }
 
-  .comment-avatar {
-    width: 48px;
-    height: 48px;
-    margin-right: 1rem;
-  }
+    .SortByTime {
+        cursor: pointer;
+    }
 
-  .comment-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    .SortByPopularity {
+        cursor: pointer;
+    }
 
-  .comment-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
+    .comment-container {
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
 
-  .comment-author {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #4da6ff;
-    margin: 0;
-  }
+    .comment-item {
+        display: flex;
+        margin-bottom: 1rem;
+    }
 
-  .comment-date {
-    font-size: 0.8rem;
-    color: #999;
-  }
+    .comment-avatar {
+        width: 48px;
+        height: 48px;
+        margin-right: 1rem;
+    }
 
-  .comment-text {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 0.5rem;
-  }
+    .comment-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-  .comment-actions {
-    display: flex;
-    align-items: center;
-  }
+    .comment-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
 
-  .comment-actions .btn {
-    border-radius: 20px;
-    margin-right: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-  }
+    .comment-author {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #4da6ff;
+        margin: 0;
+    }
 
-  .likeComment {
-    color: #28a745;
-  }
+    .comment-date {
+        font-size: 0.8rem;
+        color: #999;
+    }
 
-  .dislikeComment {
-    color: #dc3545;
-  }
+    .comment-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+    }
 
-  .reply-btn {
-    color: #4da6ff;
-  }
+    .comment-actions {
+        display: flex;
+        align-items: center;
+    }
 
-  .reply-input {
-    display: flex;
-    align-items: center;
-    margin-top: 0.5rem;
-  }
+    .comment-actions .btn {
+        border-radius: 20px;
+        margin-right: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
 
-  .reply-input input {
-    border-radius: 20px 0 0 20px;
-    border-right: none;
-  }
+    .likeComment {
+        color: #28a745;
+    }
 
-  .reply-submit {
-    border-radius: 0 20px 20px 0;
-  }
+    .dislikeComment {
+        color: #dc3545;
+    }
 
-  .replies {
-    margin-left: 3rem;
-    border-left: 2px solid #e9ecef;
-    padding-left: 1rem;
-  }
-  /* 评论区整体样式 */
-  #commentsSectionPage {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f1f3f5;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+    .reply-btn {
+        color: #4da6ff;
+    }
 
-  /* 评论区顶部栏样式 */
-  #commentsSectionPage h2 {
-    color: #2c3e50;
-    font-weight: 700;
-  }
+    .reply-input {
+        display: flex;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
 
-  #commentsSectionPage .SortByTime,
-  #commentsSectionPage .SortByPopularity {
-    color: #7f8c8d;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
+    .reply-input input {
+        border-radius: 20px 0 0 20px;
+        border-right: none;
+    }
 
-  #commentsSectionPage .SortByTime:hover,
-  #commentsSectionPage .SortByPopularity:hover {
-    color: #2c3e50;
-  }
+    .reply-submit {
+        border-radius: 0 20px 20px 0;
+    }
 
-  /* 评论输入框样式 */
-  #commentsSectionPage #userAvatar {
-    width: 48px;
-    height: 48px;
-  }
+    .replies {
+        margin-left: 3rem;
+        border-left: 2px solid #e9ecef;
+        padding-left: 1rem;
+    }
 
-  #commentsSectionPage #commentBox {
-    border-radius: 20px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border: 1px solid #dfe6e9;
-  }
+    /* 评论区整体样式 */
+    #commentsSectionPage {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f1f3f5;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-  #commentsSectionPage #sendComment {
-    background-color: #2c3e50;
-    color: #fff;
-    border-radius: 20px;
-    transition: background-color 0.3s;
-  }
+    /* 评论区顶部栏样式 */
+    #commentsSectionPage h2 {
+        color: #2c3e50;
+        font-weight: 700;
+    }
 
-  #commentsSectionPage #sendComment:hover {
-    background-color: #1a252f;
-  }
+    #commentsSectionPage .SortByTime,
+    #commentsSectionPage .SortByPopularity {
+        color: #7f8c8d;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
 
-  /* 评论区主体样式 */
-  #commentsSectionPage .comment-tree {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-  }
+    #commentsSectionPage .SortByTime:hover,
+    #commentsSectionPage .SortByPopularity:hover {
+        color: #2c3e50;
+    }
 
-  #commentsSectionPage .comment-tree h5 {
-    color: #2c3e50;
-    font-weight: 700;
-  }
+    /* 评论输入框样式 */
+    #commentsSectionPage #userAvatar {
+        width: 48px;
+        height: 48px;
+    }
 
-  #commentsSectionPage .comment-tree .reply-comment {
-    background-color: #f1f3f5;
-    border-radius: 8px;
-    padding: 1rem;
-  }
+    #commentsSectionPage #commentBox {
+        border-radius: 20px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border: 1px solid #dfe6e9;
+    }
 
-  #commentsSectionPage .comment-tree .likeComment,
-  #commentsSectionPage .comment-tree .dislikeComment,
-  #commentsSectionPage .comment-tree .reply {
-    color: #7f8c8d;
-    transition: color 0.3s;
-  }
+    #commentsSectionPage #sendComment {
+        background-color: #2c3e50;
+        color: #fff;
+        border-radius: 20px;
+        transition: background-color 0.3s;
+    }
 
-  #commentsSectionPage .comment-tree .likeComment:hover {
-    color: #27ae60;
-  }
+    #commentsSectionPage #sendComment:hover {
+        background-color: #1a252f;
+    }
 
-  #commentsSectionPage .comment-tree .dislikeComment:hover {
-    color: #e74c3c;
-  }
+    /* 评论区主体样式 */
+    #commentsSectionPage .comment-tree {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+    }
 
-  #commentsSectionPage .comment-tree .reply:hover {
-    color: #2c3e50;
-  }
+    #commentsSectionPage .comment-tree h5 {
+        color: #2c3e50;
+        font-weight: 700;
+    }
 
-  #commentsSectionPage .comment-tree .replyBox {
-    border-radius: 20px 0 0 20px;
-    border: 1px solid #dfe6e9;
-  }
+    #commentsSectionPage .comment-tree .reply-comment {
+        background-color: #f1f3f5;
+        border-radius: 8px;
+        padding: 1rem;
+    }
 
-  #commentsSectionPage .comment-tree .reply-btn {
-    background-color: #2c3e50;
-    color: #fff;
-    border-radius: 0 20px 20px 0;
-    transition: background-color 0.3s;
-  }
+    #commentsSectionPage .comment-tree .likeComment,
+    #commentsSectionPage .comment-tree .dislikeComment,
+    #commentsSectionPage .comment-tree .reply {
+        color: #7f8c8d;
+        transition: color 0.3s;
+    }
 
-  #commentsSectionPage .comment-tree .reply-btn:hover {
-    background-color: #1a252f;
-  }
-  /* 评论正文内容样式 */
-  #commentsSectionPage .comment-tree .comment-text {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #34495e;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+    #commentsSectionPage .comment-tree .likeComment:hover {
+        color: #27ae60;
+    }
 
-  #commentsSectionPage .comment-tree .reply-comment .comment-text {
-    background-color: #f5f7f9;
-  }
+    #commentsSectionPage .comment-tree .dislikeComment:hover {
+        color: #e74c3c;
+    }
+
+    #commentsSectionPage .comment-tree .reply:hover {
+        color: #2c3e50;
+    }
+
+    #commentsSectionPage .comment-tree .replyBox {
+        border-radius: 20px 0 0 20px;
+        border: 1px solid #dfe6e9;
+    }
+
+    #commentsSectionPage .comment-tree .reply-btn {
+        background-color: #2c3e50;
+        color: #fff;
+        border-radius: 0 20px 20px 0;
+        transition: background-color 0.3s;
+    }
+
+    #commentsSectionPage .comment-tree .reply-btn:hover {
+        background-color: #1a252f;
+    }
+
+    /* 评论正文内容样式 */
+    #commentsSectionPage .comment-tree .comment-text {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #34495e;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #commentsSectionPage .comment-tree .reply-comment .comment-text {
+        background-color: #f5f7f9;
+    }
 </style>

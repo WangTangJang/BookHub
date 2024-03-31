@@ -3,7 +3,7 @@ package com.wang.model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -22,9 +22,9 @@ public class Comment implements Serializable {
 
     private Integer dislikes;
 
-    private Date creationTime;
+    private Timestamp creationTime;
 
-    private Date updateTime;
+    private Timestamp updateTime;
 
     private String context;
 
@@ -78,19 +78,19 @@ public class Comment implements Serializable {
         this.dislikes = dislikes;
     }
 
-    public Date getCreationTime() {
+    public Timestamp getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(Date creationTime) {
+    public void setCreationTime(Timestamp creationTime) {
         this.creationTime = creationTime;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

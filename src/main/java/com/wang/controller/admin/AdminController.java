@@ -46,14 +46,13 @@ public class AdminController {
     @RequestMapping("index")
     public String index(Model model){
         int bookCount = booksService.count();
-
+        int unauditedCount = booksService.unauditedCount();
         int userCount = userService.count();
         int userNewAdd = userService.countYesterday();
-
         int commentCount = commentsService.count();
         int commentCountYesterday = commentsService.countYesterday();
-
         model.addAttribute("bookCount",bookCount);
+        model.addAttribute("unauditedCount",unauditedCount);
         model.addAttribute("userCount",userCount);
         model.addAttribute("userNewAdd",userNewAdd);
         model.addAttribute("commentCount",commentCount);

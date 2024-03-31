@@ -15,8 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Book;
 import java.io.File;
 import java.util.List;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Service
 public class BooksServiceImpl implements BooksService {
@@ -25,7 +28,8 @@ public class BooksServiceImpl implements BooksService {
     BooksMapper mapper;
     @Autowired
     BookCategoryService bookCategoryService;
-
+    @Autowired
+    private Properties fileStorageConfig;
 
     // 先是向书籍的信息表中插入一条数据，然后再向书籍分类表中插入一条数据
     // 正好可以试试事务，当向另一张表中插入时，如果失败，那么之前的插入也会回滚
@@ -108,23 +112,7 @@ public class BooksServiceImpl implements BooksService {
         mapper.updateReviewsCount(bookId);
     }
 
-    @Override
-    public String uploadCover(MultipartFile file) {
-        try {
-            // 文件存放服务端的位置
-            String rootPath = "C:\\Users\\Administrator\\Desktop\\ProxyZerl\\WebAppBuild\\nginx-1.25.4\\html\\img";
-            File dir = new File(rootPath + File.separator + "cover");
-            if (!dir.exists())
-                dir.mkdirs();
-            // 写文件到服务器
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
-            file.transferTo(serverFile);
-            // 你就说存没存上去吧。。。
-            return "http://localhost:8081/img/cover/" +  file.getOriginalFilename();
-        } catch (Exception e) {
-            return "You failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage();
-        }
-    }
+
 
     @Override
     public String userUpload(Books book, String username) {
@@ -132,9 +120,8 @@ public class BooksServiceImpl implements BooksService {
         if (mapper.checkDuplicateISBN(book.getIsbn())){
             return "isbn 重复";
         }else {
-            book.setStatus("尚未审核");
             book.setUploadedBy(username);
-            mapper.insert(book);
+            mapper.userUpload(book);
             return "ok";
         }
     }
@@ -165,4 +152,80 @@ public class BooksServiceImpl implements BooksService {
         return new PageImpl<>(books, pageable, total);
     }
 
+    @Override
+    public String uploadCover(MultipartFile file) {
+        try {
+            // 文件存放服务端的位置
+            String rootPath = fileStorageConfig.getProperty("upload.root-path");
+            String coverPath = fileStorageConfig.getProperty("coverPath");
+            String serverPath = fileStorageConfig.getProperty("serverPath");
+            File dir = new File(rootPath + File.separator + coverPath);
+            if (!dir.exists())
+                dir.mkdirs();
+            // 写文件到服务器
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            file.transferTo(serverFile);
+            // 你就说存没存上去吧。。。
+            return serverPath +File.separator+ coverPath +File.separator+  file.getOriginalFilename();
+        } catch (Exception e) {
+            return "You failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage();
+        }
+    }
+
+    @Override
+    public String uploadFile(MultipartFile bookFile) {
+        try {
+            String rootPath = fileStorageConfig.getProperty("upload.root-path");
+            String bookFilePath = fileStorageConfig.getProperty("bookFilePath");
+            String serverPath = fileStorageConfig.getProperty("serverPath");
+            File dir = new File(rootPath+File.separator+bookFilePath);
+            if (!dir.exists())
+                dir.mkdir();
+            File serverFile = new File(dir.getAbsolutePath()+File.separator+bookFile.getOriginalFilename());
+            bookFile.transferTo(serverFile);
+            return serverPath+File.separator+bookFilePath+File.separator+bookFile.getOriginalFilename();
+        } catch (Exception e){
+            return "You failed to upload " +  bookFile.getOriginalFilename() + " => " + e.getMessage();
+        }
+    }
+
+    @Override
+    public int unauditedCount() {
+        return getUnaudited().size();
+    }
+
+    @Override
+    public List<Books> getUnaudited() {
+        return mapper.getUnaudited();
+    }
+
+    @Override
+    public Page<Books> getUnauditedByPage(Pageable pageable) {
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+        List<Books> books = mapper.selectUnauditedPage(offset, pageable.getPageSize());
+        // 获取数据总量
+        int total = unauditedCount();
+
+        // 创建PageImpl对象
+        return new PageImpl<>(books, pageable, total);
+    }
+    @Override
+    public Books selectUnaudited(long bookId){
+        return mapper.selectUnaudited(bookId);
+    }
+
+    @Override
+    @Transactional
+    public void pass(Long bookId) {
+        Books books = mapper.selectUnaudited(bookId);
+        // 将已经审核通过的书籍从原来的表中删除
+        mapper.deleteUnaudited(Math.toIntExact(bookId));
+        // 将已经审核通过的书籍插入到正式的表中
+        mapper.insert(books);
+    }
+
+    @Override
+    public void reject(Long bookId) {
+
+    }
 }

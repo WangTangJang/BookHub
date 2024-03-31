@@ -1,58 +1,58 @@
-#gushici {
-    /* 调整gushici的字体大小 */
-     font-size: 1.3em;
+/*#gushici {*/
+/*    !* 调整gushici的字体大小 *!*/
+/*     font-size: 1.3em;*/
 
-    /* 加粗 */
-    font-weight: bold;
-}
+/*    !* 加粗 *!*/
+/*    font-weight: bold;*/
+/*}*/
 
 
 /*整体页面的背景图片*/
-/*body::before {*/
-/*    content: "";*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    z-index: -1; !* 将伪元素置于背景之后 *!*/
-/*    !*background-image: url(https://w.wallhaven.cc/full/jx/wallhaven-jxqyrq.jpg);*!*/
-/*    background-image: url("/static/images/background.jpg");*/
-/*    background-size: cover;*/
-/*    filter: blur(2px); !* 调整虚化效果的程度 *!*/
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 将伪元素置于背景之后 */
+    /*background-image: url(https://w.wallhaven.cc/full/jx/wallhaven-jxqyrq.jpg);*/
+    background-image: url("http://localhost:8081/img/background/wallhaven-exrqrr.jpg");
+    background-size: cover;
+    filter: blur(2px); /* 调整虚化效果的程度 */
+}
+/*.custom-logo{*/
+/*    font-size: 25px;*/
 /*}*/
-.custom-logo{
-    font-size: 25px;
-}
-/* 图标偏移 */
- i {
-    margin-right: 5px;
-}
+/*!* 图标偏移 *!*/
+/* i {*/
+/*    margin-right: 5px;*/
+/*}*/
 
 
-/* 正文 */
-.content-custom {
-    min-height: 100vh;
-    /* background-color: rgb(161, 161, 161) */
-}
-/* 导航栏 */
-.navbar-custom {
-    background-color: rgba(218, 218, 218,0.5)
-/*    透明度*/
-}
+/*!* 正文 *!*/
+/*.content-custom {*/
+/*    min-height: 100vh;*/
+/*    !* background-color: rgb(161, 161, 161) *!*/
+/*}*/
+/*!* 导航栏 *!*/
+/*.navbar-custom {*/
+/*    background-color: rgba(218, 218, 218,0.5)*/
+/*!*    透明度*!*/
+/*}*/
 
-/* 侧边栏 */
-.sidebar-custom{
-    background-color: rgb(205, 205, 205)
-}
-/* 卡片背景图片 */
-.card-body{
+/*!* 侧边栏 *!*/
+/*.sidebar-custom{*/
+/*    background-color: rgb(205, 205, 205)*/
+/*}*/
+/*!* 卡片背景图片 *!*/
+/*.card-body{*/
 
-}
-.card-body .card-title{
-    color: #000000;
-    text-decoration: none;
-/*    加粗*/
-    font-weight: bold;
-}
+/*}*/
+/*.card-body .card-title{*/
+/*    color: #000000;*/
+/*    text-decoration: none;*/
+/*!*    加粗*!*/
+/*    font-weight: bold;*/
+/*}*/
 

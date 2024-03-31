@@ -69,6 +69,16 @@ public class UserController {
             return ResponseEntity.badRequest().body(result);
         }
     }
+
+    @GetMapping("/checkLogin")
+    public ResponseEntity<?> checkLogin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return ResponseEntity.ok(Map.of("isLoggedIn", true));
+        } else {
+            return ResponseEntity.ok(Map.of("isLoggedIn", false));
+        }
+    }
     @PostMapping (value = "/logout")
     public ResponseEntity<?>  logout(HttpSession session){
         if (session.getAttribute("user")!=null){

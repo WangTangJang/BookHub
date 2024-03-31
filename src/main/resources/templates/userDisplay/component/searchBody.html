@@ -1,10 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+<div class="container" id="searchBody">
+    <div class="row mt-4" id="main">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-search"></i> 搜索书籍</h5>
+                </div>
+                <div class="card-body">
+                    <form id="searchForm">
+                        <div class="form-group">
+                            <label for="searchInput">搜索关键字</label>
+                            <input type="text" class="form-control" id="searchInput" name="keyword" placeholder="输入书名、作者或关键词">
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> 搜索</button>
+                        <a class="btn btn-secondary" id="searchCancel"><i class="fas fa-times"></i> 取消</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    <!--为什么隐藏之后会触发鼠标滚动的效果？？-->
+    $('#searchCancel').click(function() {
+        $('#searchBody').slideUp('fast', function() {
+            // 获取表单数据
+            var formData = {
+                keyword: ''
+            };
+            $.ajax({
+                url: '/book/doSearch',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function(response) {
+                    $.ajax({
+                        url:'/render/searchResult',
+                        data: JSON.stringify(response),
+                        contentType: 'application/json',
+                        type: 'POST',
+                        success: function (data) {
+                            reloadMain(data);
+                        },
+                        error: function (xhr,status,error){
+                            console.error('页面渲染失败',error);
+                        }
+                    })
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX请求失败:', error);
+                }
+            });
+        });
+    });
+
+    $(document).ready(function() {
+        $('#searchForm').on('submit', function(event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+
+            // 获取表单数据
+            var formData = {
+                keyword: $('#searchInput').val()
+            };
+
+            // 发送AJAX请求
+            $.ajax({
+                url: '/book/doSearch',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function(response) {
+                    $.ajax({
+                        url:'/render/searchResult',
+                        data: JSON.stringify(response),
+                        contentType: 'application/json',
+                        type: 'POST',
+                        success: function (data) {
+                            reloadMain(data);
+                        },
+                        error: function (xhr,status,error){
+                            console.error('页面渲染失败',error);
+                        }
+                    })
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX请求失败:', error);
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    #searchBody {
+        display: none;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .card-header {
+        background-color: #343a40;
+        color: #fff;
+        padding: 1rem;
+        border-bottom: none;
+    }
+    .card-body {
+        background-color: #fff;
+        padding: 1.25rem;
+    }
+</style>

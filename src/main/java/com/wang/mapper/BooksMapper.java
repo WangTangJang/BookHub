@@ -2,8 +2,6 @@ package com.wang.mapper;
 
 import com.wang.model.Books;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -112,4 +110,13 @@ public interface BooksMapper {
      */
     void updateReviewsCount(@Param("bookId") long booId);
 
+    List<Books> getUnaudited();
+
+    List<Books> selectUnauditedPage(@Param("start") int start,@Param("size") int size);
+
+    void userUpload(Books book);
+
+    Books selectUnaudited(Long bookId);
+
+    void deleteUnaudited(int id);
 }

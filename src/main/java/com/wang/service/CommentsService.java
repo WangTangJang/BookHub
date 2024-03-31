@@ -2,6 +2,8 @@ package com.wang.service;
 
 import com.wang.model.Comment;
 import com.wang.model.result.CommentResult;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -60,5 +62,9 @@ public interface CommentsService {
 
     // 昨日新增评论数量
     int countYesterday();
+
+    Page<Comment> findAllComment(Pageable pageable);
+
+    void update(Comment comment);
 
 }

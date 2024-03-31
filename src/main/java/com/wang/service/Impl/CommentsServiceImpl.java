@@ -1,6 +1,7 @@
 package com.wang.service.Impl;
 
 import com.wang.mapper.CommentsMapper;
+import com.wang.model.Books;
 import com.wang.model.Comment;
 import com.wang.model.User;
 import com.wang.model.result.CommentResult;
@@ -8,6 +9,9 @@ import com.wang.service.BooksService;
 import com.wang.service.CommentsService;
 import com.wang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,9 +42,9 @@ public class CommentsServiceImpl implements CommentsService {
         comment.setLikes(0);
         comment.setDislikes(0);
 
+        mapper.insertSelective(comment);
         booksService.updateReviewsCount(bookId);
 
-        mapper.insertSelective(comment);
     }
 
     @Override
@@ -53,9 +57,9 @@ public class CommentsServiceImpl implements CommentsService {
         replyComment.setBookId(bookId);
         replyComment.setDislikes(0);
         replyComment.setLikes(0);
+        mapper.insertSelective(replyComment);
         booksService.updateReviewsCount(bookId);
 
-        mapper.insertSelective(replyComment);
     }
     @Override
     public Comment getCommentById(long id) {
@@ -121,6 +125,22 @@ public class CommentsServiceImpl implements CommentsService {
             }
         }
         return result.size();
+    }
+
+    @Override
+    public Page<Comment> findAllComment(Pageable pageable) {
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+        List<Comment> comments = mapper.selectPage(offset, pageable.getPageSize());
+        // 获取数据总量
+        int total = mapper.count();
+
+        // 创建PageImpl对象
+        return new PageImpl<>(comments, pageable, total);
+    }
+
+    @Override
+    public void update(Comment comment) {
+        mapper.updateByPrimaryKeySelective(comment);
     }
 
     /* 这才是该写的东西！！！ */
