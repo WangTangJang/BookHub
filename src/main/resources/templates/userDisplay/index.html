@@ -18,8 +18,9 @@
     <!-- 引入Font Awesome -->
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">-->
     <link rel="stylesheet" th:href="@{/static/fontawesome-free-5.15.4/css/all.css}">
-
+    <!--这个是引入epub.js所必须的文件，据说-->
     <script src="http://localhost:8081/javascript/jszip.min.js"></script>
+    <!--引入epub.js文件，文件存放在我的nginx服务器上-->
     <script src="http://localhost:8081/javascript/epub.js"></script>
 </head>
 
@@ -58,22 +59,22 @@
 <script>
 
     //   这是一个诗词API
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open('get', 'https://v1.jinrishici.com/all.json');
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            var data = JSON.parse(xhr.responseText);
-            var gushici = document.getElementById('gushici');
+            let data = JSON.parse(xhr.responseText);
+            let gushici = document.getElementById('gushici');
             gushici.innerText = data.content;
         }
     };
     xhr.send();
     function reloadMain(data){
         // 到底是将整个刷新掉，还是将显示的内容刷新掉？？？ 不好用！！！
-        $('#mainBody').html(data);
+        $('#mainBody').html(data); // 大体的用处是在搜索时替换内容的使用的。但是我为什么不用replaceWith呢？
     }
 
-    // 检测用户是否登录
+    // 检测用户是否登录，靠的是在服务端检测session的状态，服务端会返回登录的状态
     function isLoggedIn() {
         return new Promise((resolve, reject) => {
             $.ajax({

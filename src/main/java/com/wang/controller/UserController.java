@@ -22,6 +22,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    // 不建议使用？
     @Autowired
     private UserService userService;
 
@@ -70,6 +71,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 检查用户是否登录
+     * @param session 会话
+     * @return isLoggedIn
+     */
     @GetMapping("/checkLogin")
     public ResponseEntity<?> checkLogin(HttpSession session) {
         User user = (User) session.getAttribute("user");
