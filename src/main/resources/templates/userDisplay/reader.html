@@ -5,223 +5,154 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EPUB.js + Hypothes.is Example</title>
+
+  <script src="http://localhost:8081/javascript/jszip.min.js"></script>
+  <script src="http://localhost:8081/javascript/epub.js"></script>
 </head>
 <body>
 <div  id="bookReader">
-  <script src="http://localhost:8081/javascript/jszip.min.js"></script>
-  <script src="http://localhost:8081/javascript/epub.js"></script>
-  <script type="text/javascript">
-    window.hypothesisConfig = function () {
-      return {
-        openSidebar: false,
-        enableMultiFrameSupport: true,
-        onLayoutChange: function(state) {
-          var main = document.querySelector('#main');
-          if (state.expanded === true) {
-            main.classList.add("open");
-          } else {
-            main.classList.remove("open");
-          }
-        }
-      };
-    };
-  </script>
-  <script src="https://cdn.hypothes.is/hypothesis"></script>
-  <!--引入css样式-->
   <link th:href="@{/static/css/epubReader.css}"  rel="stylesheet" type="text/css"/>
+
   <input type="hidden" id="bookUrl" th:value="${bookUrl}">
-  <div id="navigation">
-    <h1 id="title">...</h1>
-    <image id="cover" width="150px"></image>
-    <h2 id="author">...</h2>
-    <ul id="toc"></ul>
-  </div>
-  <div id="main">
-    <div id="viewer" ></div>
-    <div id="pagination">
-      <a id="prev" href="#prev" class="arrow">...</a>
-      <a id="next" href="#next" class="arrow">...</a>
-    </div>
-  </div>
+
+  <select id="toc"></select>
+  <div id="viewer" class="spreads"></div>
+  <a id="prev" href="#prev" class="arrow">‹</a>
+  <a id="next" href="#next" class="arrow">›</a>
 
   <script>
-    // Load the opf
     var params = URLSearchParams && new URLSearchParams(document.location.search.substring(1));
     var url = params && params.get("url") && decodeURIComponent(params.get("url"));
-
+    var currentSectionIndex = (params && params.get("loc")) ? params.get("loc") : undefined;
     const bookUrl = document.getElementById('bookUrl').value;
-
     // Load the opf
-    var book = ePub("bookUrl");
+    var book = ePub(bookUrl);
+    // Load the opf
     var rendition = book.renderTo("viewer", {
-      flow: "paginated",
-      ignoreClass: "annotator-hl"
+      width: "100%",
+      height: "100%",
+      spread: "always"
     });
 
-    // var hash = window.location.hash.slice(2);
-    var loc = window.location.href.indexOf("?loc=");
-    if (loc > -1) {
-      var href =  window.location.href.slice(loc + 5);
-      var hash = decodeURIComponent(href);
-    }
-    rendition.display(hash || undefined);
+    rendition.display(currentSectionIndex);
 
+    book.ready.then(() => {
 
-    var next = document.getElementById("next");
-    next.addEventListener("click", function(e){
-      window.scrollTo(0,0);
-      rendition.next();
-      e.preventDefault();
-    }, false);
+      var next = document.getElementById("next");
 
-    var prev = document.getElementById("prev");
-    prev.addEventListener("click", function(e){
-      window.scrollTo(0,0);
-      rendition.prev();
-      e.preventDefault();
-    }, false);
+      next.addEventListener("click", function(e){
+        book.package.metadata.direction === "rtl" ? rendition.prev() : rendition.next();
+        e.preventDefault();
+      }, false);
+
+      var prev = document.getElementById("prev");
+      prev.addEventListener("click", function(e){
+        book.package.metadata.direction === "rtl" ? rendition.next() : rendition.prev();
+        e.preventDefault();
+      }, false);
+
+      var keyListener = function(e){
+
+        // Left Key
+        if ((e.keyCode || e.which) == 37) {
+          book.package.metadata.direction === "rtl" ? rendition.next() : rendition.prev();
+        }
+
+        // Right Key
+        if ((e.keyCode || e.which) == 39) {
+          book.package.metadata.direction === "rtl" ? rendition.prev() : rendition.next();
+        }
+
+      };
+
+      rendition.on("keyup", keyListener);
+      document.addEventListener("keyup", keyListener, false);
+
+    })
+
+    var title = document.getElementById("title");
 
     rendition.on("rendered", function(section){
-      var nextSection = section.next();
-      var prevSection = section.prev();
+      var current = book.navigation && book.navigation.get(section.href);
 
-      if(nextSection) {
-        nextNav = book.navigation.get(nextSection.href);
-
-        if(nextNav) {
-          nextLabel = nextNav.label;
-        } else {
-          nextLabel = "下一页";
+      if (current) {
+        var $select = document.getElementById("toc");
+        var $selected = $select.querySelector("option[selected]");
+        if ($selected) {
+          $selected.removeAttribute("selected");
         }
 
-        next.textContent = nextLabel + " »";
-      } else {
-        next.textContent = "";
-      }
-
-      if(prevSection) {
-        prevNav = book.navigation.get(prevSection.href);
-
-        if(prevNav) {
-          prevLabel = prevNav.label;
-        } else {
-          prevLabel = "上一页";
+        var $options = $select.querySelectorAll("option");
+        for (var i = 0; i < $options.length; ++i) {
+          let selected = $options[i].getAttribute("ref") === current.href;
+          if (selected) {
+            $options[i].setAttribute("selected", "");
+          }
         }
+      }
 
-        prev.textContent = "« " + prevLabel;
+    });
+
+    rendition.on("relocated", function(location){
+      console.log(location);
+
+      var next = book.package.metadata.direction === "rtl" ?  document.getElementById("prev") : document.getElementById("next");
+      var prev = book.package.metadata.direction === "rtl" ?  document.getElementById("next") : document.getElementById("prev");
+
+      if (location.atEnd) {
+        next.style.visibility = "hidden";
       } else {
-        prev.textContent = "";
+        next.style.visibility = "visible";
       }
 
-      var old = document.querySelectorAll('.active');
-      Array.prototype.slice.call(old, 0).forEach(function (link) {
-        link.classList.remove("active");
-      })
-
-      var active = document.querySelector('a[href="'+section.href+'"]');
-      if (active) {
-        active.classList.add("active");
+      if (location.atStart) {
+        prev.style.visibility = "hidden";
+      } else {
+        prev.style.visibility = "visible";
       }
-      // Add CFI fragment to the history
-      history.pushState({}, '', "?loc=" + encodeURIComponent(section.href));
-      // window.location.hash = "#/"+section.href
+
+    });
+
+    rendition.on("layout", function(layout) {
+      let viewer = document.getElementById("viewer");
+
+      if (layout.spread) {
+        viewer.classList.remove('single');
+      } else {
+        viewer.classList.add('single');
+      }
+    });
+
+    window.addEventListener("unload", function () {
+      console.log("unloading");
+      this.book.destroy();
     });
 
     book.loaded.navigation.then(function(toc){
-      var $nav = document.getElementById("toc"),
+      var $select = document.getElementById("toc"),
               docfrag = document.createDocumentFragment();
 
-      toc.forEach(function(chapter, index) {
-        var item = document.createElement("li");
-        var link = document.createElement("a");
-        link.id = "chap-" + chapter.id;
-        link.textContent = chapter.label;
-        link.href = chapter.href;
-        item.appendChild(link);
-        docfrag.appendChild(item);
+      toc.forEach(function(chapter) {
+        var option = document.createElement("option");
+        option.textContent = chapter.label;
+        option.setAttribute("ref", chapter.href);
 
-        link.onclick = function(){
-          var url = link.getAttribute("href");
-          console.log(url)
-          rendition.display(url);
-          return false;
-        };
-
+        docfrag.appendChild(option);
       });
 
-      $nav.appendChild(docfrag);
+      $select.appendChild(docfrag);
 
-
-    });
-
-    book.loaded.metadata.then(function(meta){
-      var $title = document.getElementById("title");
-      var $author = document.getElementById("author");
-      var $cover = document.getElementById("cover");
-      var $nav = document.getElementById('navigation');
-
-      $title.textContent = meta.title;
-      $author.textContent = meta.creator;
-      if (book.archive) {
-        book.archive.createUrl(book.cover)
-                .then(function (url) {
-                  $cover.src = url;
-                })
-      } else {
-        $cover.src = book.cover;
-      }
-
-      if ($nav.offsetHeight + 60 < window.innerHeight) {
-        $nav.classList.add("fixed");
-      }
+      $select.onchange = function(){
+        var index = $select.selectedIndex,
+                url = $select.options[index].getAttribute("ref");
+        rendition.display(url);
+        return false;
+      };
 
     });
 
-    function checkForAnnotator(cb, w) {
-      if (!w) {
-        w = window;
-      }
-      setTimeout(function () {
-        if (w && w.annotator) {
-          cb();
-        } else {
-          checkForAnnotator(cb, w);
-        }
-      }, 100);
-    }
-
-    book.rendition.hooks.content.register(function(contents, view) {
-
-      checkForAnnotator(function () {
-
-        var annotator = contents.window.annotator;
-
-        contents.window.addEventListener('scrolltorange', function (e) {
-          var range = e.detail;
-          var cfi = new ePub.CFI(range, contents.cfiBase).toString();
-          if (cfi) {
-            book.rendition.display(cfi);
-          }
-          e.preventDefault();
-        });
-
-
-        annotator.on("highlightClick", function (annotation) {
-          console.log(annotation);
-          window.annotator.show();
-        })
-
-        annotator.on("beforeAnnotationCreated", function (annotation) {
-          console.log(annotation);
-          window.annotator.show();
-        })
-
-      }, contents.window);
-
-    });
   </script>
 </div>
-
 
 </body>
 </html>

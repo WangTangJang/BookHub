@@ -21,6 +21,10 @@ body::before {
     background-size: cover;
     filter: blur(2px); /* 调整虚化效果的程度 */
 }
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.9) linear-gradient(to right, #c9a7eb, #9f86e7);
+}
 /*.custom-logo{*/
 /*    font-size: 25px;*/
 /*}*/
