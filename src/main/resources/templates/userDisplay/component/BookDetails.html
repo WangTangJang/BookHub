@@ -30,7 +30,7 @@
                 <!-- 打分框 -->
                 <div th:if="${session.user != null}" class="col-md-6 mb-3">
                     <div th:if="${userRating == 0}" class="input-group">
-                        <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" required
+                        <input type="number" class="form-control" id="rating" name="rating" min="0" max="9" required
                                placeholder="输入评分：0到10分之间">
                         <div class="input-group-append">
                             <a th:href="${book.id}" class="btn btn-primary"
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div th:if="${userRating != 0}">
-                        <span class="badge badge-pill badge-success p-3">您给本书打了<span
+                        <span class="btn btn-secondary btn-block">您给本书打了<span
                                 th:text="${userRating}"></span>分</span>
                     </div>
                 </div>
@@ -78,8 +78,7 @@
 </div>
 <script>
 
-    $(document).one('click','#toRead',function (event){
-
+    $(document).on('click', '#toRead', function (event) {
         event.preventDefault(); // 原来的链接
         const bookUrl = $(this).attr('href'); // 获取书籍的地址
         $.ajax({
@@ -87,10 +86,17 @@
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({bookUrl: bookUrl}),
-            success: function (data){
+            success: function (data) {
                 $('#bookDetailModal').modal('hide');
-                $('.modal-backdrop').remove();
-                reloadMain(data)
+                // 害的禁用刷新
+                isLoadingBooks = true;
+                // $('.modal-backdrop').remove();
+                var booksElements = $('.aSetBooks');// 检查是否至少有一个元素具有 .aSetBooks 类
+                if (booksElements.length > 0) {
+                    // 真鸡儿的麻烦
+                    booksElements.first().replaceWith(data);
+                    booksElements.not(':first').remove();
+                }
             }
         })
     })

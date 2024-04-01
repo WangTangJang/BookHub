@@ -23,8 +23,26 @@ body::before {
 }
 
 .modal-content {
-    background: rgba(255, 255, 255, 0.9) linear-gradient(to right, #c9a7eb, #9f86e7);
+    background: linear-gradient(to right, rgba(201, 167, 235, 0.8), rgba(159, 134, 231, 0.8));
 }
+.card-body{
+    background: linear-gradient(to right, rgba(201, 167, 235, 0.8), rgba(159, 134, 231, 0.8));
+}
+.card-header{
+    background: linear-gradient(to right, rgb(201, 167, 235), rgb(159, 134, 231));
+}
+
+/*禁用滚动轴*/
+::-webkit-scrollbar {
+    display: none; /* 对于 WebKit 内核的浏览器，如 Chrome 和 Safari */
+}
+/* 对于所有浏览器 */
+element::-webkit-scrollbar,
+element {
+    -ms-overflow-style: none;  /* IE 和 Edge */
+    scrollbar-width: none;   /* Firefox */
+}
+
 /*.custom-logo{*/
 /*    font-size: 25px;*/
 /*}*/

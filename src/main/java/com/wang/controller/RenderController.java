@@ -15,7 +15,7 @@ public class RenderController {
     @RequestMapping("/bookDisplay")
     public String bookDisplay(@RequestBody Map<String, Object> map, Model model){
         model.addAttribute("books",map.get("books"));
-        return "userDisplay/component/indexBody :: #aBook";
+        return "userDisplay/component/indexBody :: aSetBooks";
     }
     @RequestMapping("/searchResult")
     public String searchResult(@RequestBody Map<String, Object> map, Model model){

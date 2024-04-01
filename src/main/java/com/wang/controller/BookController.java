@@ -10,6 +10,7 @@ import com.wang.service.BooksService;
 import com.wang.service.BookshelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,14 @@ public class BookController {
 
     @Autowired
     private BookshelfService bookshelfService;
+
+    @GetMapping("/getBooks")
+    public ResponseEntity<?> getBooks(){
+        List<Books> books = bookService.selectPage(1, 12);
+        Map<String,Object> data = new HashMap<>();
+        data.put("books",books);
+        return ResponseEntity.ok(data);
+    }
 
     @GetMapping("/getInfo/{bookId}")
     public ResponseEntity<?> toBookInfo(@PathVariable Long bookId, HttpSession session){

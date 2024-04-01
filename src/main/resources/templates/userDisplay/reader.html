@@ -14,19 +14,43 @@
   <link th:href="@{/static/css/epubReader.css}"  rel="stylesheet" type="text/css"/>
 
   <input type="hidden" id="bookUrl" th:value="${bookUrl}">
-
+  <button id="restoreOriginalContent">返回</button>
   <select id="toc"></select>
   <div id="viewer" class="spreads"></div>
   <a id="prev" href="#prev" class="arrow">‹</a>
   <a id="next" href="#next" class="arrow">›</a>
 
   <script>
+
+    $(document).on('click', '#restoreOriginalContent', function (event) {
+      $.ajax({
+        url:'/book/getBooks',
+        type:'GET',
+        success:function (data){
+          // 为什么要这样传来传去啊？？？？
+          $.ajax({
+            // 这样做不是因为效率，而是我只会用Thymeleaf加载页面。
+            url: '/render/bookDisplay',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            type: 'POST',
+            success: function (data) {
+              $('#bookReader').replaceWith(data);
+              // 我他妈还得重置这个？？？
+              currentPage = 2;
+              // 我他妈还得设置这个？？？
+              isLoadingBooks = false;
+            }
+          })
+        }
+      })
+    })
+
     var params = URLSearchParams && new URLSearchParams(document.location.search.substring(1));
     var url = params && params.get("url") && decodeURIComponent(params.get("url"));
     var currentSectionIndex = (params && params.get("loc")) ? params.get("loc") : undefined;
-    const bookUrl = document.getElementById('bookUrl').value;
     // Load the opf
-    var book = ePub(bookUrl);
+    var book = ePub(document.getElementById('bookUrl').value);
     // Load the opf
     var rendition = book.renderTo("viewer", {
       width: "100%",

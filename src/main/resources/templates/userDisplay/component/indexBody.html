@@ -1,6 +1,8 @@
 <!--书籍展示-->
 <div id="bookDisplay">
-    <div id="aBook" class="row">
+    <!--又什么要嵌套两层啊？？？-->
+    <!--而且渲染出来的还是aBook为id元素呀，重复了啊！！！-->
+    <div class="row aSetBooks" th:fragment="aSetBooks">
         <div class="col-sm-2 mb-3" th:each="book:${books}" >
             <a th:href="${book.id}" class="getInfo">
                 <div class="card shadow-lg" >
@@ -106,9 +108,10 @@
     }
 
     var isLoadingBooks = false; // 标志位,用于控制是否正在加载书籍数据
-    var currentPage = 2; // 记录已加载的书籍索引
+    let currentPage = 2; // 记录已加载的书籍索引
     // 监听鼠标滚动事件
     // 竟然会因为页面足够展示现有书籍导致没有滚动轴，导致无法检测到鼠标滚动？？？？
+    // 在其他的（页面）的时候也会进行刷新？？
     $(window).scroll(function () {
         if (isLoadingBooks) {
             return;
@@ -118,9 +121,9 @@
             loadMoreBooks();
         }
     })
+    //todo 存在一直刷新的可能性。
     function loadMoreBooks() {
         isLoadingBooks = true;
-
         $.ajax({
             url: '/getMoreBooks/'+currentPage,
             type: 'GET',
@@ -195,5 +198,4 @@
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25); /* 鼠标悬停时增加阴影效果 */
         transform: translateY(-2px); /* 鼠标悬停时向上移动按钮 */
     }
-
 </style>

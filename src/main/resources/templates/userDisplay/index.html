@@ -68,10 +68,11 @@
         }
     };
     xhr.send();
-    // 重新渲染主体
     function reloadMain(data){
+        // 到底是将整个刷新掉，还是将显示的内容刷新掉？？？ 不好用！！！
         $('#mainBody').html(data);
     }
+
     // 检测用户是否登录
     function isLoggedIn() {
         return new Promise((resolve, reject) => {
