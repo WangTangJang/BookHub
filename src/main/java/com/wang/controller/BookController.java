@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.awt.print.Book;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,6 @@ public class BookController {
     private BooksService bookService;
     @Autowired
     private BookRatingsService bookRatingsService;
-
     @Autowired
     private BookshelfService bookshelfService;
 
@@ -122,5 +122,11 @@ public class BookController {
         result.put("message","上传成功等待审核");
         return ResponseEntity.ok(result);
     }
-
+    @GetMapping("/toShelf")
+    public String toShelf(Model model, HttpSession session){ // 不再去用什么json了,直接返回页面. 够吧分离
+        User user = (User) session.getAttribute("user");
+        List<Books> books = bookshelfService.getBooksByUserId(user.getId());
+        model.addAttribute("books",books);
+        return "userDisplay/component/bookShelf :: #bookDisplay";
+    }
 }

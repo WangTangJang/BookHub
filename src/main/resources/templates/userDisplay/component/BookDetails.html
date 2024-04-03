@@ -43,7 +43,9 @@
                     </div>
                 </div>
                 <div th:if="${session.user==null}" class="col-md-6 mb-3">
-                    <a th:href="@{/login}" class="btn btn-dark btn-block toLogin">先登录吧</a>
+                    <!--<a th:href="@{/login}" class="btn btn-dark btn-block toLogin">先登录吧</a>-->
+                    <!--双层框太难看了，还是让登录操作只在导航栏中进行吧-->
+                    <a href="#" class="btn btn-dark btn-block toLogin">先登录吧</a>
                 </div>
                 <div class="col-md-6 mb-3">
                     <a th:href="${book.filePath}" id="toRead" class="btn btn-primary btn-block">阅读</a>
@@ -63,10 +65,9 @@
                             <a href="#" class="btn btn-warning btn-block collect"
                                th:href="${book.id}">收藏</a>
                         </div>
-
                     </div>
                     <div th:if="${session.user==null}">
-                        <a th:href="@{/login}" class="btn btn-dark btn-block toLogin">先登录吧</a>
+                        <a href="#" class="btn btn-dark btn-block toLogin">先登录吧</a>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -77,7 +78,7 @@
     </div>
 </div>
 <script>
-
+    <!--去阅读页面的按钮-->
     $(document).on('click', '#toRead', function (event) {
         event.preventDefault(); // 原来的链接
         const bookUrl = $(this).attr('href'); // 获取书籍的地址

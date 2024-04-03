@@ -23,7 +23,7 @@
                 <span th:text="${session.user.username}"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#"><i class="fas fa-user"></i> 个人中心</a>
+                <a class="dropdown-item" href="#" id="toShelf"><i class="fas fa-user"></i> 我的书架</a>
                 <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> 设置</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i
@@ -44,6 +44,21 @@
     </ul>
 </nav>
 <script>
+    // 去书架页面----查看我的收藏
+    $('#toShelf').click(function (event){
+        $.ajax({
+            url:'/book/toShelf',
+            method:'GET',
+            success:function (data){
+                isLoadingBooks = true; // 又是你！！
+                $('#bookDisplay').replaceWith(data);
+            },
+            error: function (data){
+            //    我就没考虑过错误情况！！
+            }
+        })
+    })
+
     // 注销
     $('#logout').click(function (event) {
         // 拦截

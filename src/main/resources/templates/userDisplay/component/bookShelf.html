@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户书架</title>
+</head>
+<body>
+<!--太重复了，，麻烦-->
+<div id="bookDisplay" class="aSetBooks" >
+    <h1>你的书架</h1>
+    <div th:if="${books!=null}" class="row ">
+        <div class="col-sm-2 mb-3 aBook" th:data="|bookId-${book.id}|" th:each="book:${books}">
+            <a th:href="${book.id}" class="getInfo">
+                <div class="card shadow-lg">
+                    <img class="card-img-top" th:src="@{${book.cover}}" alt="Book Cover">
+                    <div class="card-body">
+                        <h5 class="card-title text-center" th:text="${book.title}"></h5>
+                        <a th:href="${book.id}" class="btn btn-dark btn-sm btn-block showComments"><i
+                                class="fas fa-comment"></i>评论 <span class="badge badge-light"
+                                                                    th:text="${book.reviewsCount}"></span></a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <script>
+        // $(document).on('click', '.cancelCollect', function (event) {
+        //     // 删除data为这个id的元素 ， 这个写法迟早出bug。
+        //     let bookId = $(this).attr('href')
+        //     const elementsToRemove = document.querySelectorAll(`[data="${bookId}"]`);
+        //     // 循环删除每个元素
+        //     elementsToRemove.forEach(element => {
+        //         element.parentNode.removeChild(element);
+        //     });
+        //     // 我他妈直接重新加载，删个蛋。
+        // })
+        $(document).on('click', '.cancelCollect', function (event) {
+            event.preventDefault();
+            const bookId = $(this).attr('href'); // 使用 data-* 属性来存储ID
+            // 通过书籍ID查询所有需要删除的元素
+            const elementsToRemove = $('.aBook[data="bookId-' + bookId + '"]');
+            elementsToRemove.detach();
+            $('#bookDetailModal').modal('hide');
+            }
+        )
+    </script>
+</div>
+</body>
+</html>

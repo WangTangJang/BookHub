@@ -83,8 +83,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h5 th:text="${reply.userName}"></h5>
                                 <span th:text="${reply.creationTime}"></span>
-                            </div>
-                            <p class="comment-text">回复@<span th:text="${reply.parentUsername}"></span>：<span
+                            </div>                            <p class="comment-text">回复@<span th:text="${reply.parentUsername}"></span>：<span
                                     th:text="${reply.context}"></span></p>
                             <div class="d-flex">
                                 <div class="btn btn-sm likeComment mr-2" th:data="${reply.id}"><i
@@ -481,7 +480,7 @@
         font-size: 1rem;
         line-height: 1.5;
         color: #34495e;
-        background-color: #f9f9f9;
+        background: linear-gradient(to right, rgb(248, 243, 131), rgb(221, 201, 109));
         border-radius: 8px;
         padding: 1rem;
         margin-bottom: 0.5rem;

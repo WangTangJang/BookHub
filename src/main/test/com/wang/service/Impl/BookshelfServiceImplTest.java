@@ -72,4 +72,16 @@ public class BookshelfServiceImplTest {
         bookshelf.setBookId(1);
         //service.delFormBookshelf(bookshelf);
     }
+
+    @Test
+    public void getBooksByUserId() {
+        // userId为空时会报错
+        for (Books b:service.getBooksByUserId(3)){
+            System.out.println(b.getId());
+        }
+    }
+
+    @Test
+    public void isCollected() {
+    }
 }
