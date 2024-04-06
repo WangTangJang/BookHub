@@ -14,9 +14,10 @@
 
     <context:component-scan base-package="com.wang.controller"/>
 
-    <!-- 配置静态资源处理 -->
+    <!--a 配置静态资源处理 -->
     <mvc:annotation-driven />
-    <mvc:resources location="/WEB-INF/classes/static/" mapping="/static/**" />
+    <!-- <mvc:resources location="/WEB-INF/classes/static/" mapping="/static/**" /> -->
+    <mvc:resources location="classpath:/static/" mapping="/static/**" />
 
     <!--配置跨域支持-->
     <mvc:cors>
@@ -26,7 +27,10 @@
     </mvc:cors>
 
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="classpath:/templates/"/>
+        <!-- 关于这个里面的位置似乎是我疏忽了，不应该将路径写死，但是如果不写死，我使用idea的时候好像并不能正常显示，按理说这些个页面文件应该是在webapp路径下面的吧。
         <property name="prefix" value="/WEB-INF/classes/templates/"/>
+        -->
         <property name="suffix" value=".html"/>
         <property name="characterEncoding" value="UTF-8"/>
         <property name="order" value="1"/>
