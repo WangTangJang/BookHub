@@ -26,7 +26,7 @@
     </mvc:cors>
 
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
-        <property name="prefix" value="/WEB-INF/classes/templates/"/>
+        <property name="prefix" value="classpath:/classes/templates/"/>
         <property name="suffix" value=".html"/>
         <property name="characterEncoding" value="UTF-8"/>
         <property name="order" value="1"/>
