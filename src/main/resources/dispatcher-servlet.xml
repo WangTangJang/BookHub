@@ -27,14 +27,11 @@
     </mvc:cors>
 
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
-<<<<<<< HEAD
-        <property name="prefix" value="classpath:/classes/templates/"/>
-=======
+
         <property name="prefix" value="classpath:/templates/"/>
         <!-- 关于这个里面的位置似乎是我疏忽了，不应该将路径写死，但是如果不写死，我使用idea的时候好像并不能正常显示，按理说这些个页面文件应该是在webapp路径下面的吧。
         <property name="prefix" value="/WEB-INF/classes/templates/"/>
         -->
->>>>>>> e60d03bbc0bdee1a96b8f09a04a214da8743d19b
         <property name="suffix" value=".html"/>
         <property name="characterEncoding" value="UTF-8"/>
         <property name="order" value="1"/>

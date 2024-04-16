@@ -1,3 +1,5 @@
+## 数据库结构的sql语句
+
 DROP DATABASE bookHub;
 CREATE DATABASE bookHub;
 

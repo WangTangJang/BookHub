@@ -1,3 +1,5 @@
+## 开发途中测试使用的sql语句
+
 select * from book_original_info;
 # 删除外键
 ALTER TABLE book_ratings DROP FOREIGN KEY book_ratings_ibfk_2;

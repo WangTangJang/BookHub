@@ -11,19 +11,21 @@
     </head>
     <body>
       <div id="bookReader">
-        <link
-          th:href="@{/static/css/epubReader.css}"
-          rel="stylesheet"
-          type="text/css"
-        />
-
-        <input type="hidden" id="bookUrl" th:value="${bookUrl}" />
-        <button id="restoreOriginalContent">返回</button>
-        <select id="toc"></select>
-        <div id="viewer" class="spreads"></div>
-        <a id="prev" href="#prev" class="arrow">‹</a>
-        <a id="next" href="#next" class="arrow">›</a>
-
+        <div class="row">
+          <div class="col-12">
+              <link th:href="@{/static/css/epubReader.css}" rel="stylesheet" type="text/css" />
+              <div class="row">
+                <input type="hidden" id="bookUrl" th:value="${bookUrl}" />
+                <button id="restoreOriginalContent" class="btn btn-primary">返回</button>
+                <select id="toc" class="form-control"></select>
+              </div>
+              <div class="row">
+                <div id="viewer" class="spreads"></div>
+                <a id="prev" href="#prev" class="arrow btn btn-secondary">‹</a>
+                <a id="next" href="#next" class="arrow btn btn-secondary">›</a>
+              </div>
+          </div>
+        </div>
         <script>
           $(document).on("click", "#restoreOriginalContent", function (event) {
             $.ajax({
